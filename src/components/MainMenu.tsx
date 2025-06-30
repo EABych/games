@@ -59,7 +59,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onStartGame }) => {
       <div className="teams-setup">
         <h2>Настройка команд</h2>
         {teams.map((team) => (
-          <div key={team.id} className="team-input" style={{ '--team-color': team.color }}>
+          <div key={team.id} className="team-input" style={{ '--team-color': team.color } as React.CSSProperties}>
             <input
               type="text"
               value={team.name}

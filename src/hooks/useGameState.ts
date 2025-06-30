@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import type { GameState, Team, GamePhase } from '../types';
+import type { GameState, Team } from '../types';
 import { DEFAULT_SETTINGS } from '../types';
 import { getRandomWord } from '../data/words';
 
@@ -17,7 +17,7 @@ const initialState: GameState = {
 
 export const useGameState = () => {
   const [gameState, setGameState] = useState<GameState>(initialState);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const startNewGame = useCallback((teams: Team[], roundTime?: number, totalRounds?: number) => {
     const newSettings = { 

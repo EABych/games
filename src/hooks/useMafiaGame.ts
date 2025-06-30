@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import type { MafiaGameState, MafiaPlayer, MafiaPhase, MafiaSettings } from '../types/mafia';
+import type { MafiaGameState, MafiaPlayer, MafiaSettings } from '../types/mafia';
 import { DEFAULT_MAFIA_SETTINGS } from '../types/mafia';
 import { getOptimalRoleDistribution, shuffleRoles } from '../data/mafiaRoles';
 
@@ -16,7 +16,7 @@ const initialState: MafiaGameState = {
 
 export const useMafiaGame = () => {
   const [gameState, setGameState] = useState<MafiaGameState>(initialState);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const startNewGame = useCallback((playerNames: string[], settings: Partial<MafiaSettings> = {}) => {
     const finalSettings = { ...DEFAULT_MAFIA_SETTINGS, ...settings };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ROLE_INFO } from '../../data/mafiaRoles';
-import type { MafiaGameState, MafiaPlayer } from '../../types/mafia';
+import type { MafiaGameState } from '../../types/mafia';
 
 interface NightPhaseProps {
   gameState: MafiaGameState;
