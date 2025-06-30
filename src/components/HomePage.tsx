@@ -9,23 +9,22 @@ export const HomePage: React.FC<HomePageProps> = ({ onSelectGame }) => {
     {
       id: 'alias',
       title: 'Alias',
-      description: 'Объясни слово своей команде',
-      color: '#007AFF',
-      emoji: '🗣️'
+      description: 'Объясни слово своей команде'
     },
     {
-      id: 'mafia',
-      title: 'Мафия',
-      description: 'Ролевая игра на дедукцию',
-      color: '#5856D6',
-      emoji: '🕵️'
+      id: 'krocodil',
+      title: 'Крокодил',
+      description: 'Покажи слово без слов'
     },
     {
       id: 'fants',
       title: 'Фанты',
-      description: 'Весёлые задания для компании',
-      color: '#FF9500',
-      emoji: '🎭'
+      description: 'Весёлые задания для компании'
+    },
+    {
+      id: 'mafia',
+      title: 'Мафия',
+      description: 'Ролевая игра на дедукцию'
     }
   ];
 
@@ -42,12 +41,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onSelectGame }) => {
             key={game.id}
             className="game-card"
             onClick={() => onSelectGame(game.id)}
-            style={{ '--game-color': game.color } as React.CSSProperties}
           >
-            <div className="game-emoji">{game.emoji}</div>
             <h3>{game.title}</h3>
             <p>{game.description}</p>
-            {(game.id === 'alias' || game.id === 'fants') && <span className="available-badge">Доступно</span>}
+            {(game.id === 'alias' || game.id === 'fants' || game.id === 'krocodil') && <span className="available-badge">Доступно</span>}
             {game.id === 'mafia' && <span className="coming-soon-badge">Скоро</span>}
           </button>
         ))}

@@ -39,7 +39,7 @@ export const DEFAULT_FANT_SETTINGS: FantSettings = {
   categories: ['creative', 'funny', 'active', 'social'],
   difficulty: ['easy', 'medium'],
   allowSkip: true,
-  fantsPerPlayer: 3,
+  fantsPerPlayer: 20,
 };
 
 export interface CategoryInfo {

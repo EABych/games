@@ -148,7 +148,7 @@ export const FantsSetup: React.FC<FantsSetupProps> = ({ onStartGame }) => {
             <div className="setting-group">
               <h3>Фантов на игрока</h3>
               <div className="fants-per-player">
-                {[1, 2, 3, 4, 5].map(count => (
+                {[5, 10, 15, 20, 25, 30].map(count => (
                   <button
                     key={count}
                     className={`count-option ${settings.fantsPerPlayer === count ? 'active' : ''}`}

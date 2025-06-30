@@ -36,38 +36,17 @@ export const useFantsGame = () => {
       const updatedPlayers = [...prev.players];
       updatedPlayers[prev.currentPlayerIndex].completedFants += 1;
       
-      return {
-        ...prev,
-        players: updatedPlayers
-      };
-    });
-    nextPlayer();
-  }, []);
-
-  const skipFant = useCallback(() => {
-    setGameState(prev => {
-      const updatedPlayers = [...prev.players];
-      updatedPlayers[prev.currentPlayerIndex].skippedFants += 1;
-      
-      return {
-        ...prev,
-        players: updatedPlayers
-      };
-    });
-    nextPlayer();
-  }, []);
-
-  const nextPlayer = useCallback(() => {
-    setGameState(prev => {
       const nextPlayerIndex = (prev.currentPlayerIndex + 1) % prev.players.length;
       
-      // Check if we've completed all fants
-      const totalCompleted = prev.players.reduce((sum, player) => sum + player.completedFants + player.skippedFants, 0) + 1;
-      const isGameComplete = totalCompleted >= prev.totalFants;
+      // Check if each player has completed their required number of fants
+      const isGameComplete = updatedPlayers.every(player => 
+        (player.completedFants + player.skippedFants) >= prev.settings.fantsPerPlayer
+      );
       
       if (isGameComplete) {
         return {
           ...prev,
+          players: updatedPlayers,
           phase: 'completed',
           currentPlayerIndex: nextPlayerIndex
         };
@@ -78,12 +57,48 @@ export const useFantsGame = () => {
       
       return {
         ...prev,
+        players: updatedPlayers,
         currentPlayerIndex: nextPlayerIndex,
         currentFant: nextFant,
         usedFants: nextFant ? [...prev.usedFants, nextFant.id] : prev.usedFants
       };
     });
   }, []);
+
+  const skipFant = useCallback(() => {
+    setGameState(prev => {
+      const updatedPlayers = [...prev.players];
+      updatedPlayers[prev.currentPlayerIndex].skippedFants += 1;
+      
+      const nextPlayerIndex = (prev.currentPlayerIndex + 1) % prev.players.length;
+      
+      // Check if each player has completed their required number of fants
+      const isGameComplete = updatedPlayers.every(player => 
+        (player.completedFants + player.skippedFants) >= prev.settings.fantsPerPlayer
+      );
+      
+      if (isGameComplete) {
+        return {
+          ...prev,
+          players: updatedPlayers,
+          phase: 'completed',
+          currentPlayerIndex: nextPlayerIndex
+        };
+      }
+      
+      // Get next fant
+      const nextFant = getRandomFant(prev.usedFants, prev.settings);
+      
+      return {
+        ...prev,
+        players: updatedPlayers,
+        currentPlayerIndex: nextPlayerIndex,
+        currentFant: nextFant,
+        usedFants: nextFant ? [...prev.usedFants, nextFant.id] : prev.usedFants
+      };
+    });
+  }, []);
+
 
   const resetGame = useCallback(() => {
     setGameState(initialState);
