@@ -24,7 +24,7 @@ const initialState: KrocodilGameState = {
 
 export const useKrocodilGame = () => {
   const [gameState, setGameState] = useState<KrocodilGameState>(initialState);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const startNewGame = useCallback((teams: KrocodilTeam[], players: KrocodilPlayer[], settings: KrocodilSettings) => {
     const firstWord = getRandomKrocodilWord([], settings);

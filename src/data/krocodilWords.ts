@@ -1,4 +1,4 @@
-import type { KrocodilWord, KrocodilDifficulty, KrocodilCategory, KrocodilSettings } from '../types/krocodil';
+import type { KrocodilWord, KrocodilSettings } from '../types/krocodil';
 
 export const krocodilWords: KrocodilWord[] = [
   // ЛЕГКИЕ СЛОВА - Предметы
