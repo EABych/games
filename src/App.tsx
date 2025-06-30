@@ -111,7 +111,7 @@ function App() {
           </button>
           
           {gameState.phase === 'menu' && (
-            <MainMenu onStartGame={(teams, roundTime, totalRounds) => startNewGame(teams, roundTime, totalRounds)} />
+            <MainMenu onStartGame={(teams, gameSettings) => startNewGame(teams, gameSettings)} />
           )}
           
           {gameState.phase === 'playing' && (

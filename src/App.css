@@ -345,6 +345,61 @@ body.game-mode {
   box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
 }
 
+.difficulty-options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.difficulty-option {
+  padding: 16px 20px;
+  border: 2px solid rgba(0, 122, 255, 0.2);
+  background: rgba(255, 255, 255, 0.6);
+  color: #007AFF;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  min-height: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.difficulty-option:active {
+  transform: scale(0.98);
+}
+
+.difficulty-option.active {
+  background: #007AFF;
+  color: white;
+  border-color: #007AFF;
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+}
+
+.difficulty-label {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.difficulty-count {
+  font-size: 12px;
+  opacity: 0.8;
+  font-weight: 500;
+}
+
+.total-words {
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+  margin-top: 8px;
+  font-weight: 500;
+}
+
 
 /* Game Screen Styles */
 .game-screen {
@@ -1025,6 +1080,10 @@ body.game-mode {
   .rounds-options {
     grid-template-columns: repeat(5, 1fr);
   }
+
+  .difficulty-options {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 /* Large phones */
@@ -1060,10 +1119,29 @@ body.game-mode {
     gap: 8px;
   }
 
+  .difficulty-options {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
   .time-option,
   .rounds-option {
     font-size: 14px;
     padding: 10px 12px;
+  }
+
+  .difficulty-option {
+    font-size: 14px;
+    padding: 12px 16px;
+    min-height: 48px;
+  }
+
+  .difficulty-label {
+    font-size: 14px;
+  }
+
+  .difficulty-count {
+    font-size: 11px;
   }
 
   .game-screen {

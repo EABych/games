@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import type { Team } from '../types';
+import type { Team, GameSettings } from '../types';
+import { getWordsCountByDifficulty, getTotalWordsCount } from '../data/words';
 
 interface MainMenuProps {
-  onStartGame: (teams: Team[], roundTime: number, totalRounds: number) => void;
+  onStartGame: (teams: Team[], gameSettings: Partial<GameSettings>) => void;
 }
 
 export const MainMenu: React.FC<MainMenuProps> = ({ onStartGame }) => {
@@ -12,6 +13,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onStartGame }) => {
   ]);
   const [roundTime, setRoundTime] = useState<number>(60);
   const [totalRounds, setTotalRounds] = useState<number>(5);
+  const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('easy');
   const [showSettings, setShowSettings] = useState<boolean>(false);
 
   const updateTeamName = (id: string, name: string) => {
@@ -39,7 +41,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onStartGame }) => {
 
   const handleStart = () => {
     if (teams.length >= 2 && teams.every(team => team.name.trim())) {
-      onStartGame(teams, roundTime, totalRounds);
+      onStartGame(teams, { roundTime, totalRounds, difficulty });
     }
   };
 
@@ -125,6 +127,29 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onStartGame }) => {
                   {rounds}
                 </button>
               ))}
+            </div>
+          </div>
+
+          <div className="game-settings">
+            <h3>Уровень сложности</h3>
+            <div className="difficulty-options">
+              {[
+                { value: 'easy', label: 'Лёгкий', count: getWordsCountByDifficulty('easy') },
+                { value: 'medium', label: 'Средний', count: getWordsCountByDifficulty('medium') },
+                { value: 'hard', label: 'Сложный', count: getWordsCountByDifficulty('hard') }
+              ].map((level) => (
+                <button
+                  key={level.value}
+                  className={`difficulty-option ${difficulty === level.value ? 'active' : ''}`}
+                  onClick={() => setDifficulty(level.value as 'easy' | 'medium' | 'hard')}
+                >
+                  <span className="difficulty-label">{level.label}</span>
+                  <span className="difficulty-count">{level.count} слов</span>
+                </button>
+              ))}
+            </div>
+            <div className="total-words">
+              Всего в базе: {getTotalWordsCount()} слов
             </div>
           </div>
         </div>

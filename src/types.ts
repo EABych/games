@@ -10,6 +10,7 @@ export interface GameSettings {
   wordsPerRound: number;
   winningScore: number;
   totalRounds: number;
+  difficulty: 'easy' | 'medium' | 'hard';
 }
 
 export type GamePhase = 'menu' | 'setup' | 'playing' | 'roundEnd' | 'gameEnd';
@@ -30,5 +31,6 @@ export const DEFAULT_SETTINGS: GameSettings = {
   roundTime: 60,
   wordsPerRound: 30,
   winningScore: 50,
-  totalRounds: 5
+  totalRounds: 5,
+  difficulty: 'easy'
 };

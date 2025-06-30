@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import type { GameState, Team } from '../types';
 import { DEFAULT_SETTINGS } from '../types';
 import { getRandomWord } from '../data/words';
+import type { GameSettings } from '../types';
 
 const initialState: GameState = {
   phase: 'menu',
@@ -19,17 +20,16 @@ export const useGameState = () => {
   const [gameState, setGameState] = useState<GameState>(initialState);
   const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const startNewGame = useCallback((teams: Team[], roundTime?: number, totalRounds?: number) => {
+  const startNewGame = useCallback((teams: Team[], gameSettings?: Partial<GameSettings>) => {
     const newSettings = { 
       ...DEFAULT_SETTINGS, 
-      ...(roundTime && { roundTime }), 
-      ...(totalRounds && { totalRounds }) 
+      ...gameSettings
     };
     setGameState({
       ...initialState,
       phase: 'playing',
       teams,
-      currentWord: getRandomWord(),
+      currentWord: getRandomWord(newSettings.difficulty),
       timer: newSettings.roundTime,
       settings: newSettings,
       currentRound: 1
@@ -41,9 +41,9 @@ export const useGameState = () => {
       const newScore = guessed ? prev.roundScore + 1 : prev.roundScore - 1;
       const newUsedWords = [...prev.usedWords, prev.currentWord];
       
-      let newWord = getRandomWord();
+      let newWord = getRandomWord(prev.settings.difficulty);
       while (newUsedWords.includes(newWord)) {
-        newWord = getRandomWord();
+        newWord = getRandomWord(prev.settings.difficulty);
       }
 
       return {
@@ -84,7 +84,7 @@ export const useGameState = () => {
         ...prev,
         phase: 'playing',
         currentTeamIndex: nextTeamIndex,
-        currentWord: getRandomWord(),
+        currentWord: getRandomWord(prev.settings.difficulty),
         usedWords: [],
         roundScore: 0,
         timer: prev.settings.roundTime,
