@@ -38,21 +38,12 @@ export const useKrocodilGame = () => {
       currentWord: firstWord,
       usedWords: firstWord ? [firstWord.id] : [],
       roundTimeLeft: settings.roundTime,
-      currentRound: 1
+      currentRound: 1,
+      isTimerRunning: true
     });
   }, []);
 
-  const startTimer = useCallback(() => {
-    setGameState(prev => ({ ...prev, isTimerRunning: true }));
-  }, []);
 
-  const pauseTimer = useCallback(() => {
-    setGameState(prev => ({ ...prev, isTimerRunning: false }));
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-  }, []);
 
   const guessWord = useCallback(() => {
     setGameState(prev => {
@@ -141,7 +132,8 @@ export const useKrocodilGame = () => {
     setGameState(prev => ({
       ...prev,
       phase: 'playing',
-      roundTimeLeft: prev.settings.roundTime
+      roundTimeLeft: prev.settings.roundTime,
+      isTimerRunning: true
     }));
   }, []);
 
@@ -246,8 +238,6 @@ export const useKrocodilGame = () => {
   return {
     gameState,
     startNewGame,
-    startTimer,
-    pauseTimer,
     guessWord,
     skipWord,
     endRound,

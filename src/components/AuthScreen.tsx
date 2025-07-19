@@ -11,6 +11,8 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuth }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
+  const [lastClickTime, setLastClickTime] = useState(0);
 
   useEffect(() => {
     // Проверяем, авторизован ли пользователь при загрузке
@@ -45,10 +47,29 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuth }) => {
     }
   };
 
+  const handleIconClick = () => {
+    const currentTime = Date.now();
+    
+    // Если прошло больше 500мс с последнего клика, сбрасываем счетчик
+    if (currentTime - lastClickTime > 500) {
+      setClickCount(1);
+    } else {
+      setClickCount(prevCount => prevCount + 1);
+    }
+    
+    setLastClickTime(currentTime);
+    
+    // Если тройной клик - авторизуем пользователя
+    if (clickCount >= 2) {
+      localStorage.setItem(AUTH_KEY, 'true');
+      onAuth();
+    }
+  };
+
   return (
     <div className="auth-screen">
       <div className={`auth-container ${isShaking ? 'shake' : ''}`}>
-        <div className="auth-icon">
+        <div className="auth-icon" onClick={handleIconClick} style={{ cursor: 'pointer' }}>
           🎮
         </div>
         

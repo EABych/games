@@ -46,7 +46,6 @@ export interface KrocodilSettings {
   difficulties: KrocodilDifficulty[];
   categories: KrocodilCategory[];
   allowSkip: boolean;
-  showWordToActor: boolean; // показывать ли слово актёру
 }
 
 export const DEFAULT_KROCODIL_SETTINGS: KrocodilSettings = {
@@ -55,8 +54,7 @@ export const DEFAULT_KROCODIL_SETTINGS: KrocodilSettings = {
   wordsPerRound: 10,
   difficulties: ['easy', 'medium'],
   categories: ['objects', 'actions', 'animals', 'professions'],
-  allowSkip: true,
-  showWordToActor: true
+  allowSkip: true
 };
 
 export interface CategoryInfo {

@@ -15,7 +15,14 @@ export const FantsEnd: React.FC<FantsEndProps> = ({ gameState, onNewGame }) => {
     return a.skippedFants - b.skippedFants;
   });
 
-  const winner = sortedPlayers[0];
+  // Проверяем на ничью
+  const topScore = sortedPlayers[0];
+  const winners = sortedPlayers.filter(player => 
+    player.completedFants === topScore.completedFants && 
+    player.skippedFants === topScore.skippedFants
+  );
+  const isDrawn = winners.length > 1;
+
   const totalCompleted = gameState.players.reduce((sum, player) => sum + player.completedFants, 0);
   const totalSkipped = gameState.players.reduce((sum, player) => sum + player.skippedFants, 0);
 
@@ -24,25 +31,55 @@ export const FantsEnd: React.FC<FantsEndProps> = ({ gameState, onNewGame }) => {
       <h1>Игра завершена!</h1>
       
       <div className="winner-section">
-        <div className="winner-card">
-          <div className="winner-avatar">
-            {winner.name.charAt(0).toUpperCase()}
-          </div>
-          <h2>Победитель</h2>
-          <h3 className="winner-name">{winner.name}</h3>
-          <div className="winner-stats">
-            <div className="winner-stat">
-              <span className="stat-number">{winner.completedFants}</span>
-              <span className="stat-label">выполнено</span>
+        {isDrawn ? (
+          <div className="draw-card">
+            <div className="draw-icon">🤝</div>
+            <h2>Ничья!</h2>
+            <h3 className="draw-description">
+              {winners.length} игрока показали одинаковый результат
+            </h3>
+            <div className="draw-winners">
+              {winners.map((winner, index) => (
+                <span key={winner.id} className="draw-winner-name">
+                  {winner.name}
+                  {index < winners.length - 1 && ", "}
+                </span>
+              ))}
             </div>
-            {gameState.settings.allowSkip && (
+            <div className="winner-stats">
               <div className="winner-stat">
-                <span className="stat-number">{winner.skippedFants}</span>
-                <span className="stat-label">пропущено</span>
+                <span className="stat-number">{topScore.completedFants}</span>
+                <span className="stat-label">выполнено</span>
               </div>
-            )}
+              {gameState.settings.allowSkip && (
+                <div className="winner-stat">
+                  <span className="stat-number">{topScore.skippedFants}</span>
+                  <span className="stat-label">пропущено</span>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="winner-card">
+            <div className="winner-avatar">
+              {topScore.name.charAt(0).toUpperCase()}
+            </div>
+            <h2>Победитель</h2>
+            <h3 className="winner-name">{topScore.name}</h3>
+            <div className="winner-stats">
+              <div className="winner-stat">
+                <span className="stat-number">{topScore.completedFants}</span>
+                <span className="stat-label">выполнено</span>
+              </div>
+              {gameState.settings.allowSkip && (
+                <div className="winner-stat">
+                  <span className="stat-number">{topScore.skippedFants}</span>
+                  <span className="stat-label">пропущено</span>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="game-stats">
@@ -68,14 +105,16 @@ export const FantsEnd: React.FC<FantsEndProps> = ({ gameState, onNewGame }) => {
       <div className="final-results">
         <h3>Результаты участников</h3>
         <div className="results-list">
-          {sortedPlayers.map((player, index) => (
-            <div 
-              key={player.id}
-              className={`result-item ${index === 0 ? 'winner-result' : ''}`}
-            >
-              <div className="result-place">
-                {index === 0 ? '🏆' : `${index + 1}.`}
-              </div>
+          {sortedPlayers.map((player, index) => {
+            const isWinner = winners.some(w => w.id === player.id);
+            return (
+              <div 
+                key={player.id}
+                className={`result-item ${isWinner ? 'winner-result' : ''}`}
+              >
+                <div className="result-place">
+                  {isWinner ? (isDrawn ? '🤝' : '🏆') : `${index + 1}.`}
+                </div>
               <div className="result-avatar">
                 {player.name.charAt(0).toUpperCase()}
               </div>
@@ -89,7 +128,8 @@ export const FantsEnd: React.FC<FantsEndProps> = ({ gameState, onNewGame }) => {
                 </div>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

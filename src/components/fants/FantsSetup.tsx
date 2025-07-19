@@ -104,14 +104,26 @@ export const FantsSetup: React.FC<FantsSetupProps> = ({ onStartGame }) => {
       <div className="game-settings">
         <button
           className="settings-toggle"
-          onClick={() => setShowSettings(!showSettings)}
+          onClick={() => setShowSettings(true)}
+          type="button"
         >
-          <span>Настройки игры</span>
-          <span className={`toggle-icon ${showSettings ? 'expanded' : ''}`}>▼</span>
+          <span>⚙️ Настройки игры</span>
         </button>
 
         {showSettings && (
-          <div className="settings-content">
+          <div className="modal-overlay" onClick={() => setShowSettings(false)}>
+            <div className="modal-content settings-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="modal-header">
+                <h3>Настройки игры</h3>
+                <button
+                  className="modal-close"
+                  onClick={() => setShowSettings(false)}
+                  type="button"
+                >
+                  ×
+                </button>
+              </div>
+              <div className="modal-body settings-modal-body">
             <div className="setting-group">
               <h3>Категории заданий</h3>
               <div className="categories-grid">
@@ -121,6 +133,7 @@ export const FantsSetup: React.FC<FantsSetupProps> = ({ onStartGame }) => {
                     className={`category-option ${settings.categories.includes(category) ? 'active' : ''}`}
                     onClick={() => toggleCategory(category)}
                     style={{ '--category-color': CATEGORY_INFO[category].color } as React.CSSProperties}
+                    type="button"
                   >
                     <span className="category-emoji">{CATEGORY_INFO[category].emoji}</span>
                     <span className="category-name">{CATEGORY_INFO[category].name}</span>
@@ -138,6 +151,7 @@ export const FantsSetup: React.FC<FantsSetupProps> = ({ onStartGame }) => {
                     className={`difficulty-option ${settings.difficulty.includes(difficulty) ? 'active' : ''}`}
                     onClick={() => toggleDifficulty(difficulty)}
                     style={{ '--difficulty-color': DIFFICULTY_INFO[difficulty].color } as React.CSSProperties}
+                    type="button"
                   >
                     {DIFFICULTY_INFO[difficulty].name}
                   </button>
@@ -153,6 +167,7 @@ export const FantsSetup: React.FC<FantsSetupProps> = ({ onStartGame }) => {
                     key={count}
                     className={`count-option ${settings.fantsPerPlayer === count ? 'active' : ''}`}
                     onClick={() => setSettings(prev => ({ ...prev, fantsPerPlayer: count }))}
+                    type="button"
                   >
                     {count}
                   </button>
@@ -169,6 +184,8 @@ export const FantsSetup: React.FC<FantsSetupProps> = ({ onStartGame }) => {
                 />
                 <span>Разрешить пропускать задания</span>
               </label>
+            </div>
+              </div>
             </div>
           </div>
         )}

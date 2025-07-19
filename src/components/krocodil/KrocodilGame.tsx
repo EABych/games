@@ -5,8 +5,6 @@ interface KrocodilGameProps {
   gameState: KrocodilGameState;
   onGuessWord: () => void;
   onSkipWord: () => void;
-  onStartTimer: () => void;
-  onPauseTimer: () => void;
   onEndRound: () => void;
 }
 
@@ -14,8 +12,6 @@ export const KrocodilGame: React.FC<KrocodilGameProps> = ({
   gameState,
   onGuessWord,
   onSkipWord,
-  onStartTimer,
-  onPauseTimer,
   onEndRound
 }) => {
   const currentTeam = gameState.teams[gameState.currentTeamIndex];
@@ -49,13 +45,6 @@ export const KrocodilGame: React.FC<KrocodilGameProps> = ({
           >
             {formatTime(gameState.roundTimeLeft)}
           </div>
-          <button 
-            className={`timer-btn ${gameState.isTimerRunning ? 'pause' : 'play'}`}
-            onClick={gameState.isTimerRunning ? onPauseTimer : onStartTimer}
-            disabled={gameState.roundTimeLeft === 0}
-          >
-            {gameState.isTimerRunning ? '⏸️' : '▶️'}
-          </button>
         </div>
 
         <div className="scores">
@@ -99,19 +88,12 @@ export const KrocodilGame: React.FC<KrocodilGameProps> = ({
               </span>
             </div>
             
-            {gameState.settings.showWordToActor ? (
-              <div className="word-display">
-                <h1 className="current-word">{gameState.currentWord.word}</h1>
-                <p className="word-instruction">
-                  Покажите это слово без использования слов и звуков
-                </p>
-              </div>
-            ) : (
-              <div className="word-hidden">
-                <h2>Слово скрыто</h2>
-                <p>Команда должна угадать слово по вашим действиям</p>
-              </div>
-            )}
+            <div className="word-display">
+              <h1 className="current-word">{gameState.currentWord.word}</h1>
+              <p className="word-instruction">
+                Покажите это слово без использования слов и звуков
+              </p>
+            </div>
           </div>
         ) : (
           <div className="no-word">

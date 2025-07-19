@@ -22,6 +22,7 @@ export const KrocodilSetup: React.FC<KrocodilSetupProps> = ({ onStartGame }) => 
   const [newTeamName, setNewTeamName] = useState('');
   const [newPlayerName, setNewPlayerName] = useState('');
   const [selectedTeamId, setSelectedTeamId] = useState('');
+  const [addingPlayerToTeam, setAddingPlayerToTeam] = useState<string | null>(null);
   const [settings, setSettings] = useState<KrocodilSettings>(DEFAULT_KROCODIL_SETTINGS);
   const [showSettings, setShowSettings] = useState(false);
 
@@ -51,15 +52,17 @@ export const KrocodilSetup: React.FC<KrocodilSetupProps> = ({ onStartGame }) => 
     }
   };
 
-  const addPlayer = () => {
-    if (newPlayerName.trim() && selectedTeamId) {
+  const addPlayer = (teamId?: string) => {
+    const targetTeamId = teamId || selectedTeamId;
+    if (newPlayerName.trim() && targetTeamId) {
       const newPlayer: KrocodilPlayer = {
         id: Date.now().toString(),
         name: newPlayerName.trim(),
-        teamId: selectedTeamId
+        teamId: targetTeamId
       };
       setPlayers([...players, newPlayer]);
       setNewPlayerName('');
+      setAddingPlayerToTeam(null);
     }
   };
 
@@ -106,7 +109,8 @@ export const KrocodilSetup: React.FC<KrocodilSetupProps> = ({ onStartGame }) => 
       <p className="subtitle">Покажи слово без слов</p>
 
       <div className="teams-setup">
-        <h2>Команды</h2>
+        <h2>Команды и участники</h2>
+        <p className="teams-subtitle">Создайте команды и добавьте в них участников</p>
         
         <div className="add-team">
           <input
@@ -134,6 +138,7 @@ export const KrocodilSetup: React.FC<KrocodilSetupProps> = ({ onStartGame }) => 
                 <button
                   onClick={() => removeTeam(team.id)}
                   className="remove-team"
+                  title="Удалить команду"
                 >
                   ×
                 </button>
@@ -146,64 +151,107 @@ export const KrocodilSetup: React.FC<KrocodilSetupProps> = ({ onStartGame }) => 
                     <button
                       onClick={() => removePlayer(player.id)}
                       className="remove-player"
+                      title="Удалить игрока"
                     >
                       ×
                     </button>
                   </div>
                 ))}
+                
+                {getTeamPlayers(team.id).length === 0 && (
+                  <div className="no-players">
+                    Нет игроков в команде
+                  </div>
+                )}
               </div>
+              
+              {addingPlayerToTeam === team.id ? (
+                <div className="add-player-form">
+                  <input
+                    type="text"
+                    placeholder="Имя игрока"
+                    value={newPlayerName}
+                    onChange={(e) => setNewPlayerName(e.target.value)}
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter') {
+                        addPlayer(team.id);
+                      } else if (e.key === 'Escape') {
+                        setAddingPlayerToTeam(null);
+                        setNewPlayerName('');
+                      }
+                    }}
+                    maxLength={20}
+                    autoFocus
+                    className="add-player-input"
+                  />
+                  <button 
+                    onClick={() => addPlayer(team.id)}
+                    disabled={!newPlayerName.trim()}
+                    className="confirm-add-player"
+                    title="Добавить игрока"
+                  >
+                    ✓
+                  </button>
+                  <button 
+                    onClick={() => {
+                      setAddingPlayerToTeam(null);
+                      setNewPlayerName('');
+                    }}
+                    className="cancel-add-player"
+                    title="Отмена"
+                  >
+                    ×
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setAddingPlayerToTeam(team.id)}
+                  className="add-player-btn-new"
+                >
+                  + Добавить игрока
+                </button>
+              )}
             </div>
           ))}
         </div>
 
-        {teams.length > 0 && (
-          <div className="add-player">
-            <select
-              value={selectedTeamId}
-              onChange={(e) => setSelectedTeamId(e.target.value)}
-              className="team-select"
-            >
-              <option value="">Выберите команду</option>
-              {teams.map((team) => (
-                <option key={team.id} value={team.id}>
-                  {team.name}
-                </option>
-              ))}
-            </select>
-            <input
-              type="text"
-              placeholder="Имя игрока"
-              value={newPlayerName}
-              onChange={(e) => setNewPlayerName(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && addPlayer()}
-              maxLength={20}
-            />
-            <button 
-              onClick={addPlayer}
-              disabled={!newPlayerName.trim() || !selectedTeamId}
-              className="add-player-btn"
-            >
-              +
-            </button>
+        
+        {teams.length < 2 && (
+          <div className="requirement">
+            ⚠️ Необходимо минимум 2 команды для начала игры
           </div>
         )}
         
-        {teams.length < 2 && (
-          <p className="requirement">Минимум 2 команды</p>
+        {teams.length >= 2 && teams.some(team => getTeamPlayers(team.id).length === 0) && (
+          <div className="requirement">
+            ⚠️ В каждой команде должен быть хотя бы один игрок
+          </div>
         )}
       </div>
 
       <div className="game-settings">
         <button
           className="settings-toggle"
-          onClick={() => setShowSettings(!showSettings)}
+          onClick={() => setShowSettings(true)}
+          type="button"
         >
-          <span>Настройки игры</span>
-          <span className={`toggle-icon ${showSettings ? 'expanded' : ''}`}>▼</span>
+          <span>⚙️ Настройки игры</span>
         </button>
 
         {showSettings && (
-          <div className="settings-content">
+          <div className="modal-overlay" onClick={() => setShowSettings(false)}>
+            <div className="modal-content settings-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="modal-header">
+                <h3>Настройки игры</h3>
+                <button
+                  className="modal-close"
+                  onClick={() => setShowSettings(false)}
+                  type="button"
+                >
+                  ×
+                </button>
+              </div>
+              <div className="modal-body settings-modal-body">
             <div className="setting-group">
               <h3>Время раунда (секунды)</h3>
               <div className="time-options">
@@ -212,6 +260,7 @@ export const KrocodilSetup: React.FC<KrocodilSetupProps> = ({ onStartGame }) => 
                     key={time}
                     className={`time-option ${settings.roundTime === time ? 'active' : ''}`}
                     onClick={() => setSettings(prev => ({ ...prev, roundTime: time }))}
+                    type="button"
                   >
                     {time}
                   </button>
@@ -227,6 +276,7 @@ export const KrocodilSetup: React.FC<KrocodilSetupProps> = ({ onStartGame }) => 
                     key={points}
                     className={`points-option ${settings.pointsToWin === points ? 'active' : ''}`}
                     onClick={() => setSettings(prev => ({ ...prev, pointsToWin: points }))}
+                    type="button"
                   >
                     {points}
                   </button>
@@ -243,6 +293,7 @@ export const KrocodilSetup: React.FC<KrocodilSetupProps> = ({ onStartGame }) => 
                     className={`category-option ${settings.categories.includes(category) ? 'active' : ''}`}
                     onClick={() => toggleCategory(category)}
                     style={{ '--category-color': KROCODIL_CATEGORY_INFO[category].color } as React.CSSProperties}
+                    type="button"
                   >
                     <span className="category-emoji">{KROCODIL_CATEGORY_INFO[category].emoji}</span>
                     <span className="category-name">{KROCODIL_CATEGORY_INFO[category].name}</span>
@@ -260,6 +311,7 @@ export const KrocodilSetup: React.FC<KrocodilSetupProps> = ({ onStartGame }) => 
                     className={`difficulty-option ${settings.difficulties.includes(difficulty) ? 'active' : ''}`}
                     onClick={() => toggleDifficulty(difficulty)}
                     style={{ '--difficulty-color': KROCODIL_DIFFICULTY_INFO[difficulty].color } as React.CSSProperties}
+                    type="button"
                   >
                     {KROCODIL_DIFFICULTY_INFO[difficulty].name}
                   </button>
@@ -278,15 +330,7 @@ export const KrocodilSetup: React.FC<KrocodilSetupProps> = ({ onStartGame }) => 
               </label>
             </div>
 
-            <div className="setting-group">
-              <label className="checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={settings.showWordToActor}
-                  onChange={(e) => setSettings(prev => ({ ...prev, showWordToActor: e.target.checked }))}
-                />
-                <span>Показывать слово актёру</span>
-              </label>
+              </div>
             </div>
           </div>
         )}
