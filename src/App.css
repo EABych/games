@@ -434,7 +434,7 @@ body.game-mode {
   border-radius: 28px;
   padding: 24px;
   box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 10px 30px rgba(255, 255, 255, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   width: 100%;
   max-width: 100%;
@@ -571,7 +571,7 @@ body.game-mode {
   background: rgba(52, 199, 89, 0.9);
   color: white;
   border-color: rgba(52, 199, 89, 1);
-  box-shadow: 0 8px 32px rgba(52, 199, 89, 0.4);
+  box-shadow: 0 4px 16px rgba(52, 199, 89, 0.25);
 }
 
 .swipe-skip {
@@ -626,7 +626,7 @@ body.game-mode {
   color: white;
   border: 1px solid rgba(255, 69, 58, 0.3);
   box-shadow:
-    0 8px 32px rgba(255, 69, 58, 0.2),
+    0 4px 16px rgba(255, 69, 58, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
@@ -634,7 +634,7 @@ body.game-mode {
   background: linear-gradient(135deg, #D70015 0%, #C70000 100%);
   transform: scale(0.97);
   box-shadow:
-    0 4px 16px rgba(255, 69, 58, 0.3),
+    0 2px 8px rgba(255, 69, 58, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
@@ -645,7 +645,7 @@ body.game-mode {
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow:
-    0 8px 32px rgba(52, 199, 89, 0.4),
+    0 4px 16px rgba(52, 199, 89, 0.25),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
@@ -679,7 +679,7 @@ body.game-mode {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.1),
+    0 2px 8px rgba(255, 255, 255, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
