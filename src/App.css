@@ -4,6 +4,16 @@
   box-sizing: border-box;
 }
 
+/* CSS custom properties for safe areas */
+:root {
+  --safe-area-inset-top: env(safe-area-inset-top);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom);
+  --safe-area-inset-left: env(safe-area-inset-left);
+  --safe-area-inset-right: env(safe-area-inset-right);
+  --safe-max-height: calc(100vh - 80px - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
+  --safe-max-height-dvh: calc(100dvh - 80px - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -63,7 +73,7 @@ body.game-mode {
   /* Ensure proper centering */
   position: relative;
   /* Mobile optimization */
-  max-height: calc(100vh - 40px);
+  max-height: calc(100vh - 40px - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -433,7 +443,7 @@ body.game-mode {
   flex-direction: column;
   height: calc(100vh - 40px);
   height: calc(100dvh - 40px);
-  max-height: calc(100vh - 40px);
+  max-height: calc(100vh - 40px - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
   max-height: calc(100dvh - 40px);
   overflow: hidden;
 }
@@ -1104,7 +1114,7 @@ body.game-mode {
 @media (max-width: 428px) and (orientation: portrait) {
   .main-menu {
     padding: 20px 16px;
-    max-height: calc(100vh - 40px);
+    max-height: calc(100vh - 40px - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
     border-radius: 20px;
   }
 
@@ -1168,7 +1178,7 @@ body.game-mode {
 @media (min-width: 414px) and (max-width: 767px) {
   .main-menu {
     padding: 24px 20px;
-    max-height: calc(100vh - 30px);
+    max-height: calc(100vh - 30px - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
   }
 
   .main-menu h1 {
@@ -1228,7 +1238,7 @@ body.game-mode {
   .main-menu {
     padding: 20px 16px;
     max-width: 100%;
-    max-height: calc(100vh - 24px);
+    max-height: calc(100vh - 24px - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
   }
 
   .main-menu h1 {
@@ -1283,7 +1293,7 @@ body.game-mode {
   }
 
   .game-screen {
-    min-height: calc(100vh - 24px);
+    min-height: calc(100vh - 24px - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
     padding: 20px;
   }
 
@@ -1329,6 +1339,9 @@ body.game-mode {
   max-width: 480px;
   animation: fadeInUp 0.6s ease-out;
   margin: auto;
+  max-height: var(--safe-max-height);
+  max-height: var(--safe-max-height-dvh);
+  overflow: scroll;
 }
 
 .home-header {
@@ -1478,9 +1491,9 @@ body.game-mode {
   .game-screen {
     padding: 16px;
     border-radius: 20px;
-    height: calc(100vh - 32px);
-    height: calc(100dvh - 32px);
-    max-height: calc(100vh - 32px);
+    height: calc(100vh - 32px - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
+    height: calc(100dvh - 32px - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
+    max-height: calc(100vh - 32px - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
     max-height: calc(100dvh - 32px);
   }
 
@@ -1660,8 +1673,8 @@ body.game-mode {
 /* Home button styles */
 .home-button {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: max(20px, var(--safe-area-inset-top, 20px));
+  right: max(20px, var(--safe-area-inset-right, 20px));
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 50%;
@@ -1727,7 +1740,8 @@ body.game-mode {
   max-width: 480px;
   animation: fadeInUp 0.6s ease-out;
   margin: auto;
-  max-height: calc(100vh - 80px);
+  max-height: var(--safe-max-height);
+  max-height: var(--safe-max-height-dvh);
   overflow: scroll;
 }
 
@@ -2385,7 +2399,8 @@ body.game-mode {
   margin: auto;
   text-align: center;
   overflow: auto;
-  max-height: calc(100vh - 80px);
+  max-height: var(--safe-max-height);
+  max-height: var(--safe-max-height-dvh);
 }
 
 .fants-end h1 {
@@ -2866,7 +2881,9 @@ body.game-mode {
   max-width: 480px;
   animation: fadeInUp 0.6s ease-out;
   margin: auto;
-  max-height: calc(100vh - 80px);
+
+  max-height: var(--safe-max-height);
+  max-height: var(--safe-max-height-dvh);
   overflow: scroll;
 }
 
@@ -3305,7 +3322,8 @@ body.game-mode {
   max-width: 600px;
   animation: fadeInUp 0.6s ease-out;
   margin: auto;
-  max-height: calc(100vh - 80px);
+  max-height: var(--safe-max-height);
+  max-height: var(--safe-max-height-dvh);
   overflow: scroll;
 }
 
@@ -3680,7 +3698,8 @@ body.game-mode {
   animation: fadeInUp 0.6s ease-out;
   margin: auto;
   text-align: center;
-  max-height: calc(100vh - 80px);
+  max-height: var(--safe-max-height);
+  max-height: var(--safe-max-height-dvh);
   overflow: scroll;
 }
 
@@ -4311,7 +4330,8 @@ body.game-mode {
   max-width: 600px;
   margin: 0 auto;
 
-  max-height: calc(100vh - 80px);
+  max-height: var(--safe-max-height);
+  max-height: var(--safe-max-height-dvh);
   overflow: scroll;
 }
 
@@ -5267,5 +5287,1177 @@ body.game-mode {
   .category-stats,
   .intensity-stats {
     flex-direction: column;
+  }
+}
+
+/* Coming Soon Page Styles */
+.coming-soon-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.coming-soon-content {
+  background: white;
+  border-radius: 24px;
+  padding: 40px;
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.coming-soon-content h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1d1d1f;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+
+.coming-soon-content .description {
+  font-size: 1.1rem;
+  color: #86868b;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.features {
+  text-align: left;
+  margin-bottom: 32px;
+}
+
+.features h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 12px;
+  margin-top: 24px;
+}
+
+.features h3:first-child {
+  margin-top: 0;
+}
+
+.features ul {
+  list-style: none;
+  padding: 0;
+}
+
+.features li {
+  padding: 6px 0;
+  font-size: 1rem;
+  color: #515154;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.back-to-home-btn {
+  background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: -0.2px;
+}
+
+.back-to-home-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 122, 255, 0.4);
+}
+
+.back-to-home-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+}
+
+@media (max-width: 480px) {
+  .coming-soon-content {
+    padding: 32px 24px;
+    margin: 0 16px;
+  }
+
+  .coming-soon-content h1 {
+    font-size: 2rem;
+  }
+
+  .features {
+    text-align: center;
+  }
+}
+
+/* ============================================
+   POET GAME STYLES
+   ============================================ */
+
+/* Poet Setup Styles */
+.poet-setup {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+
+  max-height: var(--safe-max-height);
+  max-height: var(--safe-max-height-dvh);
+  overflow: scroll;
+}
+
+.poet-setup .setup-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.poet-setup .setup-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1d1d1f;
+  margin-bottom: 12px;
+}
+
+.poet-setup .setup-header p {
+  font-size: 1.1rem;
+  color: #86868b;
+  line-height: 1.6;
+}
+
+.poet-setup .setup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.poet-setup .setup-section {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.poet-setup .setup-section h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 16px;
+}
+
+/* Players Section */
+.poet-setup .players-input {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.poet-setup .players-input input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e5e5e7;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.poet-setup .players-input input:focus {
+  outline: none;
+  border-color: #007AFF;
+}
+
+.poet-setup .add-player-btn {
+  background: #007AFF;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.poet-setup .add-player-btn:hover:not(:disabled) {
+  background: #0051D5;
+  transform: translateY(-1px);
+}
+
+.poet-setup .add-player-btn:disabled {
+  background: #c7c7cc;
+  cursor: not-allowed;
+}
+
+.poet-setup .players-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.poet-setup .player-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f2f2f7;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+}
+
+.poet-setup .remove-btn {
+  background: #ff3b30;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Categories Grid */
+.poet-setup .categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.poet-setup .category-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  border: 2px solid #e5e5e7;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.poet-setup .category-btn:hover {
+  border-color: #007AFF;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 122, 255, 0.15);
+}
+
+.poet-setup .category-btn.selected {
+  border-color: #007AFF;
+  background: rgba(0, 122, 255, 0.1);
+}
+
+.poet-setup .category-emoji {
+  font-size: 1.5rem;
+}
+
+.poet-setup .category-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.poet-setup .category-name {
+  font-weight: 600;
+  color: #1d1d1f;
+}
+
+.poet-setup .category-desc {
+  font-size: 0.9rem;
+  color: #86868b;
+}
+
+/* Difficulty Grid */
+.poet-setup .difficulty-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.poet-setup .difficulty-btn {
+  background: white;
+  border: 2px solid #e5e5e7;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.poet-setup .difficulty-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.poet-setup .difficulty-btn.selected {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.poet-setup .difficulty-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.poet-setup .difficulty-desc {
+  font-size: 0.9rem;
+  color: #86868b;
+}
+
+/* Game Settings */
+.poet-setup .game-settings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.poet-setup .setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.poet-setup .setting-item label {
+  font-weight: 500;
+  color: #1d1d1f;
+}
+
+.poet-setup .setting-item select {
+  padding: 8px 12px;
+  border: 2px solid #e5e5e7;
+  border-radius: 6px;
+  background: white;
+  font-size: 0.9rem;
+}
+
+.poet-setup .checkbox-item {
+  grid-column: 1 / -1;
+}
+
+.poet-setup .checkbox-item label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.poet-setup .checkbox-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+/* Start Game Button */
+.poet-setup .start-game-btn {
+  background: linear-gradient(135deg, #32D74B 0%, #28A745 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 16px;
+}
+
+.poet-setup .start-game-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(50, 215, 75, 0.4);
+}
+
+.poet-setup .start-game-btn:disabled {
+  background: #c7c7cc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.poet-setup .requirement-text {
+  color: #ff3b30;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* Poet Game Styles */
+.poet-game {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  max-height: var(--safe-max-height);
+  max-height: var(--safe-max-height-dvh);
+  overflow: scroll;
+}
+
+.poet-game .game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.poet-game .round-info h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1d1d1f;
+  margin-bottom: 8px;
+}
+
+.poet-game .timer .time {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #007AFF;
+}
+
+.poet-game .timer .time.warning {
+  color: #FF3B30;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.poet-game .phase-badge {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.poet-game .phase-badge.writing {
+  background: rgba(0, 122, 255, 0.1);
+  color: #007AFF;
+}
+
+.poet-game .phase-badge.voting {
+  background: rgba(50, 215, 75, 0.1);
+  color: #32D74B;
+}
+
+/* First Line Display */
+.poet-game .first-line-display {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.poet-game .first-line-display h2 {
+  font-size: 1.2rem;
+  color: #495057;
+  margin-bottom: 12px;
+}
+
+.poet-game .first-line {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  font-style: italic;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.poet-game .rhyme-suggestion {
+  font-size: 1rem;
+  color: #6c757d;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+/* Writing Phase */
+.poet-game .writing-phase {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.poet-game .player-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e5e7;
+}
+
+.poet-game .player-navigation h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1d1d1f;
+}
+
+.poet-game .player-navigation button {
+  background: #f2f2f7;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.poet-game .player-navigation button:hover:not(:disabled) {
+  background: #e5e5e7;
+}
+
+.poet-game .player-navigation button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.poet-game .submitted-state {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.poet-game .success-message {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #32D74B;
+  margin-bottom: 16px;
+}
+
+.poet-game .progress-indicator {
+  margin-top: 24px;
+}
+
+.poet-game .progress-text {
+  font-size: 1rem;
+  color: #86868b;
+  margin-bottom: 8px;
+}
+
+.poet-game .progress-bar {
+  background: #e5e5e7;
+  border-radius: 10px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.poet-game .progress-fill {
+  background: linear-gradient(135deg, #32D74B 0%, #28A745 100%);
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Writing Interface */
+.poet-game .writing-interface {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.poet-game .second-line-input {
+  margin-bottom: 24px;
+}
+
+.poet-game .second-line-input label {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 8px;
+}
+
+.poet-game .second-line-input input {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid #e5e5e7;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  transition: border-color 0.3s ease;
+}
+
+.poet-game .second-line-input input:focus {
+  outline: none;
+  border-color: #007AFF;
+}
+
+.poet-game .char-counter {
+  text-align: right;
+  font-size: 0.9rem;
+  color: #86868b;
+  margin-top: 4px;
+}
+
+.poet-game .action-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.poet-game .submit-btn {
+  background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.poet-game .submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 122, 255, 0.4);
+}
+
+.poet-game .submit-btn:disabled {
+  background: #c7c7cc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.poet-game .skip-btn {
+  background: #f2f2f7;
+  color: #86868b;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.poet-game .skip-btn:hover {
+  background: #e5e5e7;
+}
+
+/* Voting Phase */
+.poet-game .voting-phase {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.poet-game .voting-phase h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.poet-game .voting-phase > p {
+  text-align: center;
+  color: #86868b;
+  margin-bottom: 24px;
+}
+
+.poet-game .poems-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.poet-game .poem-card {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
+  border-left: 4px solid #007AFF;
+}
+
+.poet-game .poem-card.skipped {
+  background: #f2f2f7;
+  border-left-color: #c7c7cc;
+  opacity: 0.7;
+}
+
+.poet-game .poem-content {
+  margin-bottom: 16px;
+}
+
+.poet-game .poem-lines {
+  margin-bottom: 12px;
+}
+
+.poet-game .poem-lines .first-line {
+  font-size: 1.1rem;
+  color: #495057;
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+.poet-game .poem-lines .second-line {
+  font-size: 1.1rem;
+  color: #1d1d1f;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.poet-game .poem-author {
+  font-size: 0.9rem;
+  color: #86868b;
+  text-align: right;
+}
+
+.poet-game .poem-voting {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.poet-game .votes-count {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #FF3B30;
+}
+
+.poet-game .vote-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.poet-game .vote-btn {
+  background: #f2f2f7;
+  color: #1d1d1f;
+  border: none;
+  border-radius: 16px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.poet-game .vote-btn:hover:not(:disabled) {
+  background: #e5e5e7;
+}
+
+.poet-game .vote-btn.voted {
+  background: #FF3B30;
+  color: white;
+}
+
+.poet-game .vote-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.poet-game .end-voting-btn {
+  background: linear-gradient(135deg, #32D74B 0%, #28A745 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: block;
+  margin: 0 auto;
+}
+
+.poet-game .end-voting-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(50, 215, 75, 0.4);
+}
+
+/* Loading State */
+.poet-game.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.poet-game .loading-content {
+  text-align: center;
+}
+
+.poet-game .loading-content h2 {
+  font-size: 1.5rem;
+  color: #1d1d1f;
+  margin-bottom: 16px;
+}
+
+.poet-game .loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e5e5e7;
+  border-top: 4px solid #007AFF;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Poet Round End & End Styles */
+.poet-round-end,
+.poet-end {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.poet-round-end .round-end-header,
+.poet-end .game-end-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.poet-round-end .round-end-header h1,
+.poet-end .game-end-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1d1d1f;
+  margin-bottom: 16px;
+}
+
+.poet-end .winner-announcement {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 193, 7, 0.1) 100%);
+  border-radius: 20px;
+  padding: 32px;
+  margin: 24px 0;
+}
+
+.poet-end .winner-crown {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.poet-end .winner-name {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1d1d1f;
+  margin-bottom: 8px;
+}
+
+.poet-end .winner-score {
+  font-size: 1.3rem;
+  color: #86868b;
+}
+
+/* Results and Rankings */
+.poet-round-end .round-results,
+.poet-end .final-leaderboard {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.poet-round-end .round-results h2,
+.poet-end .final-leaderboard h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 20px;
+}
+
+.poet-round-end .poems-ranking,
+.poet-end .leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.poet-round-end .ranking-item,
+.poet-end .final-leaderboard-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.poet-round-end .ranking-item.winner,
+.poet-end .final-leaderboard-item.winner {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 193, 7, 0.1) 100%);
+  border: 2px solid #FFD700;
+}
+
+.poet-round-end .rank {
+  font-size: 1.5rem;
+  font-weight: 700;
+  min-width: 40px;
+  text-align: center;
+}
+
+.poet-round-end .poem-content {
+  flex: 1;
+}
+
+.poet-round-end .poem-text {
+  margin-bottom: 12px;
+}
+
+.poet-round-end .poem-text .first-line,
+.poet-round-end .poem-text .second-line {
+  font-size: 1.1rem;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.poet-round-end .poem-text .first-line {
+  color: #495057;
+  margin-bottom: 4px;
+}
+
+.poet-round-end .poem-text .second-line {
+  color: #1d1d1f;
+  font-weight: 500;
+}
+
+.poet-round-end .poem-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.poet-round-end .author {
+  color: #86868b;
+  font-size: 0.9rem;
+}
+
+.poet-round-end .votes {
+  color: #FF3B30;
+  font-weight: 600;
+}
+
+.poet-round-end .voters {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #e5e5e7;
+}
+
+.poet-round-end .voters-label {
+  font-size: 0.9rem;
+  color: #86868b;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.poet-round-end .voters-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.poet-round-end .voter {
+  background: #e5e5e7;
+  color: #1d1d1f;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+}
+
+/* Special Awards */
+.poet-end .special-awards {
+  margin-bottom: 32px;
+}
+
+.poet-end .special-awards h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.poet-end .awards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.poet-end .award-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.poet-end .award-icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.poet-end .award-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 8px;
+}
+
+.poet-end .award-recipient {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #007AFF;
+  margin-bottom: 4px;
+}
+
+.poet-end .award-detail {
+  font-size: 0.9rem;
+  color: #86868b;
+}
+
+/* Game Statistics */
+.poet-end .game-statistics {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.poet-end .game-statistics h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.poet-end .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.poet-end .stat-item {
+  text-align: center;
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.poet-end .stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #007AFF;
+  margin-bottom: 4px;
+}
+
+.poet-end .stat-label {
+  font-size: 0.9rem;
+  color: #86868b;
+}
+
+/* Actions and Messages */
+.poet-round-end .round-end-actions,
+.poet-end .game-end-actions {
+  text-align: center;
+  margin: 32px 0;
+}
+
+.poet-round-end .next-round-btn,
+.poet-end .new-game-btn {
+  background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.poet-round-end .next-round-btn:hover,
+.poet-end .new-game-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 122, 255, 0.4);
+}
+
+.poet-end .motivational-message {
+  text-align: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 32px;
+}
+
+.poet-end .motivational-message p {
+  font-size: 1rem;
+  color: #495057;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.poet-end .motivational-message .quote {
+  font-style: italic;
+  font-weight: 500;
+  color: #6c757d;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .poet-setup,
+  .poet-game,
+  .poet-round-end,
+  .poet-end {
+    padding: 16px;
+  }
+
+  .poet-setup .categories-grid,
+  .poet-setup .difficulty-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .poet-setup .game-settings {
+    grid-template-columns: 1fr;
+  }
+
+  .poet-game .game-header {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .poet-game .player-navigation {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .poet-game .action-buttons {
+    flex-direction: column;
+  }
+
+  .poet-game .poem-voting {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .poet-end .awards-grid,
+  .poet-end .stats-grid {
+    grid-template-columns: 1fr;
   }
 }

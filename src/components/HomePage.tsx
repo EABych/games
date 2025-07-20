@@ -27,6 +27,16 @@ export const HomePage: React.FC<HomePageProps> = ({ onSelectGame }) => {
       description: 'Провокационные дилеммы для взрослых'
     },
     {
+      id: 'poet',
+      title: 'Поэт',
+      description: 'Придумай рифму к строке стиха'
+    },
+    {
+      id: 'yersh',
+      title: 'Ерш',
+      description: 'Весёлая карточная игра с заданиями'
+    },
+    {
       id: 'mafia',
       title: 'Мафия',
       description: 'Ролевая игра на дедукцию'
@@ -49,7 +59,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onSelectGame }) => {
           >
             <h3>{game.title}</h3>
             <p>{game.description}</p>
-            {(game.id === 'alias' || game.id === 'fants' || game.id === 'krocodil' || game.id === 'this-or-that') && <span className="available-badge">Доступно</span>}
+            {(game.id === 'alias' || game.id === 'fants' || game.id === 'krocodil' || game.id === 'this-or-that' || game.id === 'poet' || game.id === 'yersh') && <span className="available-badge">Доступно</span>}
             {game.id === 'this-or-that' && <span className="adult-badge">18+</span>}
             {game.id === 'mafia' && <span className="coming-soon-badge">Скоро</span>}
           </button>

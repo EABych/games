@@ -69,3 +69,4 @@ export default tseslint.config([
   },
 ])
 ```
+https://slotobzor.com/nastolnye-igry-dlya-vzroslyh/igra-ersh-kartochki-s-zadaniyami-raspechatat/

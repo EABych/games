@@ -19,7 +19,13 @@
       "Bash(git branch:*)",
       "Bash(grep:*)",
       "Bash(gh release create:*)",
-      "Bash(git tag:*)"
+      "Bash(git tag:*)",
+      "Bash(magick:*)",
+      "Bash(convert:*)",
+      "Bash(python3:*)",
+      "Bash(pip3 install:*)",
+      "Bash(ls:*)",
+      "Bash(cp:*)"
     ],
     "deny": []
   }
