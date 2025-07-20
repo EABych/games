@@ -17,7 +17,9 @@
       "Bash(npm run deploy:*)",
       "Bash(npx gh-pages:*)",
       "Bash(git branch:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(gh release create:*)",
+      "Bash(git tag:*)"
     ],
     "deny": []
   }

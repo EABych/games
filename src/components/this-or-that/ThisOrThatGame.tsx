@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { ThisOrThatGameState, ThisOrThatAnswer } from '../../types/this-or-that';
+import type { ThisOrThatGameState } from '../../types/this-or-that';
 import { THIS_OR_THAT_CATEGORY_INFO, THIS_OR_THAT_INTENSITY_INFO } from '../../types/this-or-that';
 
 interface ThisOrThatGameProps {

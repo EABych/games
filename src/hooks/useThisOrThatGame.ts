@@ -2,8 +2,7 @@ import { useState, useCallback } from 'react';
 import type { 
   ThisOrThatGameState, 
   ThisOrThatPlayer, 
-  ThisOrThatSettings, 
-  ThisOrThatQuestion,
+  ThisOrThatSettings,
   ThisOrThatAnswer 
 } from '../types/this-or-that';
 import { THIS_OR_THAT_QUESTIONS } from '../data/this-or-that-questions';
@@ -70,7 +69,7 @@ export const useThisOrThatGame = () => {
     });
   }, []);
 
-  const skipQuestion = useCallback((playerId: string) => {
+  const skipQuestion = useCallback((_playerId: string) => {
     // Пропуск означает, что игрок не добавляет ответ для этого вопроса
     // Ничего не делаем, просто позволяем игре продолжиться
   }, []);
