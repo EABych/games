@@ -63,11 +63,12 @@ export const useGameState = () => {
       const updatedTeams = [...prev.teams];
       updatedTeams[prev.currentTeamIndex].score += Math.max(0, prev.roundScore);
       
-      // Check if this is the last team in the current round
-      const isLastTeamInRound = prev.currentTeamIndex === prev.teams.length - 1;
-      // Calculate the actual round number (how many complete cycles we've had)
-      const actualRoundNumber = Math.floor(prev.currentRound / prev.teams.length) + (isLastTeamInRound ? 1 : 0);
-      const isGameComplete = actualRoundNumber >= prev.settings.totalRounds;
+      // Check if game is complete
+      // currentRound tracks total turns, so we need to check if we've completed all rounds
+      const turnsPerRound = prev.teams.length;
+      const completedRounds = Math.floor((prev.currentRound - 1) / turnsPerRound);
+      const isLastTeamInRound = (prev.currentRound % turnsPerRound) === 0;
+      const isGameComplete = isLastTeamInRound && completedRounds >= prev.settings.totalRounds;
       
       return {
         ...prev,
@@ -82,7 +83,8 @@ export const useGameState = () => {
     warningTriggeredRef.current = false;
     setGameState(prev => {
       const nextTeamIndex = (prev.currentTeamIndex + 1) % prev.teams.length;
-      const newRound = nextTeamIndex === 0 ? prev.currentRound + 1 : prev.currentRound;
+      // Increment currentRound for each turn
+      const newRound = prev.currentRound + 1;
       
       return {
         ...prev,

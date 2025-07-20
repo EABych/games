@@ -12,36 +12,42 @@ export const GameEnd: React.FC<GameEndProps> = ({ gameState, onNewGame }) => {
 
   return (
     <div className="game-end">
-      <h1>Игра окончена!</h1>
+      <div className="game-end-header">
+        <h1>Игра окончена!</h1>
+      </div>
       
-      <div className="winner" style={{ backgroundColor: winner.color }}>
-        <h2>🏆 Победитель</h2>
-        <h3>{winner.name}</h3>
-        <p className="winner-score">{winner.score} очков</p>
+      <div className="game-end-content">
+        <div className="winner" style={{ backgroundColor: winner.color }}>
+          <h2>🏆 Победитель</h2>
+          <h3>{winner.name}</h3>
+          <p className="winner-score">{winner.score} очков</p>
+        </div>
+
+        <div className="final-results">
+          <h3>Финальные результаты:</h3>
+          {sortedTeams.map((team, index) => (
+            <div 
+              key={team.id} 
+              className={`final-team-result ${index === 0 ? 'winner-result' : ''}`}
+            >
+              <span className="place">{index + 1}</span>
+              <span className="team-name" style={{ color: team.color }}>
+                {team.name}
+              </span>
+              <span className="team-score">{team.score} очков</span>
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div className="final-results">
-        <h3>Финальные результаты:</h3>
-        {sortedTeams.map((team, index) => (
-          <div 
-            key={team.id} 
-            className={`final-team-result ${index === 0 ? 'winner-result' : ''}`}
-          >
-            <span className="place">{index + 1}</span>
-            <span className="team-name" style={{ color: team.color }}>
-              {team.name}
-            </span>
-            <span className="team-score">{team.score} очков</span>
-          </div>
-        ))}
+      <div className="game-end-footer">
+        <button 
+          className="new-game-button"
+          onClick={onNewGame}
+        >
+          Новая игра
+        </button>
       </div>
-
-      <button 
-        className="new-game-button"
-        onClick={onNewGame}
-      >
-        Новая игра
-      </button>
     </div>
   );
 };

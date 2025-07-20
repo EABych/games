@@ -13,36 +13,44 @@ export const RoundEnd: React.FC<RoundEndProps> = ({ gameState, onNextRound }) =>
 
   return (
     <div className="round-end">
-      <h2>Раунд завершен!</h2>
-
-      <div className="round-summary" style={{ borderColor: currentTeam.color }}>
-        <h3>{currentTeam.name}</h3>
-        <p className="round-score">Очки за раунд: {Math.max(0, gameState.roundScore)}</p>
-        <p>Общий счет: {currentTeam.score}</p>
+      <div className="round-end-header">
+        <h2>Раунд завершен!</h2>
       </div>
 
-      <div className="all-scores">
-        <h3>Текущий счет:</h3>
-        {gameState.teams
-          .sort((a, b) => b.score - a.score)
-          .map((team) => (
-            <div key={team.id} className="team-result">
-              <span style={{ color: team.color }}>{team.name}</span>
-              <span>{team.score} очков</span>
-            </div>
-          ))}
-      </div>
-      <div className="next-team-info">
-        <p>Следующая команда: <strong style={{ color: nextTeam.color }}>{nextTeam.name}</strong></p>
+      <div className="round-end-content">
+        <div className="round-summary" style={{ borderColor: currentTeam.color }}>
+          <h3>{currentTeam.name}</h3>
+          <p className="round-score">Очки за раунд: {Math.max(0, gameState.roundScore)}</p>
+          <p>Общий счет: {currentTeam.score}</p>
+        </div>
+
+        <div className="all-scores">
+          <h3>Текущий счет:</h3>
+          {gameState.teams
+            .sort((a, b) => b.score - a.score)
+            .map((team) => (
+              <div key={team.id} className="team-result">
+                <span style={{ color: team.color }}>{team.name}</span>
+                <span>-</span>
+                <span>{team.score} очков</span>
+              </div>
+            ))}
+        </div>
+
+        <div className="next-team-info">
+          <p>Следующая команда: <strong style={{ color: nextTeam.color }}>{nextTeam.name}</strong></p>
+        </div>
       </div>
 
-      <button
-        className="next-round-button"
-        onClick={onNextRound}
-        style={{ backgroundColor: nextTeam.color }}
-      >
-        Начать следующий раунд
-      </button>
+      <div className="round-end-footer">
+        <button
+          className="next-round-button"
+          onClick={onNextRound}
+          style={{ backgroundColor: nextTeam.color }}
+        >
+          Начать следующий раунд
+        </button>
+      </div>
     </div>
   );
 };

@@ -65,18 +65,19 @@ export const GameScreen: React.FC<GameScreenProps> = ({
   return (
     <div className="game-screen">
       <div className="game-header">
-        <div className="team-info" style={{ backgroundColor: currentTeam.color }}>
-          <h2>{currentTeam.name}</h2>
-          <p>Очки за раунд: {gameState.roundScore}</p>
+        <div className="round-info">
+          {Math.ceil(gameState.currentRound / gameState.teams.length)}/{gameState.settings.totalRounds}
         </div>
-        <div className="game-info">
-          <div className="round-info">
-            Раунд {Math.floor((gameState.currentRound - 1) / gameState.teams.length) + 1} из {gameState.settings.totalRounds}
+        <div className="current-team-section">
+          <div className="team-info" style={{ backgroundColor: currentTeam.color }}>
+            <h2>{currentTeam.name}</h2>
+            <p>Очки за раунд: {gameState.roundScore}</p>
           </div>
           <div className={`timer ${gameState.timer <= 10 ? 'timer-warning' : ''}`}>
             {minutes}:{seconds.toString().padStart(2, '0')}
           </div>
         </div>
+        <div className="placeholder"></div>
       </div>
 
       <div 

@@ -70,7 +70,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuth }) => {
     <div className="auth-screen">
       <div className={`auth-container ${isShaking ? 'shake' : ''}`}>
         <div className="auth-icon" onClick={handleIconClick} style={{ cursor: 'pointer' }}>
-          🎮
+          <div className="logo"></div>
         </div>
         
         <h1 className="auth-title">Добро пожаловать!</h1>
@@ -103,9 +103,6 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuth }) => {
           </button>
         </form>
         
-        <div className="auth-hint">
-          Подсказка: выразите своё желание поиграть
-        </div>
       </div>
     </div>
   );

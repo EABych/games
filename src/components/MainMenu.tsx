@@ -57,8 +57,12 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onStartGame }) => {
   // @ts-ignore
   return (
     <div className="main-menu">
-      <h1>Alias</h1>
-      <div className="teams-setup">
+      <div className="main-menu-header">
+        <h1>Alias</h1>
+      </div>
+      
+      <div className="main-menu-content">
+        <div className="teams-setup">
         <h2>Настройка команд</h2>
         {teams.map((team) => (
           <div key={team.id} className="team-input" style={{ '--team-color': team.color } as React.CSSProperties}>
@@ -153,14 +157,18 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onStartGame }) => {
             </div>
           </div>
         </div>
+        </div>
       </div>
-      <button
-        className="start-game"
-        onClick={handleStart}
-        disabled={teams.some(team => !team.name.trim())}
-      >
-        Начать игру
-      </button>
+      
+      <div className="main-menu-footer">
+        <button
+          className="start-game"
+          onClick={handleStart}
+          disabled={teams.some(team => !team.name.trim())}
+        >
+          Начать игру
+        </button>
+      </div>
     </div>
   );
 };

@@ -105,10 +105,13 @@ export const KrocodilSetup: React.FC<KrocodilSetupProps> = ({ onStartGame }) => 
 
   return (
     <div className="krocodil-setup">
-      <h1>Крокодил</h1>
-      <p className="subtitle">Покажи слово без слов</p>
+      <div className="setup-header">
+        <h1>Крокодил</h1>
+        <p className="subtitle">Покажи слово без слов</p>
+      </div>
 
-      <div className="teams-setup">
+      <div className="setup-content">
+        <div className="teams-setup">
         <h2>Команды и участники</h2>
         <p className="teams-subtitle">Создайте команды и добавьте в них участников</p>
         
@@ -334,15 +337,18 @@ export const KrocodilSetup: React.FC<KrocodilSetupProps> = ({ onStartGame }) => 
             </div>
           </div>
         )}
+        </div>
       </div>
 
-      <button
-        className="start-game"
-        onClick={handleStartGame}
-        disabled={!canStartGame}
-      >
-        Начать игру
-      </button>
+      <div className="setup-footer">
+        <button
+          className="start-game"
+          onClick={handleStartGame}
+          disabled={!canStartGame}
+        >
+          Начать игру
+        </button>
+      </div>
     </div>
   );
 };
