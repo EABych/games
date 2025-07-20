@@ -3,6 +3,7 @@ import type { GameState, Team } from '../types';
 import { DEFAULT_SETTINGS } from '../types';
 import { getRandomWord } from '../data/words';
 import type { GameSettings } from '../types';
+import { vibrateWarning, playWarningSound, playTimeUpSound, vibrateTimeUp } from '../utils/notifications';
 
 const initialState: GameState = {
   phase: 'menu',
@@ -19,12 +20,14 @@ const initialState: GameState = {
 export const useGameState = () => {
   const [gameState, setGameState] = useState<GameState>(initialState);
   const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const warningTriggeredRef = useRef<boolean>(false);
 
   const startNewGame = useCallback((teams: Team[], gameSettings?: Partial<GameSettings>) => {
     const newSettings = { 
       ...DEFAULT_SETTINGS, 
       ...gameSettings
     };
+    warningTriggeredRef.current = false;
     setGameState({
       ...initialState,
       phase: 'playing',
@@ -76,6 +79,7 @@ export const useGameState = () => {
   }, []);
 
   const nextTeam = useCallback(() => {
+    warningTriggeredRef.current = false;
     setGameState(prev => {
       const nextTeamIndex = (prev.currentTeamIndex + 1) % prev.teams.length;
       const newRound = nextTeamIndex === 0 ? prev.currentRound + 1 : prev.currentRound;
@@ -112,11 +116,24 @@ export const useGameState = () => {
     if (gameState.phase === 'playing' && gameState.timer > 0) {
       intervalRef.current = setInterval(() => {
         setGameState(prev => {
-          if (prev.timer <= 1) {
+          const newTimer = prev.timer - 1;
+          
+          // Warning notification at 10 seconds
+          if (newTimer === 10 && !warningTriggeredRef.current) {
+            warningTriggeredRef.current = true;
+            vibrateWarning();
+            playWarningSound();
+          }
+          
+          // Time up notification
+          if (newTimer <= 0) {
+            vibrateTimeUp();
+            playTimeUpSound();
             endRound();
             return prev;
           }
-          return { ...prev, timer: prev.timer - 1 };
+          
+          return { ...prev, timer: newTimer };
         });
       }, 1000);
     } else {

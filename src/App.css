@@ -606,7 +606,7 @@ body.game-mode {
   flex: 1;
   padding: 18px 16px;
   border: none;
-  border-radius: 20px;
+  border-radius: 10px;
   font-size: 1.125rem;
   font-weight: 700;
   cursor: pointer;
@@ -1328,11 +1328,11 @@ body.game-mode {
 
 /* Home Page Styles */
 .home-page {
-  background: rgba(255, 255, 255, 0.95);
+  background: #fff0ef;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 24px;
+  border-radius: 10px;
   padding: 40px 32px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
   width: 100%;
@@ -3866,7 +3866,7 @@ body.game-mode {
 }
 
 .round-info {
-  margin-bottom: 32px;
+  /*margin-bottom: 32px;*/
 }
 
 .round-details {
