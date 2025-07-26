@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { HeadwordsGameSettings } from './types';
+
+export interface HeadwordsGameSettings {
+  playerCount: number;
+  category: string;
+}
 
 interface HeadwordsCategory {
   id: string;

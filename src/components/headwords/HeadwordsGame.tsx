@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { HeadwordsHostSetup } from './HeadwordsHostSetup';
+import { HeadwordsHostSetup, HeadwordsGameSettings } from './HeadwordsHostSetup';
 import { HeadwordsHostGame } from './HeadwordsHostGame';
-import { HeadwordsGameSettings } from './types';
 import './Headwords.css';
 
 interface HeadwordsGameProps {
