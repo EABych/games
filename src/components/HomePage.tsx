@@ -1,10 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface HomePageProps {
-  onSelectGame: (game: string) => void;
+  onSelectGame?: (game: string) => void;
 }
 
 export const HomePage: React.FC<HomePageProps> = ({ onSelectGame }) => {
+  const navigate = useNavigate();
   const games = [
     {
       id: 'alias',
@@ -65,7 +67,13 @@ export const HomePage: React.FC<HomePageProps> = ({ onSelectGame }) => {
           <button
             key={game.id}
             className="game-card"
-            onClick={() => onSelectGame(game.id)}
+            onClick={() => {
+              if (onSelectGame) {
+                onSelectGame(game.id);
+              } else {
+                navigate(`/${game.id}`);
+              }
+            }}
           >
             <h3>{game.title}</h3>
             <p>{game.description}</p>

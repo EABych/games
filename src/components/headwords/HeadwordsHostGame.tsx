@@ -78,7 +78,7 @@ export const HeadwordsHostGame: React.FC<HeadwordsHostGameProps> = ({ settings, 
   // Открыть роль для игрока в новом окне
   const openRoleInNewWindow = () => {
     if (roomId) {
-      const playerUrl = `${window.location.origin}/?mode=player&roomId=${roomId}&gameType=headwords`;
+      const playerUrl = `${window.location.origin}/player/headwords/${roomId}`;
       window.open(playerUrl, '_blank', 'width=400,height=700,menubar=no,toolbar=no,location=no,status=no');
     } else {
       setServerStatus('❌ Ошибка: ID комнаты не найден');

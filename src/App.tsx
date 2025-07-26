@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './App.css';
 import { useGameState } from './hooks/useGameState';
 import { useFantsGame } from './hooks/useFantsGame';
 import { useKrocodilGame } from './hooks/useKrocodilGame';
 import { useThisOrThatGame } from './hooks/useThisOrThatGame';
 import { usePoetGame } from './hooks/usePoetGame';
+import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { HomePage } from './components/HomePage';
 import { MainMenu } from './components/MainMenu';
 import { GameScreen } from './components/GameScreen';
@@ -38,18 +39,35 @@ import './components/mafia/MafiaPlayer.css';
 import './components/spy/Spy.css';
 import './components/headwords/Headwords.css';
 
-type AppPhase = 'home' | 'alias' | 'fants' | 'krocodil' | 'this-or-that' | 'poet' | 'yersh' | 'mafia' | 'spy' | 'headwords';
+// Main App component with game logic
+const MainApp: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Определяем текущую игру по URL
+  const getCurrentGameFromPath = useCallback((): 'home' | 'alias' | 'fants' | 'krocodil' | 'this-or-that' | 'poet' | 'yersh' | 'mafia' | 'spy' | 'headwords' => {
+    const path = location.pathname;
+    if (path === '/alias') return 'alias';
+    if (path === '/fants') return 'fants';
+    if (path === '/krocodil') return 'krocodil';
+    if (path === '/this-or-that') return 'this-or-that';
+    if (path === '/poet') return 'poet';
+    if (path === '/yersh') return 'yersh';
+    if (path === '/mafia') return 'mafia';
+    if (path === '/spy') return 'spy';
+    if (path === '/headwords') return 'headwords';
+    return 'home';
+  }, [location.pathname]);
 
-function App() {
-  const [appPhase, setAppPhase] = useState<AppPhase>('home');
+  const [appPhase, setAppPhase] = useState<'home' | 'alias' | 'fants' | 'krocodil' | 'this-or-that' | 'poet' | 'yersh' | 'mafia' | 'spy' | 'headwords'>(getCurrentGameFromPath());
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // Обновляем appPhase при изменении URL
+  useEffect(() => {
+    setAppPhase(getCurrentGameFromPath());
+  }, [getCurrentGameFromPath]);
   
-  // Проверяем query параметры для режима игрока
-  const urlParams = new URLSearchParams(window.location.search);
-  const isPlayerMode = urlParams.get('mode') === 'player';
-  const roomId = urlParams.get('roomId');
-  const gameType = urlParams.get('gameType') as 'mafia' | 'spy' | 'headwords';
   const { 
     gameState, 
     startNewGame, 
@@ -119,34 +137,18 @@ function App() {
   };
 
   const handleSelectGame = (game: string) => {
-    if (game === 'alias') {
-      setAppPhase('alias');
-    } else if (game === 'fants') {
-      setAppPhase('fants');
-    } else if (game === 'krocodil') {
-      setAppPhase('krocodil');
-    } else if (game === 'this-or-that') {
-      setAppPhase('this-or-that');
-    } else if (game === 'poet') {
-      setAppPhase('poet');
-    } else if (game === 'yersh') {
-      setAppPhase('yersh');
-    } else if (game === 'mafia') {
-      setAppPhase('mafia');
-    } else if (game === 'spy') {
-      setAppPhase('spy');
-    } else if (game === 'headwords') {
-      setAppPhase('headwords');
-    }
+    navigate(`/${game}`);
+    // setAppPhase будет обновлен автоматически через useEffect
   };
 
   const handleBackToHome = () => {
-    setAppPhase('home');
     resetGame();
     resetFantsGame();
     resetKrocodilGame();
     resetThisOrThatGame();
     resetPoetGame();
+    navigate('/');
+    // setAppPhase будет обновлен автоматически через useEffect
   };
 
   const handleHomeClick = () => {
@@ -162,34 +164,13 @@ function App() {
     setShowConfirmModal(false);
   };
 
-  // Show player screen if in player mode
-  if (isPlayerMode) {
-    return (
-      <div className="app">
-        {gameType === 'mafia' ? (
-          <MafiaPlayerScreen roomId={roomId} />
-        ) : gameType === 'spy' ? (
-          <SpyPlayerScreen roomId={roomId} />
-        ) : gameType === 'headwords' ? (
-          <HeadwordsPlayerScreen roomId={roomId} />
-        ) : (
-          <SpyPlayerScreen roomId={roomId} />
-        )}
-      </div>
-    );
-  }
-
   // Show auth screen if not authenticated
   if (!isAuthenticated) {
-    return (
-      <div className="app">
-        <AuthScreen onAuth={handleAuth} />
-      </div>
-    );
+    return <AuthScreen onAuth={handleAuth} />;
   }
 
   return (
-    <div className="app">
+    <>
       {appPhase === 'home' && (
         <HomePage onSelectGame={handleSelectGame} />
       )}
@@ -386,8 +367,51 @@ function App() {
         onConfirm={handleConfirmHome}
         onCancel={handleCancelModal}
       />
+    </>
+  );
+};
+
+function App() {
+  return (
+    <div className="app">
+      <BrowserRouter>
+        <Routes>
+          {/* Main app routes */}
+          <Route path="/*" element={<MainApp />} />
+          
+          {/* Player screens (public routes) */}
+          <Route path="/player/mafia/:roomId" element={<MafiaPlayerScreen />} />
+          <Route path="/player/spy/:roomId" element={<SpyPlayerScreen />} />
+          <Route path="/player/headwords/:roomId" element={<HeadwordsPlayerScreen />} />
+          
+          {/* Legacy support for old URLs */}
+          <Route path="/games" element={<LegacyPlayerRoute />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
-}
+};
+
+// Legacy player route component
+const LegacyPlayerRoute: React.FC = () => {
+  const navigateToRoute = useNavigate();
+  const urlParams = new URLSearchParams(window.location.search);
+  const mode = urlParams.get('mode');
+  const roomId = urlParams.get('roomId');
+  const gameType = urlParams.get('gameType');
+
+  React.useEffect(() => {
+    if (mode === 'player' && roomId && gameType) {
+      // Перенаправляем на новый формат URL
+      navigateToRoute(`/player/${gameType}/${roomId}`, { replace: true });
+    } else {
+      // Если параметры некорректные, перенаправляем на главную
+      navigateToRoute('/', { replace: true });
+    }
+  }, [navigateToRoute, mode, roomId, gameType]);
+
+  // Показываем загрузку во время перенаправления
+  return <div>Перенаправление...</div>;
+};
 
 export default App

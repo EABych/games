@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 interface SpyRole {
   playerNumber: number;
@@ -18,7 +19,9 @@ interface SpyPlayerScreenProps {
   roomId?: string | null;
 }
 
-export const SpyPlayerScreen: React.FC<SpyPlayerScreenProps> = ({ roomId }) => {
+export const SpyPlayerScreen: React.FC<SpyPlayerScreenProps> = ({ roomId: propRoomId }) => {
+  const { roomId: paramRoomId } = useParams<{ roomId: string }>();
+  const roomId = propRoomId || paramRoomId;
   const [playerRole, setPlayerRole] = useState<SpyRole | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');

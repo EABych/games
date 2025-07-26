@@ -12,14 +12,9 @@ export const QRCodeModal: React.FC<QRCodeModalProps> = ({ isOpen, onClose, roomI
   const [qrCodeDataURL, setQrCodeDataURL] = useState<string>('');
 
   useEffect(() => {
-    if (isOpen) {
-      // Генерируем ссылку для игроков с roomId и gameType
-      const params = new URLSearchParams();
-      params.set('mode', 'player');
-      if (roomId) params.set('roomId', roomId);
-      if (gameType) params.set('gameType', gameType);
-      
-      const playerUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+    if (isOpen && roomId && gameType) {
+      // Генерируем ссылку для игроков в новом формате
+      const playerUrl = `${window.location.origin}/player/${gameType}/${roomId}`;
       
       // Генерируем QR-код
       QRCode.toDataURL(playerUrl, {
@@ -42,12 +37,9 @@ export const QRCodeModal: React.FC<QRCodeModalProps> = ({ isOpen, onClose, roomI
   if (!isOpen) return null;
 
   // Генерируем ссылку для отображения
-  const params = new URLSearchParams();
-  params.set('mode', 'player');
-  if (roomId) params.set('roomId', roomId);
-  if (gameType) params.set('gameType', gameType);
-  
-  const playerUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+  const playerUrl = roomId && gameType 
+    ? `${window.location.origin}/player/${gameType}/${roomId}`
+    : '';
 
   return (
     <div className="qr-modal-overlay" onClick={onClose}>

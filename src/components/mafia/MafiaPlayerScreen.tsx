@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 interface MafiaRole {
   role: string;
@@ -17,7 +18,9 @@ interface MafiaPlayerScreenProps {
   roomId?: string | null;
 }
 
-export const MafiaPlayerScreen: React.FC<MafiaPlayerScreenProps> = ({ roomId }) => {
+export const MafiaPlayerScreen: React.FC<MafiaPlayerScreenProps> = ({ roomId: propRoomId }) => {
+  const { roomId: paramRoomId } = useParams<{ roomId: string }>();
+  const roomId = propRoomId || paramRoomId;
   const [playerRole, setPlayerRole] = useState<MafiaRole | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');

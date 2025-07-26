@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 interface HeadwordsRole {
   playerNumber: number;
@@ -14,7 +15,9 @@ interface HeadwordsPlayerScreenProps {
   onBackToGames?: () => void;
 }
 
-export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ roomId }) => {
+export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ roomId: propRoomId }) => {
+  const { roomId: paramRoomId } = useParams<{ roomId: string }>();
+  const roomId = propRoomId || paramRoomId;
   const [playerRole, setPlayerRole] = useState<HeadwordsRole | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
