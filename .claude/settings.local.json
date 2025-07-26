@@ -36,7 +36,8 @@
       "Bash(npm run:*)",
       "Bash(cat:*)",
       "Bash(node:*)",
-      "Bash(gh-pages:*)"
+      "Bash(gh-pages:*)",
+      "Bash(git fetch:*)"
     ],
     "deny": []
   }
