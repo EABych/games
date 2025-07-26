@@ -41,7 +41,6 @@ export const MafiaGame: React.FC<MafiaGameProps> = ({ onBack }) => {
     return (
       <MafiaHostSetup
         onStartGame={handleStartGame}
-        onBack={onBack}
       />
     );
   }
@@ -50,7 +49,6 @@ export const MafiaGame: React.FC<MafiaGameProps> = ({ onBack }) => {
     return (
       <MafiaHostTimer
         settings={gameSettings}
-        onBack={handleBackToSetup}
         onNewGame={handleNewGame}
       />
     );

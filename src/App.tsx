@@ -350,7 +350,7 @@ const MainApp: React.FC = () => {
             </svg>
           </button>
           
-          <YershGame onBackToHome={handleBackToHome} />
+          <YershGame />
         </>
       )}
 

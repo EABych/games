@@ -34,7 +34,6 @@ export const SpyGame: React.FC<SpyGameProps> = ({ onBack }) => {
     return (
       <SpyHostSetup
         onStartGame={handleStartGame}
-        onBack={onBack}
       />
     );
   }

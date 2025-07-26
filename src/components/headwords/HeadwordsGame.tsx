@@ -35,7 +35,6 @@ export const HeadwordsGame: React.FC<HeadwordsGameProps> = ({ onBack }) => {
       {phase === 'setup' && (
         <HeadwordsHostSetup
           onGameStart={handleGameStart}
-          onBack={onBack}
         />
       )}
       
