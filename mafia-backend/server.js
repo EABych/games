@@ -3,9 +3,15 @@ import cors from 'cors';
 
 const app = express();
 
-// CORS настройки для GitHub Pages
+// CORS настройки для развертывания
 app.use(cors({
-  origin: ['https://elenabyckova.github.io', 'https://eabych.github.io', 'http://localhost:5173', 'http://localhost:3000'],
+  origin: [
+    'https://elenabyckova.github.io', 
+    'https://eabych.github.io', 
+    'https://games-lfke.onrender.com',
+    'http://localhost:5173', 
+    'http://localhost:3000'
+  ],
   methods: ['GET', 'POST'],
   credentials: true
 }));
