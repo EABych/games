@@ -14,6 +14,7 @@ interface MafiaGameSettings {
   includeDon: boolean;
   discussionTime: number;
   votingTime: number;
+  nightTime: number;
 }
 
 type GamePhase = 'setup' | 'timer';

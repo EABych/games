@@ -16,6 +16,7 @@ interface MafiaGameSettings {
   includeDon: boolean;
   discussionTime: number;
   votingTime: number;
+  nightTime: number;
 }
 
 type TimerPhase = 'ready' | 'discussion' | 'voting' | 'night';
@@ -106,7 +107,7 @@ export const MafiaHostTimer: React.FC<MafiaHostTimerProps> = ({ settings, onBack
         duration = settings.votingTime;
         break;
       case 'night':
-        duration = 30; // 30 секунд на ночные действия
+        duration = settings.nightTime;
         break;
       default:
         return;
@@ -229,7 +230,7 @@ export const MafiaHostTimer: React.FC<MafiaHostTimerProps> = ({ settings, onBack
             disabled={!gameStarted}
           >
             🌙 Ночь<br/>
-            <small>(0:30)</small>
+            <small>({formatTime(settings.nightTime)})</small>
           </button>
         </div>
 

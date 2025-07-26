@@ -13,6 +13,7 @@ interface MafiaGameSettings {
   includeDon: boolean;
   discussionTime: number;
   votingTime: number;
+  nightTime: number;
 }
 
 export const MafiaHostSetup: React.FC<MafiaHostSetupProps> = ({ onStartGame, onBack }) => {
@@ -23,7 +24,8 @@ export const MafiaHostSetup: React.FC<MafiaHostSetupProps> = ({ onStartGame, onB
     includeSheriff: false,
     includeDon: false,
     discussionTime: 180, // 3 минуты
-    votingTime: 60       // 1 минута
+    votingTime: 60,      // 1 минута
+    nightTime: 30        // 30 секунд
   });
 
   const [errors, setErrors] = useState<string[]>([]);
@@ -188,6 +190,18 @@ export const MafiaHostSetup: React.FC<MafiaHostSetupProps> = ({ onStartGame, onB
               max="120"
               value={settings.votingTime}
               onChange={(e) => setSettings({...settings, votingTime: parseInt(e.target.value)})}
+              className="time-input"
+            />
+          </div>
+
+          <div className="time-setting">
+            <label>Время на ночные действия (секунды):</label>
+            <input
+              type="number"
+              min="15"
+              max="180"
+              value={settings.nightTime}
+              onChange={(e) => setSettings({...settings, nightTime: parseInt(e.target.value)})}
               className="time-input"
             />
           </div>
