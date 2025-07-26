@@ -3,10 +3,13 @@
   padding: 20px;
   max-width: 600px;
   margin: 0 auto;
-  background: #1a1a1a;
-  color: #ffffff;
-  border-radius: 15px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: #2c3e50;
+  border-radius: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .setup-header {
@@ -17,24 +20,30 @@
 .setup-header h2 {
   margin: 10px 0;
   font-size: 28px;
-  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+  background: linear-gradient(45deg, #e74c3c, #3498db);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-weight: 700;
 }
 
 .back-button {
-  background: #333;
+  background: #34495e;
   color: white;
   border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
+  padding: 12px 20px;
+  border-radius: 12px;
   cursor: pointer;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(52, 73, 94, 0.3);
+  transition: all 0.2s ease;
 }
 
 .back-button:hover {
-  background: #555;
+  background: #2c3e50;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(52, 73, 94, 0.4);
 }
 
 .setup-content {
@@ -44,22 +53,26 @@
 }
 
 .setting-section {
-  background: #2a2a2a;
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid #333;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid rgba(52, 152, 219, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 .setting-section h3 {
-  margin: 0 0 15px 0;
-  color: #ff6b6b;
-  font-size: 20px;
+  margin: 0 0 20px 0;
+  color: #e74c3c;
+  font-size: 22px;
+  font-weight: 700;
 }
 
 .setting-section h4 {
-  margin: 15px 0 10px 0;
-  color: #4ecdc4;
-  font-size: 16px;
+  margin: 20px 0 15px 0;
+  color: #3498db;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 /* Player Count Controls */
@@ -72,31 +85,35 @@
 }
 
 .count-button {
-  background: #ff6b6b;
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
   color: white;
   border: none;
-  width: 50px;
-  height: 50px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+  transition: all 0.2s ease;
 }
 
 .count-button:hover {
-  background: #ff5252;
+  background: linear-gradient(135deg, #c0392b, #a93226);
   transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(231, 76, 60, 0.4);
 }
 
 .player-count {
-  font-size: 32px;
-  font-weight: bold;
-  color: #4ecdc4;
-  min-width: 60px;
+  font-size: 36px;
+  font-weight: 800;
+  color: #2980b9;
+  min-width: 80px;
   text-align: center;
+  text-shadow: 0 2px 4px rgba(41, 128, 185, 0.2);
 }
 
 /* Roles Preview */
@@ -117,13 +134,15 @@
 }
 
 .mafia-role {
-  background: #d32f2f;
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
   color: white;
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
 }
 
 .citizen-role {
-  background: #388e3c;
+  background: linear-gradient(135deg, #27ae60, #229954);
   color: white;
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
 }
 
 /* Special Roles */
@@ -142,7 +161,7 @@
 }
 
 .role-checkbox:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(52, 152, 219, 0.1);
 }
 
 .role-checkbox input[type="checkbox"] {
@@ -161,8 +180,9 @@
 .role-requirement {
   margin-left: auto;
   font-size: 12px;
-  color: #999;
+  color: #7f8c8d;
   font-style: italic;
+  font-weight: 500;
 }
 
 /* Time Settings */
@@ -172,33 +192,39 @@
 
 .time-setting label {
   display: block;
-  margin-bottom: 8px;
-  color: #ccc;
-  font-weight: 500;
+  margin-bottom: 10px;
+  color: #34495e;
+  font-weight: 600;
+  font-size: 16px;
 }
 
 .time-input {
   width: 100%;
-  padding: 12px;
-  border: 2px solid #333;
-  border-radius: 8px;
-  background: #1a1a1a;
-  color: white;
+  padding: 14px 16px;
+  border: 2px solid #bdc3c7;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #2c3e50;
   font-size: 16px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
 .time-input:focus {
   outline: none;
-  border-color: #4ecdc4;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
 }
 
 /* Errors */
 .errors {
-  background: #d32f2f;
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
   color: white;
-  padding: 15px;
-  border-radius: 8px;
-  margin: 15px 0;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px 0;
+  box-shadow: 0 4px 16px rgba(231, 76, 60, 0.3);
 }
 
 .errors h4 {
@@ -221,24 +247,31 @@
 }
 
 .start-game-button {
-  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+  background: linear-gradient(135deg, #3498db, #2980b9);
   color: white;
   border: none;
-  padding: 16px 32px;
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: bold;
+  padding: 18px 36px;
+  border-radius: 16px;
+  font-size: 20px;
+  font-weight: 700;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all 0.2s ease;
+  box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .start-game-button:hover:not(:disabled) {
-  transform: scale(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.5);
+  background: linear-gradient(135deg, #2980b9, #1f618d);
 }
 
 .start-game-button:disabled {
-  opacity: 0.5;
+  opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 /* Mafia Host Timer Styles */
@@ -246,10 +279,13 @@
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
-  background: #1a1a1a;
-  color: #ffffff;
-  border-radius: 15px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: #2c3e50;
+  border-radius: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .timer-header {
@@ -260,33 +296,40 @@
 .timer-header h2 {
   margin: 10px 0;
   font-size: 28px;
-  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+  background: linear-gradient(45deg, #e74c3c, #3498db);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-weight: 700;
 }
 
 /* Server Status */
 .server-status {
-  background: #2a2a2a;
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 25px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 24px;
+  border-radius: 16px;
+  margin-bottom: 30px;
   text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 .create-game-button {
-  background: #4caf50;
+  background: linear-gradient(135deg, #27ae60, #229954);
   color: white;
   border: none;
-  padding: 15px 30px;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: bold;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
   cursor: pointer;
+  box-shadow: 0 4px 16px rgba(39, 174, 96, 0.3);
+  transition: all 0.2s ease;
 }
 
 .create-game-button:hover {
-  background: #45a049;
+  background: linear-gradient(135deg, #229954, #1e8449);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
 }
 
 .game-info {
@@ -294,24 +337,29 @@
 }
 
 .game-info code {
-  background: #333;
-  padding: 8px 12px;
-  border-radius: 6px;
+  background: rgba(52, 73, 94, 0.1);
+  color: #2c3e50;
+  padding: 12px 16px;
+  border-radius: 8px;
   display: block;
-  margin-top: 10px;
-  font-family: monospace;
+  margin-top: 12px;
+  font-family: 'SF Mono', monospace;
   word-break: break-all;
+  font-size: 14px;
+  border: 1px solid rgba(52, 73, 94, 0.2);
 }
 
 /* Timer Display */
 .timer-display {
-  background: #2a2a2a;
-  padding: 30px;
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 24px;
   text-align: center;
-  margin-bottom: 25px;
-  border: 3px solid #333;
-  transition: border-color 0.3s;
+  margin-bottom: 30px;
+  border: 3px solid rgba(52, 152, 219, 0.3);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 .phase-name {
@@ -330,7 +378,8 @@
 
 .timer-status {
   font-size: 18px;
-  color: #ccc;
+  color: #7f8c8d;
+  font-weight: 600;
 }
 
 /* Timer Controls */
@@ -346,16 +395,17 @@
 }
 
 .phase-button {
-  background: #333;
+  background: rgba(52, 73, 94, 0.9);
   color: white;
   border: none;
-  padding: 20px 15px;
-  border-radius: 12px;
+  padding: 24px 20px;
+  border-radius: 16px;
   cursor: pointer;
   text-align: center;
   font-size: 16px;
-  font-weight: bold;
-  transition: all 0.2s;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(52, 73, 94, 0.3);
 }
 
 .phase-button:hover:not(:disabled) {
@@ -369,15 +419,15 @@
 }
 
 .phase-button.discussion:hover:not(:disabled) {
-  background: #4CAF50;
+  background: linear-gradient(135deg, #27ae60, #229954);
 }
 
 .phase-button.voting:hover:not(:disabled) {
-  background: #FF9800;
+  background: linear-gradient(135deg, #f39c12, #e67e22);
 }
 
 .phase-button.night:hover:not(:disabled) {
-  background: #2196F3;
+  background: linear-gradient(135deg, #3498db, #2980b9);
 }
 
 .phase-button small {
@@ -394,18 +444,21 @@
 }
 
 .control-button {
-  background: #666;
+  background: rgba(149, 165, 166, 0.9);
   color: white;
   border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
+  padding: 14px 28px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(149, 165, 166, 0.3);
+  transition: all 0.2s ease;
 }
 
 .control-button:hover:not(:disabled) {
-  background: #777;
+  background: rgba(127, 140, 141, 0.9);
+  transform: translateY(-1px);
 }
 
 .control-button:disabled {
@@ -414,11 +467,11 @@
 }
 
 .control-button.stop:hover:not(:disabled) {
-  background: #f44336;
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
 }
 
 .control-button.reset:hover:not(:disabled) {
-  background: #ff9800;
+  background: linear-gradient(135deg, #f39c12, #e67e22);
 }
 
 /* Game Management */
@@ -431,39 +484,47 @@
 }
 
 .reset-game-button, .new-setup-button {
-  background: #ff6b6b;
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
   color: white;
   border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
+  padding: 14px 24px;
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+  transition: all 0.2s ease;
 }
 
 .reset-game-button:hover {
-  background: #ff5252;
+  background: linear-gradient(135deg, #c0392b, #a93226);
+  transform: translateY(-1px);
 }
 
 .new-setup-button {
-  background: #4ecdc4;
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
 }
 
 .new-setup-button:hover {
-  background: #26a69a;
+  background: linear-gradient(135deg, #2980b9, #1f618d);
+  transform: translateY(-1px);
 }
 
 /* Instructions */
 .instructions {
-  background: #2a2a2a;
-  padding: 20px;
-  border-radius: 12px;
-  border-left: 4px solid #4ecdc4;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 24px;
+  border-radius: 16px;
+  border-left: 4px solid #3498db;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 .instructions h3 {
-  margin: 0 0 15px 0;
-  color: #4ecdc4;
+  margin: 0 0 20px 0;
+  color: #3498db;
+  font-weight: 700;
 }
 
 .instructions ul {
@@ -472,34 +533,143 @@
 }
 
 .instructions li {
-  margin: 8px 0;
-  line-height: 1.5;
+  margin: 10px 0;
+  line-height: 1.6;
+  color: #34495e;
+  font-weight: 500;
 }
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .mafia-host-setup, .mafia-host-timer {
-    padding: 15px;
-    margin: 10px;
+    padding: 16px;
+    margin: 0;
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .setup-header, .timer-header {
+    margin-bottom: 20px;
+    padding-top: 10px;
+  }
+  
+  .setup-header h2, .timer-header h2 {
+    font-size: 24px;
+  }
+  
+  .setup-content {
+    gap: 20px;
+  }
+  
+  .setting-section {
+    padding: 20px;
+    margin-bottom: 16px;
   }
   
   .time-display {
     font-size: 48px;
+    padding: 30px 20px;
   }
   
   .phase-buttons {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .phase-button {
+    padding: 20px 16px;
+    font-size: 15px;
   }
   
   .control-buttons {
     flex-direction: column;
+    gap: 12px;
+  }
+  
+  .control-button {
+    padding: 16px 24px;
+    font-size: 16px;
   }
   
   .game-management {
     flex-direction: column;
+    gap: 12px;
+  }
+  
+  .reset-game-button, .new-setup-button {
+    padding: 16px 24px;
+    font-size: 16px;
   }
   
   .roles-preview {
     flex-direction: column;
+    gap: 12px;
+  }
+  
+  .role-item {
+    min-width: auto;
+    padding: 14px 16px;
+  }
+  
+  .player-count-controls {
+    gap: 16px;
+  }
+  
+  .count-button {
+    width: 52px;
+    height: 52px;
+    font-size: 24px;
+  }
+  
+  .player-count {
+    font-size: 32px;
+    min-width: 70px;
+  }
+  
+  .instructions {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .server-status, .timer-display {
+    margin-bottom: 20px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .mafia-host-setup, .mafia-host-timer {
+    padding: 12px;
+  }
+  
+  .setup-header h2, .timer-header h2 {
+    font-size: 22px;
+  }
+  
+  .setting-section {
+    padding: 16px;
+  }
+  
+  .time-display {
+    font-size: 40px;
+    padding: 25px 15px;
+  }
+  
+  .phase-button {
+    padding: 18px 14px;
+    font-size: 14px;
+  }
+  
+  .player-count {
+    font-size: 28px;
+    min-width: 60px;
+  }
+  
+  .count-button {
+    width: 48px;
+    height: 48px;
+    font-size: 22px;
   }
 }
