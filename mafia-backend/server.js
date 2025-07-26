@@ -419,12 +419,78 @@ app.post('/api/mafia/reset', (req, res) => {
 // Категории ролей для игры "Слова на лоб"
 const headwordsCategories = {
   celebrities: [
-    'Владимир Путин', 'Анджелина Джоли', 'Леонардо ДиКаприо', 'Мадонна', 'Элон Мск',
-    'Опра Уинфри', 'Дональд Трамп', 'Бейонсе', 'Джонни Депп', 'Тейлор Свифт',
-    'Роберт Дауни мл.', 'Скарлетт Йоханссон', 'Брэд Питт', 'Дженнифер Лоуренс', 'Том Круз',
-    'Мерил Стрип', 'Уилл Смит', 'Эмма Стоун', 'Джордж Клуни', 'Натали Портман',
-    'Кристиан Бейл', 'Шарлиз Терон', 'Морган Фриман', 'Хелен Миррен', 'Сэмюэл Л. Джексон',
-    'Киану Ривз', 'Гвинет Пэлтроу', 'Мэтт Дэймон', 'Кейт Уинслет', 'Хью Джекман'
+    // Политики и лидеры
+    'Владимир Путин', 'Дональд Трамп', 'Барак Обама', 'Джо Байден', 'Ангела Меркель',
+    'Эммануэль Макрон', 'Борис Джонсон', 'Си Цзиньпин', 'Нарендра Моди', 'Реджеп Эрдоган',
+    
+    // Голливудские звезды (самые известные)
+    'Анджелина Джоли', 'Леонардо ДиКаприо', 'Том Круз', 'Брэд Питт', 'Джонни Депп',
+    'Роберт Дауни мл.', 'Скарлетт Йоханссон', 'Джулия Робертс', 'Мерил Стрип', 'Уилл Смит',
+    'Том Хэнкс', 'Николь Кидман', 'Сандра Буллок', 'Джордж Клуни', 'Дженнифер Лоуренс',
+    'Морган Фриман', 'Энтони Хопкинс', 'Киану Ривз', 'Дэниэл Крейг', 'Хью Джекман',
+    'Мэтт Дэймон', 'Бен Аффлек', 'Эдди Мерфи', 'Джим Керри', 'Адам Сэндлер',
+    'Арнольд Шварценеггер', 'Сильвестр Сталлоне', 'Брюс Уиллис', 'Харрисон Форд', 'Сэмюэл Л. Джексон',
+    
+    // Российские звезды (самые известные)
+    'Константин Хабенский', 'Сергей Безруков', 'Владимир Машков', 'Данила Козловский', 'Евгений Миронов',
+    'Чулпан Хаматова', 'Рената Литвинова', 'Светлана Ходченкова', 'Екатерина Климова', 'Ирина Горбачева',
+    'Никита Михалков', 'Федор Бондарчук', 'Андрей Тарковский', 'Алексей Балабанов', 'Гоша Куценко',
+    'Филипп Киркоров', 'Алла Пугачева', 'Максим Галкин', 'Иван Ургант', 'Андрей Малахов',
+    
+    // Музыканты-легенды (всех знают)
+    'Майкл Джексон', 'Элвис Пресли', 'Джон Леннон', 'Пол Маккартни', 'Фредди Меркьюри',
+    'Дэвид Боуи', 'Боб Дилан', 'Мадонна', 'Бейонсе', 'Тейлор Свифт',
+    'Уитни Хьюстон', 'Селин Дион', 'Бритни Спирс', 'Леди Гага', 'Эминем',
+    'Queen', 'The Beatles', 'Rolling Stones', 'Pink Floyd', 'Led Zeppelin',
+    'AC/DC', 'Metallica', 'U2', 'Coldplay', 'Radiohead',
+    
+    // Российская музыка (хиты)
+    'Алла Пугачева', 'Валерий Леонтьев', 'Иосиф Кобзон', 'Лев Лещенко', 'София Ротару',
+    'Филипп Киркоров', 'Григорий Лепс', 'Николай Басков', 'Земфира', 'Валерий Меладзе',
+    'Дима Билан', 'Полина Гагарина', 'Сергей Шнуров', 'Баста', 'Тимати',
+    
+    // Спорт (мегазвезды)
+    'Криштиану Роналду', 'Лионель Месси', 'Майкл Джордан', 'Майк Тайсон', 'Мохаммед Али',
+    'Усэйн Болт', 'Майкл Фелпс', 'Леброн Джеймс', 'Роджер Федерер', 'Рафаэль Надаль',
+    'Новак Джокович', 'Серена Уильямс', 'Мария Шарапова', 'Александр Овечкин', 'Хабиб Нурмагомедов',
+    'Конор МакГрегор', 'Флойд Мейвезер', 'Федор Емельяненко', 'Елена Исинбаева', 'Евгения Медведева',
+    
+    // Исторические личности (всех эпох)
+    'Наполеон Бонапарт', 'Юлий Цезарь', 'Александр Македонский', 'Чингисхан', 'Клеопатра',
+    'Екатерина Великая', 'Петр Первый', 'Иван Грозный', 'Александр Невский', 'Владимир Ленин',
+    'Иосиф Сталин', 'Адольф Гитлер', 'Мао Цзэдун', 'Фидель Кастро', 'Че Гевара',
+    'Нельсон Мандела', 'Мартин Лютер Кинг', 'Махатма Ганди', 'Уинстон Черчилль', 'Джон Кеннеди',
+    'Авраам Линкольн', 'Джордж Вашингтон', 'Королева Елизавета II', 'Принцесса Диана', 'Михаил Горбачев',
+    
+    // Ученые и изобретатели (гении человечества)
+    'Альберт Эйнштейн', 'Исаак Ньютон', 'Чарльз Дарвин', 'Галилео Галилей', 'Николай Коперник',
+    'Мария Кюри', 'Томас Эдисон', 'Никола Тесла', 'Стив Джобс', 'Билл Гейтс',
+    'Марк Цукерберг', 'Элон Мск', 'Джефф Безос', 'Уолт Дисней', 'Генри Форд',
+    'Дмитрий Менделеев', 'Иван Павлов', 'Константин Циолковский', 'Сергей Королев', 'Андрей Сахаров',
+    
+    // Писатели (классики мировой литературы)
+    'Уильям Шекспир', 'Лев Толстой', 'Федор Достоевский', 'Антон Чехов', 'Александр Пушкин',
+    'Михаил Лермонтов', 'Сергей Есенин', 'Владимир Маяковский', 'Анна Ахматова', 'Борис Пастернак',
+    'Джоан Роулинг', 'Стивен Кинг', 'Агата Кристи', 'Артур Конан Дойл', 'Жюль Верн',
+    'Эрнест Хемингуэй', 'Марк Твен', 'Чарльз Диккенс', 'Джордж Оруэлл', 'Александр Солженицын',
+    
+    // Художники (мировые гении)
+    'Леонардо да Винчи', 'Микеланджело', 'Винсент ван Гог', 'Пабло Пикассо', 'Сальвадор Дали',
+    'Клод Моне', 'Анри Матисс', 'Илья Репин', 'Иван Айвазовский', 'Виктор Васнецов',
+    'Казимир Малевич', 'Василий Кандинский', 'Марк Шагал', 'Энди Уорхол', 'Фрида Кало',
+    
+    // Режиссеры (классики кино)
+    'Стивен Спилберг', 'Мартин Скорсезе', 'Квентин Тарантино', 'Альфред Хичкок', 'Стэнли Кубрик',
+    'Джордж Лукас', 'Джеймс Кэмерон', 'Питер Джексон', 'Тим Бертон', 'Клинт Иствуд',
+    'Сергей Эйзенштейн', 'Андрей Тарковский', 'Никита Михалков', 'Алексей Балабанов', 'Вуди Аллен',
+    
+    // Комики и телеведущие (мировые звезды)
+    'Чарли Чаплин', 'Мистер Бин', 'Джим Керри', 'Робин Уильямс', 'Эдди Мерфи',
+    'Джерри Сайнфелд', 'Эллен ДеДженерес', 'Опра Уинфри', 'Джимми Фэллон', 'Стивен Колберт',
+    'Иван Ургант', 'Максим Галкин', 'Гарик Харламов', 'Павел Воля', 'Тимур Батрутдинов',
+    
+    // Знаменитости (самые известные лица)
+    'Ким Кардашьян', 'Париж Хилтон', 'Кендалл Дженнер', 'Кайли Дженнер', 'Гордон Рамзи'
   ],
   cartoons: [
     'Микки Маус', 'Спанч Боб', 'Том и Джерри', 'Багз Банни', 'Покемон Пикачу',
@@ -477,11 +543,11 @@ let currentHeadwordsGame = {
 };
 
 // Создание структуры игры "Слова на лоб"
-function createHeadwordsGame(roomId, category, roles, playerCount) {
+function createHeadwordsGame(roomId, categories, roles, playerCount) {
   return {
     id: roomId,
     type: 'headwords',
-    category: category,
+    categories: categories, // теперь массив категорий
     roles: roles,
     playerCount: playerCount,
     rolesGiven: 0,
@@ -492,7 +558,8 @@ function createHeadwordsGame(roomId, category, roles, playerCount) {
 // Создать новую игру "Слова на лоб"
 app.post('/api/headwords/generate-game', (req, res) => {
   try {
-    const { playerCount, category } = req.body;
+    console.log('Получен запрос на создание игры Headwords:', req.body);
+    const { playerCount, categories } = req.body;
     
     if (!playerCount || typeof playerCount !== 'number') {
       return res.status(400).json({ 
@@ -506,52 +573,88 @@ app.post('/api/headwords/generate-game', (req, res) => {
       });
     }
     
-    if (!category || !headwordsCategories[category]) {
+    // Поддерживаем как старый формат (category), так и новый (categories)
+    let selectedCategories = [];
+    if (req.body.category) {
+      // Обратная совместимость
+      selectedCategories = [req.body.category];
+      console.log('Используем старый формат category:', selectedCategories);
+    } else if (categories && Array.isArray(categories) && categories.length > 0) {
+      selectedCategories = categories;
+      console.log('Используем новый формат categories:', selectedCategories);
+    } else {
+      console.log('Не найдены категории:', { category: req.body.category, categories });
       return res.status(400).json({ 
-        error: 'Требуется указать корректную категорию' 
+        error: 'Требуется указать хотя бы одну категорию' 
       });
     }
     
-    // Получаем роли из выбранной категории
-    const availableRoles = [...headwordsCategories[category]];
+    // Проверяем валидность всех категорий
+    console.log('Проверяем категории:', selectedCategories);
+    console.log('Доступные категории:', Object.keys(headwordsCategories));
+    
+    for (const category of selectedCategories) {
+      if (!headwordsCategories[category]) {
+        console.log(`Категория "${category}" не найдена в headwordsCategories`);
+        return res.status(400).json({ 
+          error: `Неизвестная категория: ${category}. Доступные: ${Object.keys(headwordsCategories).join(', ')}` 
+        });
+      }
+    }
+    
+    // Собираем роли из всех выбранных категорий
+    let availableRoles = [];
+    selectedCategories.forEach(category => {
+      availableRoles.push(...headwordsCategories[category]);
+    });
+    
+    // Удаляем дубликаты (если роль есть в нескольких категориях)
+    availableRoles = [...new Set(availableRoles)];
     
     if (playerCount > availableRoles.length) {
+      const categoryNames = selectedCategories.map(cat => getCategoryDisplayName(cat)).join(', ');
       return res.status(400).json({ 
-        error: `В категории "${category}" недостаточно ролей для ${playerCount} игроков` 
+        error: `В выбранных категориях (${categoryNames}) недостаточно уникальных ролей для ${playerCount} игроков (доступно: ${availableRoles.length})` 
       });
     }
     
     // Перемешиваем и выбираем нужное количество уникальных ролей
     const selectedRoles = [];
+    const rolesPool = [...availableRoles]; // копируем массив
+    
     for (let i = 0; i < playerCount; i++) {
-      const randomIndex = Math.floor(Math.random() * availableRoles.length);
-      selectedRoles.push(availableRoles.splice(randomIndex, 1)[0]);
+      const randomIndex = Math.floor(Math.random() * rolesPool.length);
+      selectedRoles.push(rolesPool.splice(randomIndex, 1)[0]);
     }
     
     // Создаем комнату
     const roomId = generateRoomId();
-    const headwordsGame = createHeadwordsGame(roomId, category, selectedRoles, playerCount);
+    const headwordsGame = createHeadwordsGame(roomId, selectedCategories, selectedRoles, playerCount);
     
     // Сохраняем игру в активных играх
     activeGames.set(roomId, headwordsGame);
     
     // Обновляем старые переменные для совместимости
     currentHeadwordsGame = {
-      category: category,
+      category: selectedCategories.join(', '), // для совместимости со старым API
+      categories: selectedCategories,
       roles: selectedRoles,
       playerCount: playerCount,
       rolesGiven: 0
     };
     
-    console.log(`Создана игра "Слова на лоб" ${roomId}: категория "${category}", ${playerCount} игроков`);
+    const categoryNames = selectedCategories.map(cat => getCategoryDisplayName(cat)).join(', ');
+    console.log(`Создана игра "Слова на лоб" ${roomId}: категории "${categoryNames}", ${playerCount} игроков`);
     
     res.json({
       success: true,
       message: `Игра "Слова на лоб" создана для ${playerCount} игроков`,
       roomId: roomId,
       playerCount,
-      category: category,
-      rolesCount: selectedRoles.length
+      categories: selectedCategories,
+      categoriesDisplay: categoryNames,
+      rolesCount: selectedRoles.length,
+      availableRoles: availableRoles.length
     });
     
   } catch (error) {
@@ -588,11 +691,19 @@ app.get('/api/headwords/get-role', (req, res) => {
       
       console.log(`Выдана роль в комнате ${roomId}: игрок ${currentPlayerIndex + 1} - "${role}"`);
       
+      // Поддерживаем как старый формат (category), так и новый (categories)
+      const categoriesDisplay = game.categories 
+        ? game.categories.map(cat => getCategoryDisplayName(cat)).join(', ')
+        : getCategoryDisplayName(game.category || 'unknown');
+        
       const response = {
         playerNumber: currentPlayerIndex + 1,
         totalPlayers: game.playerCount,
         role: role,
-        category: game.category,
+        categories: game.categories || [game.category],
+        categoriesDisplay: categoriesDisplay,
+        // Обратная совместимость
+        category: game.categories ? game.categories.join(', ') : game.category,
         isLastPlayer: game.rolesGiven === game.playerCount,
         roomId: roomId
       };
@@ -639,11 +750,15 @@ app.get('/api/headwords/get-role', (req, res) => {
 
 // Получить список доступных категорий
 app.get('/api/headwords/categories', (req, res) => {
+  console.log('Запрос категорий. Доступные категории:', Object.keys(headwordsCategories));
+  
   const categories = Object.keys(headwordsCategories).map(key => ({
     id: key,
     name: getCategoryDisplayName(key),
     rolesCount: headwordsCategories[key].length
   }));
+  
+  console.log('Отправляем категории:', categories);
   
   res.json({
     categories: categories

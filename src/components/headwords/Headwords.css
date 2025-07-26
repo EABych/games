@@ -131,6 +131,7 @@
   cursor: pointer;
   transition: all 0.2s ease;
   text-align: center;
+  position: relative;
 }
 
 .headwords-host-setup .category-button:hover {
@@ -154,6 +155,30 @@
 .headwords-host-setup .category-count {
   font-size: 12px;
   opacity: 0.8;
+}
+
+.headwords-host-setup .category-checkmark {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #48bb78;
+  font-weight: 900;
+  font-size: 14px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.headwords-host-setup .multi-select-hint {
+  font-size: 14px;
+  color: #718096;
+  margin-bottom: 15px;
+  text-align: center;
 }
 
 .headwords-host-setup .category-hint {

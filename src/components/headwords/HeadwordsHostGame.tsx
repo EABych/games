@@ -18,24 +18,43 @@ export const HeadwordsHostGame: React.FC<HeadwordsHostGameProps> = ({ settings, 
   // Создание игры на сервере
   const createGameOnServer = async () => {
     try {
+      // Поддерживаем обратную совместимость
+      let requestData;
+      if (Array.isArray(settings.categories)) {
+        requestData = {
+          playerCount: settings.playerCount,
+          categories: settings.categories
+        };
+      } else if ((settings as any).category) {
+        // Старый формат
+        requestData = {
+          playerCount: settings.playerCount,
+          category: (settings as any).category
+        };
+      } else {
+        console.error('Некорректный формат настроек:', settings);
+        setServerStatus('❌ Ошибка: некорректные настройки игры');
+        return;
+      }
+      
+      console.log('Отправляем запрос на создание игры:', requestData);
+      
       const response = await fetch('https://mafia-backend-5z0e.onrender.com/api/headwords/generate-game', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          playerCount: settings.playerCount,
-          category: settings.category
-        })
+        body: JSON.stringify(requestData)
       });
 
       if (response.ok) {
         const data = await response.json();
-        setServerStatus(`✅ Игра создана для ${data.playerCount} игроков. Категория: ${getCategoryDisplayName(data.category)}. ID комнаты: ${data.roomId}`);
+        setServerStatus(`✅ Игра создана для ${data.playerCount} игроков. Категории: ${data.categoriesDisplay}. ID комнаты: ${data.roomId}`);
         setRoomId(data.roomId);
         setGameStarted(true);
       } else {
         const errorData = await response.json();
+        console.error('Ошибка создания игры:', errorData);
         setServerStatus(`❌ Ошибка: ${errorData.error}`);
       }
     } catch (error) {
@@ -110,7 +129,7 @@ export const HeadwordsHostGame: React.FC<HeadwordsHostGameProps> = ({ settings, 
                 {currentRole.role}
               </div>
               <div className="category-info">
-                Категория: {getCategoryDisplayName(currentRole.category)}
+                Категории: {currentRole.categoriesDisplay || getCategoryDisplayName(currentRole.category)}
               </div>
             </div>
             
@@ -136,7 +155,7 @@ export const HeadwordsHostGame: React.FC<HeadwordsHostGameProps> = ({ settings, 
       <div className="game-header">
         <button onClick={onBack} className="back-button">← Настройки</button>
         <h2>🎭 Ведущий "Слова на лоб"</h2>
-        <p>Игроков: {settings.playerCount} | Категория: {getCategoryDisplayName(settings.category)}</p>
+        <p>Игроков: {settings.playerCount} | Категории: {settings.categories.map(cat => getCategoryDisplayName(cat)).join(', ')}</p>
       </div>
 
       <div className="server-status">

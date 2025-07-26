@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 interface HeadwordsRole {
   playerNumber: number;
@@ -23,14 +23,14 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
   const getRoleFromServer = async () => {
     setIsLoading(true);
     setError('');
-    
+
     try {
-      const url = roomId 
+      const url = roomId
         ? `https://mafia-backend-5z0e.onrender.com/api/headwords/get-role?roomId=${roomId}`
         : 'https://mafia-backend-5z0e.onrender.com/api/headwords/get-role';
-      
+
       const response = await fetch(url);
-      
+
       if (response.ok) {
         const data = await response.json();
         // Начинаем обратный отсчет перед показом роли
@@ -43,6 +43,7 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
     } catch (err) {
       setError('Ошибка соединения с сервером');
       setIsLoading(false);
+      console.log(err)
     }
   };
 
@@ -73,7 +74,7 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
       professions: 'Профессии',
       objects: 'Предметы'
     };
-    
+
     return displayNames[categoryId] || categoryId;
   };
 
@@ -86,7 +87,7 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
       professions: '💼',
       objects: '🔧'
     };
-    
+
     return emojis[categoryId] || '🎯';
   };
 
@@ -99,11 +100,11 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
             <h1>🎭 Приготовьтесь!</h1>
             <p>Приложите телефон ко лбу горизонтально</p>
           </div>
-          
+
           <div className="countdown-timer">
             <div className="countdown-number">{countdown}</div>
           </div>
-          
+
           <div className="countdown-instruction">
             <p>📱 Поверните телефон горизонтально</p>
             <p>🤚 Прижмите к лбу экраном наружу</p>
@@ -122,18 +123,18 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
           <div className="role-category">
             {getCategoryEmoji(playerRole.category)} {getCategoryDisplayName(playerRole.category)}
           </div>
-          
+
           <div className="role-main">
             {playerRole.role}
           </div>
-          
+
           <div className="role-footer">
             <div className="player-info">
               Игрок {playerRole.playerNumber} из {playerRole.totalPlayers}
             </div>
           </div>
         </div>
-        
+
         {/* Инструкция внизу экрана (для владельца телефона) */}
         <div className="role-instructions">
           <p>❓ Задавайте вопросы "да/нет", чтобы угадать свою роль</p>
@@ -151,7 +152,7 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
           <h1>🎭 Добро пожаловать в "Слова на лоб"!</h1>
           <p>Нажмите кнопку ниже, чтобы получить свою роль</p>
         </div>
-        
+
         <div className="welcome-content">
           {!isLoading && !error && (
             <>
@@ -165,8 +166,8 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
                   <li>🎯 <strong>Цель:</strong> Угадать, кто вы, не глядя на экран</li>
                 </ul>
               </div>
-              
-              <button 
+
+              <button
                 onClick={getRoleFromServer}
                 className="get-role-button"
               >
@@ -174,20 +175,20 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
               </button>
             </>
           )}
-          
+
           {isLoading && (
             <div className="loading-state">
               <div className="loading-spinner"></div>
               <p>Получаем роль...</p>
             </div>
           )}
-          
+
           {error && (
             <div className="error-state">
               <div className="error-icon">❌</div>
               <h3>Ошибка</h3>
               <p>{error}</p>
-              <button 
+              <button
                 onClick={getRoleFromServer}
                 className="retry-button"
               >

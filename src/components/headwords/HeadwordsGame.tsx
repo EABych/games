@@ -14,7 +14,7 @@ export const HeadwordsGame: React.FC<HeadwordsGameProps> = ({ onBack }) => {
   const [phase, setPhase] = useState<HeadwordsPhase>('setup');
   const [gameSettings, setGameSettings] = useState<HeadwordsGameSettings>({
     playerCount: 4,
-    category: 'celebrities'
+    categories: ['celebrities']
   });
 
   const handleGameStart = (settings: HeadwordsGameSettings) => {
