@@ -17,16 +17,19 @@
     
     <!-- GitHub Pages SPA redirect script -->
     <script>
-      // Single Page Apps for GitHub Pages
-      // https://github.com/rafgraph/spa-github-pages
+      // Обработка SPA редиректов от 404.html
       (function(l) {
         if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
-            return s.replace(/~and~/g, '&')
-          }).join('?')
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          )
+          var path = l.search.slice(2); // убираем ?/
+          var segments = path.split('&');
+          var newPath = segments[0] || '';
+          var query = segments.slice(1).join('&').replace(/~/g, '&');
+          
+          // Восстанавливаем правильный путь
+          var finalPath = l.pathname + (newPath ? newPath : '');
+          var finalUrl = finalPath + (query ? '?' + query : '') + l.hash;
+          
+          window.history.replaceState(null, null, finalUrl);
         }
       }(window.location))
     </script>
