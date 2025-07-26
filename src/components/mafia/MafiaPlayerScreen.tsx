@@ -133,22 +133,7 @@ export const MafiaPlayerScreen: React.FC = () => {
             <div className="warning-message">
               ⚠️ Запомните свою роль и не показывайте её другим игрокам!
             </div>
-            
-            {playerRole.isLastPlayer && (
-              <div className="last-player-message">
-                🎉 Все роли розданы! Игра может начинаться.
-              </div>
-            )}
           </div>
-        </div>
-        
-        <div className="player-actions">
-          <button 
-            onClick={() => window.close()}
-            className="close-tab-button"
-          >
-            ✅ Понятно, закрыть
-          </button>
         </div>
       </div>
     );
