@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-react-app:*)",
+      "Bash(npm create:*)",
+      "Bash(npm install)",
+      "Bash(npm run dev:*)",
+      "Bash(mkdir:*)",
+      "Bash(npm run build:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(git commit:*)",
+      "Bash(mv:*)",
+      "Bash(true)",
+      "Bash(rm:*)",
+      "Bash(npm run deploy:*)",
+      "Bash(npx gh-pages:*)",
+      "Bash(git branch:*)",
+      "Bash(grep:*)",
+      "Bash(gh release create:*)",
+      "Bash(git tag:*)",
+      "Bash(magick:*)",
+      "Bash(convert:*)",
+      "Bash(python3:*)",
+      "Bash(pip3 install:*)",
+      "Bash(ls:*)",
+      "Bash(cp:*)",
+      "Bash(touch:*)",
+      "Bash(gh workflow run:*)",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Bash(git init:*)",
+      "Bash(git rm:*)",
+      "Bash(git remote get-url:*)",
+      "Bash(npm run:*)",
+      "Bash(cat:*)",
+      "Bash(node:*)"
+    ],
+    "deny": []
+  }
+}
