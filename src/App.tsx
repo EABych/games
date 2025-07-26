@@ -421,26 +421,5 @@ function App() {
   );
 };
 
-// Legacy player route component
-const LegacyPlayerRoute: React.FC = () => {
-  const navigateToRoute = useNavigate();
-  const urlParams = new URLSearchParams(window.location.search);
-  const mode = urlParams.get('mode');
-  const roomId = urlParams.get('roomId');
-  const gameType = urlParams.get('gameType');
-
-  React.useEffect(() => {
-    if (mode === 'player' && roomId && gameType) {
-      // Перенаправляем на новый формат URL
-      navigateToRoute(`/player/${gameType}/${roomId}`, { replace: true });
-    } else {
-      // Если параметры некорректные, перенаправляем на главную
-      navigateToRoute('/', { replace: true });
-    }
-  }, [navigateToRoute, mode, roomId, gameType]);
-
-  // Показываем загрузку во время перенаправления
-  return <div>Перенаправление...</div>;
-};
 
 export default App
