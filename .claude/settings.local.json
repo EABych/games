@@ -26,7 +26,12 @@
       "Bash(pip3 install:*)",
       "Bash(ls:*)",
       "Bash(cp:*)",
-      "Bash(touch:*)"
+      "Bash(touch:*)",
+      "Bash(gh workflow run:*)",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Bash(git init:*)",
+      "Bash(git rm:*)"
     ],
     "deny": []
   }

@@ -61,7 +61,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onSelectGame }) => {
             <p>{game.description}</p>
             {(game.id === 'alias' || game.id === 'fants' || game.id === 'krocodil' || game.id === 'this-or-that' || game.id === 'poet' || game.id === 'yersh') && <span className="available-badge">Доступно</span>}
             {game.id === 'this-or-that' && <span className="adult-badge">18+</span>}
-            {game.id === 'mafia' && <span className="coming-soon-badge">Скоро</span>}
+            {game.id === 'mafia' && <span className="available-badge">Доступно</span>}
           </button>
         ))}
       </div>

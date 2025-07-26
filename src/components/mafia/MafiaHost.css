@@ -1,0 +1,505 @@
+/* Mafia Host Setup Styles */
+.mafia-host-setup {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  background: #1a1a1a;
+  color: #ffffff;
+  border-radius: 15px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.setup-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.setup-header h2 {
+  margin: 10px 0;
+  font-size: 28px;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.back-button {
+  background: #333;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.back-button:hover {
+  background: #555;
+}
+
+.setup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.setting-section {
+  background: #2a2a2a;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #333;
+}
+
+.setting-section h3 {
+  margin: 0 0 15px 0;
+  color: #ff6b6b;
+  font-size: 20px;
+}
+
+.setting-section h4 {
+  margin: 15px 0 10px 0;
+  color: #4ecdc4;
+  font-size: 16px;
+}
+
+/* Player Count Controls */
+.player-count-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 15px 0;
+}
+
+.count-button {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.count-button:hover {
+  background: #ff5252;
+  transform: scale(1.05);
+}
+
+.player-count {
+  font-size: 32px;
+  font-weight: bold;
+  color: #4ecdc4;
+  min-width: 60px;
+  text-align: center;
+}
+
+/* Roles Preview */
+.roles-preview {
+  display: flex;
+  gap: 15px;
+  margin: 15px 0;
+  flex-wrap: wrap;
+}
+
+.role-item {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  flex: 1;
+  text-align: center;
+  min-width: 120px;
+}
+
+.mafia-role {
+  background: #d32f2f;
+  color: white;
+}
+
+.citizen-role {
+  background: #388e3c;
+  color: white;
+}
+
+/* Special Roles */
+.special-roles {
+  margin-top: 15px;
+}
+
+.role-checkbox {
+  display: flex;
+  align-items: center;
+  margin: 12px 0;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.role-checkbox:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.role-checkbox input[type="checkbox"] {
+  margin-right: 12px;
+  transform: scale(1.2);
+}
+
+.role-checkbox input[type="checkbox"]:disabled {
+  opacity: 0.5;
+}
+
+.role-checkbox span {
+  font-size: 16px;
+}
+
+.role-requirement {
+  margin-left: auto;
+  font-size: 12px;
+  color: #999;
+  font-style: italic;
+}
+
+/* Time Settings */
+.time-setting {
+  margin: 15px 0;
+}
+
+.time-setting label {
+  display: block;
+  margin-bottom: 8px;
+  color: #ccc;
+  font-weight: 500;
+}
+
+.time-input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #333;
+  border-radius: 8px;
+  background: #1a1a1a;
+  color: white;
+  font-size: 16px;
+}
+
+.time-input:focus {
+  outline: none;
+  border-color: #4ecdc4;
+}
+
+/* Errors */
+.errors {
+  background: #d32f2f;
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+
+.errors h4 {
+  margin: 0 0 10px 0;
+}
+
+.errors ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.errors li {
+  margin: 5px 0;
+}
+
+/* Actions */
+.setup-actions {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.start-game-button {
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.start-game-button:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+.start-game-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Mafia Host Timer Styles */
+.mafia-host-timer {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  background: #1a1a1a;
+  color: #ffffff;
+  border-radius: 15px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.timer-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.timer-header h2 {
+  margin: 10px 0;
+  font-size: 28px;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Server Status */
+.server-status {
+  background: #2a2a2a;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.create-game-button {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.create-game-button:hover {
+  background: #45a049;
+}
+
+.game-info {
+  text-align: left;
+}
+
+.game-info code {
+  background: #333;
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: block;
+  margin-top: 10px;
+  font-family: monospace;
+  word-break: break-all;
+}
+
+/* Timer Display */
+.timer-display {
+  background: #2a2a2a;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  margin-bottom: 25px;
+  border: 3px solid #333;
+  transition: border-color 0.3s;
+}
+
+.phase-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.time-display {
+  font-size: 72px;
+  font-weight: bold;
+  font-family: 'SF Mono', monospace;
+  margin: 20px 0;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.timer-status {
+  font-size: 18px;
+  color: #ccc;
+}
+
+/* Timer Controls */
+.timer-controls {
+  margin-bottom: 25px;
+}
+
+.phase-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.phase-button {
+  background: #333;
+  color: white;
+  border: none;
+  padding: 20px 15px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.phase-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.phase-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.phase-button.discussion:hover:not(:disabled) {
+  background: #4CAF50;
+}
+
+.phase-button.voting:hover:not(:disabled) {
+  background: #FF9800;
+}
+
+.phase-button.night:hover:not(:disabled) {
+  background: #2196F3;
+}
+
+.phase-button small {
+  display: block;
+  margin-top: 5px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.control-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.control-button {
+  background: #666;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.control-button:hover:not(:disabled) {
+  background: #777;
+}
+
+.control-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.control-button.stop:hover:not(:disabled) {
+  background: #f44336;
+}
+
+.control-button.reset:hover:not(:disabled) {
+  background: #ff9800;
+}
+
+/* Game Management */
+.game-management {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.reset-game-button, .new-setup-button {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.reset-game-button:hover {
+  background: #ff5252;
+}
+
+.new-setup-button {
+  background: #4ecdc4;
+}
+
+.new-setup-button:hover {
+  background: #26a69a;
+}
+
+/* Instructions */
+.instructions {
+  background: #2a2a2a;
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 4px solid #4ecdc4;
+}
+
+.instructions h3 {
+  margin: 0 0 15px 0;
+  color: #4ecdc4;
+}
+
+.instructions ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.instructions li {
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .mafia-host-setup, .mafia-host-timer {
+    padding: 15px;
+    margin: 10px;
+  }
+  
+  .time-display {
+    font-size: 48px;
+  }
+  
+  .phase-buttons {
+    grid-template-columns: 1fr;
+  }
+  
+  .control-buttons {
+    flex-direction: column;
+  }
+  
+  .game-management {
+    flex-direction: column;
+  }
+  
+  .roles-preview {
+    flex-direction: column;
+  }
+}

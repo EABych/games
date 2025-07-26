@@ -27,8 +27,10 @@ import { PoetRoundEnd } from './components/poet/PoetRoundEnd';
 import { PoetEnd } from './components/poet/PoetEnd';
 import { YershGame } from './components/YershGame';
 import { AuthScreen } from './components/AuthScreen';
+import { MafiaGame } from './components/mafia/MafiaGame';
+import './components/mafia/MafiaHost.css';
 
-type AppPhase = 'home' | 'alias' | 'fants' | 'krocodil' | 'this-or-that' | 'poet' | 'yersh';
+type AppPhase = 'home' | 'alias' | 'fants' | 'krocodil' | 'this-or-that' | 'poet' | 'yersh' | 'mafia';
 
 function App() {
   const [appPhase, setAppPhase] = useState<AppPhase>('home');
@@ -115,6 +117,8 @@ function App() {
       setAppPhase('poet');
     } else if (game === 'yersh') {
       setAppPhase('yersh');
+    } else if (game === 'mafia') {
+      setAppPhase('mafia');
     }
   };
 
@@ -324,6 +328,10 @@ function App() {
 
       {appPhase === 'yersh' && (
         <YershGame onBackToHome={handleBackToHome} />
+      )}
+
+      {appPhase === 'mafia' && (
+        <MafiaGame onBack={handleBackToHome} />
       )}
 
       <ConfirmModal
