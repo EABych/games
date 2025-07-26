@@ -1016,9 +1016,9 @@
 @media (max-width: 768px) {
   .mafia-host-setup, .mafia-host-timer {
     padding: 16px;
-    padding-bottom: calc(16px + env(safe-area-inset-bottom));
-    padding-left: calc(16px + env(safe-area-inset-left));
-    padding-right: calc(16px + env(safe-area-inset-right));
+    padding-bottom: calc(env(safe-area-inset-bottom));
+    padding-left: calc(env(safe-area-inset-left));
+    padding-right: calc(env(safe-area-inset-right));
     margin: 0;
     min-height: 100vh;
     min-height: 100dvh;
@@ -1145,10 +1145,10 @@
 /* Extra small screens */
 @media (max-width: 480px) {
   .mafia-host-setup, .mafia-host-timer {
-    padding: 12px;
-    padding-bottom: calc(12px + env(safe-area-inset-bottom));
-    padding-left: calc(12px + env(safe-area-inset-left));
-    padding-right: calc(12px + env(safe-area-inset-right));
+    padding: 0px;
+    padding-bottom: calc(env(safe-area-inset-bottom));
+    padding-left: calc(env(safe-area-inset-left));
+    padding-right: calc(env(safe-area-inset-right));
   }
 
   .setup-header h2, .timer-header h2 {

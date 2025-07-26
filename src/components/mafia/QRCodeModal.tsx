@@ -14,7 +14,7 @@ export const QRCodeModal: React.FC<QRCodeModalProps> = ({ isOpen, onClose, roomI
   useEffect(() => {
     if (isOpen && roomId && gameType) {
       // Генерируем ссылку для игроков в новом формате
-      const playerUrl = `${window.location.origin}/player/${gameType}/${roomId}`;
+      const playerUrl = `${window.location.origin}/games/player/${gameType}/${roomId}`;
       
       // Генерируем QR-код
       QRCode.toDataURL(playerUrl, {
@@ -38,7 +38,7 @@ export const QRCodeModal: React.FC<QRCodeModalProps> = ({ isOpen, onClose, roomI
 
   // Генерируем ссылку для отображения
   const playerUrl = roomId && gameType 
-    ? `${window.location.origin}/player/${gameType}/${roomId}`
+    ? `${window.location.origin}/games/player/${gameType}/${roomId}`
     : '';
 
   return (

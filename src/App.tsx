@@ -409,15 +409,16 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* Main app routes */}
-          <Route path="/*" element={<MainApp />} />
+          <Route path="/games/*" element={<MainApp />} />
           
           {/* Player screens (public routes) */}
-          <Route path="/player/mafia/:roomId" element={<MafiaPlayerScreen />} />
-          <Route path="/player/spy/:roomId" element={<SpyPlayerScreen />} />
-          <Route path="/player/headwords/:roomId" element={<HeadwordsPlayerScreen />} />
+          <Route path="/games/player/mafia/:roomId" element={<MafiaPlayerScreen />} />
+          <Route path="/games/player/spy/:roomId" element={<SpyPlayerScreen />} />
+          <Route path="/games/player/headwords/:roomId" element={<HeadwordsPlayerScreen />} />
           
           {/* Legacy support for old URLs */}
           <Route path="/games" element={<LegacyPlayerRoute />} />
+          <Route path="/*" element={<LegacyPlayerRoute />} />
         </Routes>
       </BrowserRouter>
     </div>
