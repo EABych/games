@@ -98,9 +98,8 @@ export const MafiaHostSetup: React.FC<MafiaHostSetupProps> = ({ onStartGame, onB
   return (
     <div className="mafia-host-setup">
       <div className="setup-header">
-        <button onClick={onBack} className="back-button">← Назад</button>
-        <h2>🎭 Настройка игры Мафия</h2>
-        <p>Настройте параметры игры для ведущего</p>
+        <h2>Настройка Мафии</h2>
+        <p>Настройте параметры игры</p>
       </div>
 
       <div className="setup-content">
@@ -127,10 +126,12 @@ export const MafiaHostSetup: React.FC<MafiaHostSetupProps> = ({ onStartGame, onB
           <h3>Роли в игре</h3>
           <div className="roles-preview">
             <div className="role-item mafia-role">
-              <span>🔫 Мафия: {getMafiaCount()}</span>
+              <div className="role-type">Мафия</div>
+              <div className="role-count">{getMafiaCount()}</div>
             </div>
             <div className="role-item citizen-role">
-              <span>👥 Мирные жители: {getCitizensCount()}</span>
+              <div className="role-type">Мирные жители</div>
+              <div className="role-count">{getCitizensCount()}</div>
             </div>
           </div>
 
@@ -152,7 +153,6 @@ export const MafiaHostSetup: React.FC<MafiaHostSetupProps> = ({ onStartGame, onB
                 }
               }}
             >
-              <span className="role-icon">👨‍⚕️</span>
               <div className="role-info">
                 <span className="role-name">Доктор</span>
                 <span className="role-description">Защищает от убийства</span>
@@ -184,7 +184,6 @@ export const MafiaHostSetup: React.FC<MafiaHostSetupProps> = ({ onStartGame, onB
                 }
               }}
             >
-              <span className="role-icon">🕵️</span>
               <div className="role-info">
                 <span className="role-name">Детектив</span>
                 <span className="role-description">Проверяет игроков</span>
@@ -216,7 +215,6 @@ export const MafiaHostSetup: React.FC<MafiaHostSetupProps> = ({ onStartGame, onB
                 }
               }}
             >
-              <span className="role-icon">🤠</span>
               <div className="role-info">
                 <span className="role-name">Шериф</span>
                 <span className="role-description">Альтернатива детективу</span>
@@ -237,7 +235,6 @@ export const MafiaHostSetup: React.FC<MafiaHostSetupProps> = ({ onStartGame, onB
                 }
               }}
             >
-              <span className="role-icon">👑</span>
               <div className="role-info">
                 <span className="role-name">Дон мафии</span>
                 <span className="role-description">Заменяет одного мафиози</span>
@@ -297,16 +294,16 @@ export const MafiaHostSetup: React.FC<MafiaHostSetupProps> = ({ onStartGame, onB
             </ul>
           </div>
         )}
+      </div>
 
-        <div className="setup-actions">
-          <button 
-            onClick={handleStartGame} 
-            className="start-game-button"
-            disabled={errors.length > 0}
-          >
-            🎯 Создать игру
-          </button>
-        </div>
+      <div className="setup-actions">
+        <button 
+          onClick={handleStartGame} 
+          className="start-game-button"
+          disabled={errors.length > 0}
+        >
+          Создать игру
+        </button>
       </div>
     </div>
   );

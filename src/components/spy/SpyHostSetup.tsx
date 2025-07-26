@@ -39,7 +39,6 @@ export const SpyHostSetup: React.FC<SpyHostSetupProps> = ({ onStartGame, onBack 
   return (
     <div className="spy-host-setup">
       <div className="setup-header">
-        <button onClick={onBack} className="back-button">← Назад</button>
         <h2>🕵️ Настройка игры Шпион</h2>
         <p>Настройте параметры игры для ведущего</p>
       </div>

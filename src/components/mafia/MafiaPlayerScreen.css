@@ -1,0 +1,262 @@
+/* Mafia Player Screen - Dark Glass Theme */
+.mafia-player-screen.dark {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  position: relative;
+}
+
+.mafia-player-screen.dark::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Welcome State - Glass Card */
+.mafia-player-screen.dark .welcome-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 28px;
+  padding: 56px 48px;
+  text-align: center;
+  max-width: 460px;
+  width: 100%;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.25);
+  position: relative;
+  z-index: 1;
+}
+
+.mafia-player-screen.dark h1 {
+  font-size: 4rem;
+  font-weight: 200;
+  color: #FFFFFF;
+  margin: 0 0 20px 0;
+  letter-spacing: -2px;
+  opacity: 0.85;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+  font-family: "STIX Two Math";
+}
+
+.mafia-player-screen.dark p {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 48px 0;
+  line-height: 1.6;
+  font-weight: 300;
+  letter-spacing: 0.2px;
+}
+
+.get-role-button {
+  width: 100%;
+  max-width: 320px;
+  padding: 18px 32px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 16px;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.25);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.get-role-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(102, 126, 234, 0.35);
+}
+
+.get-role-button:active {
+  transform: scale(0.98);
+}
+
+/* Role Card - Glass Style */
+.mafia-player-screen.dark .role-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  padding: 48px 40px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  flex-direction: column;
+}
+
+.role-header {
+  margin-bottom: 40px;
+}
+
+.role-name {
+  font-size: 3.5rem;
+  font-weight: 500;
+  margin: 0 0 24px 0;
+  letter-spacing: -1.5px;
+  opacity: 0.98;
+}
+
+.role-team {
+  display: flex;
+  justify-content: center;
+}
+
+.team-indicator {
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.team-indicator.mafia {
+  background: rgba(220, 38, 38, 0.2);
+  color: #FF6B6B;
+  border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+.team-indicator.citizen {
+  background: rgba(5, 150, 105, 0.2);
+  color: #6BCF7F;
+  border: 1px solid rgba(5, 150, 105, 0.3);
+}
+
+.role-description {
+  margin: 40px 0;
+}
+
+.role-description p {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 300;
+}
+
+.role-footer {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.privacy-notice {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+/* Loading State */
+.loading-state {
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 24px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-state p {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  font-weight: 300;
+}
+
+/* Error State */
+.error-state {
+  text-align: center;
+}
+
+.error-state h3 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #FF6B6B;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.3px;
+}
+
+.error-state p {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 32px 0;
+  font-weight: 300;
+}
+
+.retry-button {
+  padding: 16px 32px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.retry-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.retry-button:active {
+  transform: scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .mafia-player-screen.dark {
+    padding: 16px;
+  }
+
+  .mafia-player-screen.dark .role-card {
+    padding: 32px 24px;
+  }
+
+  .role-name {
+    font-size: 2.5rem;
+  }
+
+  .mafia-player-screen.dark h1 {
+    font-size: 2.75rem;
+  }
+
+  .mafia-player-screen.dark .welcome-card {
+    padding: 40px 32px;
+  }
+}

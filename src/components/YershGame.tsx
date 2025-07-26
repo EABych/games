@@ -192,7 +192,6 @@ export const YershGame: React.FC<YershGameProps> = ({ onBackToHome }) => {
     return (
       <div className="yersh-game">
         <div className="game-header">
-          <button className="back-button" onClick={onBackToHome}>← Назад</button>
           <h1>Игра Ерш</h1>
           <a 
             href="https://tesera.ru/images/items/1449810/Rules-erch-rus.pdf" 
@@ -234,7 +233,6 @@ export const YershGame: React.FC<YershGameProps> = ({ onBackToHome }) => {
       )}
 
       <div className="game-header">
-        <button className="back-button" onClick={onBackToHome}>← Назад</button>
         <div className="game-stats">
           <span>Выполнено заданий: {gameState.completedTasks}</span>
           <span>Карт в колоде: {gameState.deck.length}</span>

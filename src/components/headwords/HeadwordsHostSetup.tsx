@@ -84,7 +84,6 @@ export const HeadwordsHostSetup: React.FC<HeadwordsHostSetupProps> = ({ onGameSt
   return (
     <div className="headwords-host-setup">
       <div className="setup-header">
-        <button onClick={onBack} className="back-button">← Игры</button>
         <h2>🎭 Слова на лоб</h2>
         <p>Настройте параметры игры</p>
       </div>
