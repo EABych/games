@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
+export interface HeadwordsGameSettings {
+  playerCount: number;
+  category: string;
+}
+
 interface HeadwordsCategory {
   id: string;
   name: string;
@@ -9,11 +14,6 @@ interface HeadwordsCategory {
 interface HeadwordsHostSetupProps {
   onGameStart: (settings: HeadwordsGameSettings) => void;
   onBack: () => void;
-}
-
-export interface HeadwordsGameSettings {
-  playerCount: number;
-  category: string;
 }
 
 export const HeadwordsHostSetup: React.FC<HeadwordsHostSetupProps> = ({ onGameStart, onBack }) => {
