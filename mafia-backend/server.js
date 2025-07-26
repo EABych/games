@@ -5,18 +5,48 @@ const app = express();
 
 // CORS настройки для GitHub Pages
 app.use(cors({
-  origin: ['https://elenabyckova.github.io', 'http://localhost:5173', 'http://localhost:3000'],
+  origin: ['https://elenabyckova.github.io', 'https://eabych.github.io', 'http://localhost:5173', 'http://localhost:3000'],
   methods: ['GET', 'POST'],
   credentials: true
 }));
 
 app.use(express.json());
 
-// Хранилище для текущего списка ролей
+// Хранилище для всех активных игр
+let activeGames = new Map();
+
+// Генерация уникального ID комнаты
+function generateRoomId() {
+  return Math.random().toString(36).substring(2, 8).toUpperCase();
+}
+
+// Создание структуры игры Мафия
+function createMafiaGame(roomId, roles) {
+  return {
+    id: roomId,
+    type: 'mafia',
+    roles: roles,
+    roleIndex: 0,
+    createdAt: new Date()
+  };
+}
+
+// Создание структуры игры Шпион
+function createSpyGame(roomId, location, spyPlayerIndex, playerCount) {
+  return {
+    id: roomId,
+    type: 'spy',
+    location: location,
+    spyPlayerIndex: spyPlayerIndex,
+    playerCount: playerCount,
+    rolesGiven: 0,
+    createdAt: new Date()
+  };
+}
+
+// Совместимость со старым API (временно)
 let currentRoles = [];
 let roleIndex = 0;
-
-// Хранилище для игры Шпион
 let currentSpyGame = {
   location: '',
   spyPlayerIndex: -1,
@@ -245,19 +275,28 @@ app.post('/api/mafia/generate-roles', (req, res) => {
       });
     }
     
-    // Генерируем новый список ролей (удаляем старый)
-    currentRoles = generateRoles(playerCount, settings);
+    // Генерируем новый список ролей и создаем комнату
+    const roles = generateRoles(playerCount, settings);
+    const roomId = generateRoomId();
+    const mafiaGame = createMafiaGame(roomId, roles);
+    
+    // Сохраняем игру в активных играх
+    activeGames.set(roomId, mafiaGame);
+    
+    // Обновляем старые переменные для совместимости
+    currentRoles = roles;
     roleIndex = 0;
     
-    console.log(`Сгенерированы роли для ${playerCount} игроков:`, currentRoles);
+    console.log(`Создана игра Мафия ${roomId} для ${playerCount} игроков:`, roles);
     
     res.json({
       success: true,
       message: `Роли сгенерированы для ${playerCount} игроков`,
+      roomId: roomId,
       playerCount,
-      totalRoles: currentRoles.length,
-      mafiaCount: currentRoles.filter(role => role === 'mafia' || role === 'don').length,
-      citizensCount: currentRoles.filter(role => ['citizen', 'doctor', 'detective', 'sheriff'].includes(role)).length
+      totalRoles: roles.length,
+      mafiaCount: roles.filter(role => role === 'mafia' || role === 'don').length,
+      citizensCount: roles.filter(role => ['citizen', 'doctor', 'detective', 'sheriff'].includes(role)).length
     });
     
   } catch (error) {
@@ -270,31 +309,65 @@ app.post('/api/mafia/generate-roles', (req, res) => {
 // Получить свою роль
 app.get('/api/mafia/get-role', (req, res) => {
   try {
-    if (currentRoles.length === 0) {
-      return res.status(404).json({ 
-        error: 'Роли не были сгенерированы. Сначала создайте список ролей.' 
+    const { roomId } = req.query;
+    
+    if (roomId) {
+      // Новый API с roomId
+      const game = activeGames.get(roomId);
+      if (!game || game.type !== 'mafia') {
+        return res.status(404).json({ 
+          error: 'Игра Мафия не найдена. Проверьте ID комнаты.' 
+        });
+      }
+      
+      if (game.roleIndex >= game.roles.length) {
+        return res.status(404).json({ 
+          error: 'Все роли уже розданы. Создайте новую игру.' 
+        });
+      }
+      
+      const role = game.roles[game.roleIndex];
+      const roleInfo = getRoleInfo(role);
+      game.roleIndex++;
+      
+      console.log(`Выдана роль в комнате ${roomId}: ${role} (${game.roleIndex}/${game.roles.length})`);
+      
+      res.json({
+        role,
+        roleInfo,
+        playerNumber: game.roleIndex,
+        totalPlayers: game.roles.length,
+        isLastPlayer: game.roleIndex === game.roles.length,
+        roomId: roomId
+      });
+    } else {
+      // Старый API для совместимости
+      if (currentRoles.length === 0) {
+        return res.status(404).json({ 
+          error: 'Роли не были сгенерированы. Сначала создайте список ролей.' 
+        });
+      }
+      
+      if (roleIndex >= currentRoles.length) {
+        return res.status(404).json({ 
+          error: 'Все роли уже розданы. Создайте новый список ролей.' 
+        });
+      }
+      
+      const role = currentRoles[roleIndex];
+      const roleInfo = getRoleInfo(role);
+      roleIndex++;
+      
+      console.log(`Выдана роль: ${role} (${roleIndex}/${currentRoles.length})`);
+      
+      res.json({
+        role,
+        roleInfo,
+        playerNumber: roleIndex,
+        totalPlayers: currentRoles.length,
+        isLastPlayer: roleIndex === currentRoles.length
       });
     }
-    
-    if (roleIndex >= currentRoles.length) {
-      return res.status(404).json({ 
-        error: 'Все роли уже розданы. Создайте новый список ролей.' 
-      });
-    }
-    
-    const role = currentRoles[roleIndex];
-    const roleInfo = getRoleInfo(role);
-    roleIndex++;
-    
-    console.log(`Выдана роль: ${role} (${roleIndex}/${currentRoles.length})`);
-    
-    res.json({
-      role,
-      roleInfo,
-      playerNumber: roleIndex,
-      totalPlayers: currentRoles.length,
-      isLastPlayer: roleIndex === currentRoles.length
-    });
     
   } catch (error) {
     res.status(500).json({ 
@@ -353,7 +426,14 @@ app.post('/api/spy/generate-game', (req, res) => {
     // Выбираем случайного шпиона (игрок с индексом от 0 до playerCount-1)
     const spyIndex = Math.floor(Math.random() * playerCount);
     
-    // Обновляем состояние игры
+    // Создаем комнату
+    const roomId = generateRoomId();
+    const spyGame = createSpyGame(roomId, selectedLocation, spyIndex, playerCount);
+    
+    // Сохраняем игру в активных играх
+    activeGames.set(roomId, spyGame);
+    
+    // Обновляем старые переменные для совместимости
     currentSpyGame = {
       location: selectedLocation,
       spyPlayerIndex: spyIndex,
@@ -361,11 +441,12 @@ app.post('/api/spy/generate-game', (req, res) => {
       rolesGiven: 0
     };
     
-    console.log(`Создана игра Шпион: локация "${selectedLocation}", шпион - игрок ${spyIndex + 1}/${playerCount}`);
+    console.log(`Создана игра Шпион ${roomId}: локация "${selectedLocation}", шпион - игрок ${spyIndex + 1}/${playerCount}`);
     
     res.json({
       success: true,
       message: `Игра Шпион создана для ${playerCount} игроков`,
+      roomId: roomId,
       playerCount,
       location: selectedLocation,
       spyPlayerIndex: spyIndex
@@ -381,50 +462,103 @@ app.post('/api/spy/generate-game', (req, res) => {
 // Получить свою роль в игре Шпион
 app.get('/api/spy/get-role', (req, res) => {
   try {
-    if (!currentSpyGame.location) {
-      return res.status(404).json({ 
-        error: 'Игра Шпион не была создана. Сначала создайте игру.' 
-      });
-    }
+    const { roomId } = req.query;
     
-    if (currentSpyGame.rolesGiven >= currentSpyGame.playerCount) {
-      return res.status(404).json({ 
-        error: 'Все роли уже розданы. Создайте новую игру.' 
-      });
-    }
-    
-    const currentPlayerIndex = currentSpyGame.rolesGiven;
-    const isSpy = currentPlayerIndex === currentSpyGame.spyPlayerIndex;
-    
-    currentSpyGame.rolesGiven++;
-    
-    console.log(`Выдана роль в игре Шпион: игрок ${currentPlayerIndex + 1} - ${isSpy ? 'ШПИОН' : `житель локации "${currentSpyGame.location}"`}`);
-    
-    const response = {
-      playerNumber: currentPlayerIndex + 1,
-      totalPlayers: currentSpyGame.playerCount,
-      isSpy: isSpy,
-      isLastPlayer: currentSpyGame.rolesGiven === currentSpyGame.playerCount
-    };
-    
-    if (isSpy) {
-      response.role = 'spy';
-      response.roleInfo = {
-        name: 'Шпион',
-        description: 'Вы шпион! Ваша задача - угадать локацию, не выдав себя',
-        instruction: 'Слушайте других игроков и попытайтесь понять, где вы находитесь'
+    if (roomId) {
+      // Новый API с roomId
+      const game = activeGames.get(roomId);
+      if (!game || game.type !== 'spy') {
+        return res.status(404).json({ 
+          error: 'Игра Шпион не найдена. Проверьте ID комнаты.' 
+        });
+      }
+      
+      if (game.rolesGiven >= game.playerCount) {
+        return res.status(404).json({ 
+          error: 'Все роли уже розданы. Создайте новую игру.' 
+        });
+      }
+      
+      const currentPlayerIndex = game.rolesGiven;
+      const isSpy = currentPlayerIndex === game.spyPlayerIndex;
+      
+      game.rolesGiven++;
+      
+      console.log(`Выдана роль в комнате ${roomId}: игрок ${currentPlayerIndex + 1} - ${isSpy ? 'ШПИОН' : `житель локации "${game.location}"`}`);
+      
+      const response = {
+        playerNumber: currentPlayerIndex + 1,
+        totalPlayers: game.playerCount,
+        isSpy: isSpy,
+        isLastPlayer: game.rolesGiven === game.playerCount,
+        roomId: roomId
       };
+      
+      if (isSpy) {
+        response.role = 'spy';
+        response.roleInfo = {
+          name: 'Шпион',
+          description: 'Вы шпион! Ваша задача - угадать локацию, не выдав себя',
+          instruction: 'Слушайте других игроков и попытайтесь понять, где вы находитесь'
+        };
+      } else {
+        response.role = 'resident';
+        response.location = game.location;
+        response.roleInfo = {
+          name: 'Житель локации',
+          description: `Вы находитесь в локации: ${game.location}`,
+          instruction: 'Ваша задача - найти шпиона среди игроков'
+        };
+      }
+      
+      res.json(response);
     } else {
-      response.role = 'resident';
-      response.location = currentSpyGame.location;
-      response.roleInfo = {
-        name: 'Житель локации',
-        description: `Вы находитесь в локации: ${currentSpyGame.location}`,
-        instruction: 'Ваша задача - найти шпиона среди игроков'
+      // Старый API для совместимости
+      if (!currentSpyGame.location) {
+        return res.status(404).json({ 
+          error: 'Игра Шпион не была создана. Сначала создайте игру.' 
+        });
+      }
+      
+      if (currentSpyGame.rolesGiven >= currentSpyGame.playerCount) {
+        return res.status(404).json({ 
+          error: 'Все роли уже розданы. Создайте новую игру.' 
+        });
+      }
+      
+      const currentPlayerIndex = currentSpyGame.rolesGiven;
+      const isSpy = currentPlayerIndex === currentSpyGame.spyPlayerIndex;
+      
+      currentSpyGame.rolesGiven++;
+      
+      console.log(`Выдана роль в игре Шпион: игрок ${currentPlayerIndex + 1} - ${isSpy ? 'ШПИОН' : `житель локации "${currentSpyGame.location}"`}`);
+      
+      const response = {
+        playerNumber: currentPlayerIndex + 1,
+        totalPlayers: currentSpyGame.playerCount,
+        isSpy: isSpy,
+        isLastPlayer: currentSpyGame.rolesGiven === currentSpyGame.playerCount
       };
+      
+      if (isSpy) {
+        response.role = 'spy';
+        response.roleInfo = {
+          name: 'Шпион',
+          description: 'Вы шпион! Ваша задача - угадать локацию, не выдав себя',
+          instruction: 'Слушайте других игроков и попытайтесь понять, где вы находитесь'
+        };
+      } else {
+        response.role = 'resident';
+        response.location = currentSpyGame.location;
+        response.roleInfo = {
+          name: 'Житель локации',
+          description: `Вы находитесь в локации: ${currentSpyGame.location}`,
+          instruction: 'Ваша задача - найти шпиона среди игроков'
+        };
+      }
+      
+      res.json(response);
     }
-    
-    res.json(response);
     
   } catch (error) {
     res.status(500).json({ 
