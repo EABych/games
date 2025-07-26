@@ -28,7 +28,9 @@ import { PoetEnd } from './components/poet/PoetEnd';
 import { YershGame } from './components/YershGame';
 import { AuthScreen } from './components/AuthScreen';
 import { MafiaGame } from './components/mafia/MafiaGame';
+import { MafiaPlayerScreen } from './components/mafia/MafiaPlayerScreen';
 import './components/mafia/MafiaHost.css';
+import './components/mafia/MafiaPlayer.css';
 
 type AppPhase = 'home' | 'alias' | 'fants' | 'krocodil' | 'this-or-that' | 'poet' | 'yersh' | 'mafia';
 
@@ -36,6 +38,10 @@ function App() {
   const [appPhase, setAppPhase] = useState<AppPhase>('home');
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+  // Проверяем query параметры для режима игрока
+  const urlParams = new URLSearchParams(window.location.search);
+  const isPlayerMode = urlParams.get('mode') === 'player';
   const { 
     gameState, 
     startNewGame, 
@@ -143,6 +149,15 @@ function App() {
   const handleCancelModal = () => {
     setShowConfirmModal(false);
   };
+
+  // Show player screen if in player mode
+  if (isPlayerMode) {
+    return (
+      <div className="app">
+        <MafiaPlayerScreen />
+      </div>
+    );
+  }
 
   // Show auth screen if not authenticated
   if (!isAuthenticated) {

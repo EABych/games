@@ -349,6 +349,51 @@
   border: 1px solid rgba(52, 73, 94, 0.2);
 }
 
+.player-access-section {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(52, 152, 219, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(52, 152, 219, 0.2);
+}
+
+.player-access-section h4 {
+  margin: 0 0 16px 0;
+  color: #3498db;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.show-qr-button {
+  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(155, 89, 182, 0.3);
+  transition: all 0.2s ease;
+  margin-bottom: 12px;
+  display: block;
+  width: 100%;
+}
+
+.show-qr-button:hover {
+  background: linear-gradient(135deg, #8e44ad, #732d91);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(155, 89, 182, 0.4);
+}
+
+.access-hint {
+  margin: 0;
+  font-size: 14px;
+  color: #7f8c8d;
+  text-align: center;
+  font-style: italic;
+}
+
 /* Timer Display */
 .timer-display {
   background: rgba(255, 255, 255, 0.95);

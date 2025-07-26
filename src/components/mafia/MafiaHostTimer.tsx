@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { QRCodeModal } from './QRCodeModal';
+import './QRCodeModal.css';
 
 interface MafiaHostTimerProps {
   settings: MafiaGameSettings;
@@ -24,6 +26,7 @@ export const MafiaHostTimer: React.FC<MafiaHostTimerProps> = ({ settings, onBack
   const [isActive, setIsActive] = useState<boolean>(false);
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [serverStatus, setServerStatus] = useState<string>('');
+  const [showQRModal, setShowQRModal] = useState<boolean>(false);
 
   // Создание игры на сервере
   const createGameOnServer = async () => {
@@ -74,7 +77,7 @@ export const MafiaHostTimer: React.FC<MafiaHostTimerProps> = ({ settings, onBack
     let interval: number | null = null;
     
     if (isActive && timeLeft > 0) {
-      interval = setInterval(() => {
+      interval = window.setInterval(() => {
         setTimeLeft(timeLeft => {
           if (timeLeft <= 1) {
             setIsActive(false);
@@ -88,7 +91,7 @@ export const MafiaHostTimer: React.FC<MafiaHostTimerProps> = ({ settings, onBack
     }
 
     return () => {
-      if (interval) clearInterval(interval);
+      if (interval) window.clearInterval(interval);
     };
   }, [isActive, timeLeft]);
 
@@ -172,8 +175,18 @@ export const MafiaHostTimer: React.FC<MafiaHostTimerProps> = ({ settings, onBack
         ) : (
           <div className="game-info">
             <p>{serverStatus}</p>
-            <p>🔗 Игроки могут получать роли по адресу:</p>
-            <code>https://mafia-backend-5z0e.onrender.com/api/mafia/get-role</code>
+            <div className="player-access-section">
+              <h4>📱 Доступ для игроков:</h4>
+              <button 
+                onClick={() => setShowQRModal(true)}
+                className="show-qr-button"
+              >
+                📱 Показать QR-код
+              </button>
+              <p className="access-hint">
+                Игроки могут отсканировать QR-код или перейти по ссылке для получения ролей
+              </p>
+            </div>
           </div>
         )}
       </div>
@@ -257,6 +270,11 @@ export const MafiaHostTimer: React.FC<MafiaHostTimerProps> = ({ settings, onBack
           <li>Когда все роли розданы - начинайте игру</li>
         </ul>
       </div>
+
+      <QRCodeModal 
+        isOpen={showQRModal}
+        onClose={() => setShowQRModal(false)}
+      />
     </div>
   );
 };
