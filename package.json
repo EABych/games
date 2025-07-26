@@ -6,7 +6,8 @@
   "homepage": "https://EABych.github.io/games",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npm ci && tsc -b && vite build",
+    "render-build": "npm ci && npm run build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
