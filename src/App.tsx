@@ -362,7 +362,7 @@ const MainApp: React.FC = () => {
             </svg>
           </button>
           
-          <MafiaGame onBack={handleBackToHome} />
+          <MafiaGame />
         </>
       )}
 
@@ -374,7 +374,7 @@ const MainApp: React.FC = () => {
             </svg>
           </button>
           
-          <SpyGame onBack={handleBackToHome} />
+          <SpyGame />
         </>
       )}
 
@@ -386,7 +386,7 @@ const MainApp: React.FC = () => {
             </svg>
           </button>
           
-          <HeadwordsGame onBack={handleBackToHome} />
+          <HeadwordsGame />
         </>
       )}
 

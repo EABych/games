@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { MafiaHostSetup } from './MafiaHostSetup';
 import { MafiaHostTimer } from './MafiaHostTimer';
 
-interface MafiaGameProps {
-  onBack: () => void;
-}
+interface MafiaGameProps {}
 
 interface MafiaGameSettings {
   playerCount: number;
@@ -19,17 +17,13 @@ interface MafiaGameSettings {
 
 type GamePhase = 'setup' | 'timer';
 
-export const MafiaGame: React.FC<MafiaGameProps> = ({ onBack }) => {
+export const MafiaGame: React.FC<MafiaGameProps> = () => {
   const [phase, setPhase] = useState<GamePhase>('setup');
   const [gameSettings, setGameSettings] = useState<MafiaGameSettings | null>(null);
 
   const handleStartGame = (settings: MafiaGameSettings) => {
     setGameSettings(settings);
     setPhase('timer');
-  };
-
-  const handleBackToSetup = () => {
-    setPhase('setup');
   };
 
   const handleNewGame = () => {
