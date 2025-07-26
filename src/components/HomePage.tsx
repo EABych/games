@@ -33,11 +33,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onSelectGame }) => {
       title: 'Поэт',
       description: 'Придумай рифму к строке стиха'
     },
-    {
-      id: 'yersh',
-      title: 'Ерш',
-      description: 'Весёлая карточная игра с заданиями'
-    },
+    // {
+    //   id: 'yersh',
+    //   title: 'Ерш',
+    //   description: 'Весёлая карточная игра с заданиями'
+    // },
     {
       id: 'mafia',
       title: 'Мафия',
@@ -61,7 +61,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onSelectGame }) => {
         <h1>Игры для компании</h1>
         <p>Выберите игру для веселого времяпрепровождения</p>
       </div>
-      
+
       <div className="games-grid">
         {games.map((game) => (
           <button
