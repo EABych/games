@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { QRCodeModal } from '../mafia/QRCodeModal';
-import { HeadwordsGameSettings } from './HeadwordsHostSetup';
+import type { HeadwordsGameSettings } from './HeadwordsHostSetup';
 
 interface HeadwordsHostGameProps {
   settings: HeadwordsGameSettings;
