@@ -171,7 +171,7 @@ function App() {
         ) : gameType === 'spy' ? (
           <SpyPlayerScreen roomId={roomId} />
         ) : gameType === 'headwords' ? (
-          <HeadwordsPlayerScreen roomId={roomId} />
+          <HeadwordsPlayerScreen roomId={roomId} onBackToGames={handleBackToHome} />
         ) : (
           <SpyPlayerScreen roomId={roomId} />
         )}

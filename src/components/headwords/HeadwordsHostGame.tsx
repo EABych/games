@@ -12,7 +12,6 @@ export const HeadwordsHostGame: React.FC<HeadwordsHostGameProps> = ({ settings, 
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [serverStatus, setServerStatus] = useState<string>('');
   const [showQRModal, setShowQRModal] = useState<boolean>(false);
-  const [currentRole, setCurrentRole] = useState<any>(null);
   const [roomId, setRoomId] = useState<string>('');
 
   // Создание игры на сервере
@@ -70,31 +69,19 @@ export const HeadwordsHostGame: React.FC<HeadwordsHostGameProps> = ({ settings, 
       });
       setServerStatus('🔄 Игра сброшена');
       setGameStarted(false);
-      setCurrentRole(null);
       setRoomId('');
     } catch (error) {
       setServerStatus('❌ Ошибка сброса игры');
     }
   };
 
-  // Получить роль на этом устройстве
-  const getRoleOnThisDevice = async () => {
-    try {
-      const url = roomId 
-        ? `https://mafia-backend-5z0e.onrender.com/api/headwords/get-role?roomId=${roomId}`
-        : 'https://mafia-backend-5z0e.onrender.com/api/headwords/get-role';
-      
-      const response = await fetch(url);
-      
-      if (response.ok) {
-        const data = await response.json();
-        setCurrentRole(data);
-      } else {
-        const errorData = await response.json();
-        setServerStatus(`❌ ${errorData.error}`);
-      }
-    } catch (error) {
-      setServerStatus('❌ Ошибка получения роли');
+  // Открыть роль для игрока в новом окне
+  const openRoleInNewWindow = () => {
+    if (roomId) {
+      const playerUrl = `${window.location.origin}/?mode=player&roomId=${roomId}&gameType=headwords`;
+      window.open(playerUrl, '_blank', 'width=400,height=700,menubar=no,toolbar=no,location=no,status=no');
+    } else {
+      setServerStatus('❌ Ошибка: ID комнаты не найден');
     }
   };
 
@@ -111,44 +98,6 @@ export const HeadwordsHostGame: React.FC<HeadwordsHostGameProps> = ({ settings, 
     return displayNames[categoryId] || categoryId;
   };
 
-  if (currentRole) {
-    return (
-      <div className="headwords-host-game">
-        <div className="role-display">
-          <div className="role-card">
-            <div className="role-header">
-              <div className="role-emoji">🎭</div>
-              <h2 className="role-name">Ваша роль</h2>
-              <div className="player-info">
-                Игрок {currentRole.playerNumber} из {currentRole.totalPlayers}
-              </div>
-            </div>
-            
-            <div className="role-content">
-              <div className="role-text">
-                {currentRole.role}
-              </div>
-              <div className="category-info">
-                Категории: {currentRole.categoriesDisplay || getCategoryDisplayName(currentRole.category)}
-              </div>
-            </div>
-            
-            <div className="role-footer">
-              <div className="warning-message">
-                ⚠️ Не показывайте эту информацию другим игрокам!
-              </div>
-            </div>
-          </div>
-          
-          <div className="game-actions">
-            <button onClick={() => setCurrentRole(null)} className="back-to-game-button">
-              ← Вернуться к игре
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="headwords-host-game">
@@ -177,14 +126,14 @@ export const HeadwordsHostGame: React.FC<HeadwordsHostGameProps> = ({ settings, 
                 </button>
                 
                 <button 
-                  onClick={getRoleOnThisDevice}
+                  onClick={openRoleInNewWindow}
                   className="get-role-here-button"
                 >
-                  🎲 Получить роль здесь
+                  🎲 Показать роль игроку
                 </button>
               </div>
               <p className="access-hint">
-                Игроки могут отсканировать QR-код или получить роль на этом устройстве
+                Игроки могут отсканировать QR-код или нажать кнопку для открытия роли в новом окне
               </p>
             </div>
           </div>
@@ -205,7 +154,7 @@ export const HeadwordsHostGame: React.FC<HeadwordsHostGameProps> = ({ settings, 
         <h3>📝 Инструкции:</h3>
         <ul>
           <li>Сначала создайте игру на сервере</li>
-          <li>Дайте игрокам доступ к ролям через QR-код или на этом устройстве</li>
+          <li>Дайте игрокам доступ к ролям через QR-код или откройте в новом окне</li>
           <li>Игроки увидят таймер, затем роль появится на экране</li>
           <li>Игрок должен приложить телефон ко лбу горизонтально</li>
           <li>Остальные видят роль и отвечают на вопросы игрока</li>

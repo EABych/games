@@ -125,19 +125,21 @@
 
 .headwords-host-setup .category-button {
   background: rgba(255, 255, 255, 0.8);
-  border: 2px solid transparent;
+  border: 2px solid rgba(102, 126, 234, 0.3);
   padding: 20px 15px;
   border-radius: 16px;
   cursor: pointer;
   transition: all 0.2s ease;
   text-align: center;
   position: relative;
+  color: #2d3748;
 }
 
 .headwords-host-setup .category-button:hover {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  border-color: rgba(102, 126, 234, 0.5);
 }
 
 .headwords-host-setup .category-button.selected {
@@ -689,74 +691,56 @@
 
 /* Role Screen - Optimized for horizontal viewing */
 .headwords-player-screen.role-screen {
-  background: #000000;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 0;
   align-items: center;
   justify-content: center;
   position: relative;
+  overflow: hidden;
 }
 
-.headwords-player-screen.role-screen .role-container {
-  width: 100%;
+
+/* Карточка роли на весь экран */
+.headwords-player-screen.role-screen .role-card-fullscreen {
+  width: 100vw;
   height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 40px;
   box-sizing: border-box;
+  position: relative;
 }
 
-.headwords-player-screen.role-screen .role-category {
-  font-size: 24px;
-  font-weight: 700;
-  color: #ffffff;
-  opacity: 0.8;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.headwords-player-screen.role-screen .role-main {
-  font-size: 72px;
+/* Основной текст роли */
+.headwords-player-screen.role-screen .role-text-main {
+  font-size: clamp(48px, 8vw, 96px);
   font-weight: 900;
   color: #ffffff;
   text-align: center;
   line-height: 1.1;
-  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  margin: 20px 0;
-  /* Адаптивный размер для длинных названий */
+  text-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   word-break: break-word;
   hyphens: auto;
+  max-width: 100%;
+  position: relative;
 }
 
-.headwords-player-screen.role-screen .role-footer {
-  margin-top: 30px;
-}
-
-.headwords-player-screen.role-screen .player-info {
-  font-size: 18px;
-  color: #ffffff;
-  opacity: 0.7;
-  text-align: center;
-  font-weight: 600;
-}
-
-.headwords-player-screen.role-screen .role-instructions {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 15px;
-  text-align: center;
-  font-size: 14px;
-  backdrop-filter: blur(10px);
-}
-
-.headwords-player-screen.role-screen .role-instructions p {
-  margin: 5px 0;
-  opacity: 0.9;
+/* Добавляем декоративный эффект */
+.headwords-player-screen.role-screen .role-text-main::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background: linear-gradient(45deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    transparent 50%, 
+    rgba(255, 255, 255, 0.1) 100%);
+  border-radius: 20px;
+  z-index: -1;
+  opacity: 0.5;
 }
 
 /* Responsive Design */
@@ -808,41 +792,19 @@
     font-size: 80px;
   }
   
-  .headwords-player-screen.role-screen .role-main {
-    font-size: 48px;
-  }
-  
-  .headwords-player-screen.role-screen .role-category {
-    font-size: 18px;
+  .headwords-player-screen.role-screen .role-text-main {
+    font-size: 64px;
   }
 }
 
 /* Landscape optimizations for role screen */
 @media (orientation: landscape) and (max-height: 600px) {
-  .headwords-player-screen.role-screen .role-main {
-    font-size: 64px;
+  .headwords-player-screen.role-screen .role-text-main {
+    font-size: 80px;
   }
   
-  .headwords-player-screen.role-screen .role-category {
-    font-size: 20px;
-    margin-bottom: 15px;
-  }
-  
-  .headwords-player-screen.role-screen .role-footer {
-    margin-top: 20px;
-  }
-  
-  .headwords-player-screen.role-screen .role-instructions {
-    padding: 10px;
-    font-size: 12px;
+  .headwords-player-screen.role-screen .role-card-fullscreen {
+    padding: 20px;
   }
 }
 
-/* Very long role names - adaptive font size */
-.headwords-player-screen.role-screen .role-main[data-length="long"] {
-  font-size: 48px;
-}
-
-.headwords-player-screen.role-screen .role-main[data-length="very-long"] {
-  font-size: 36px;
-}

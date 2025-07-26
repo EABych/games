@@ -11,9 +11,10 @@ interface HeadwordsRole {
 
 interface HeadwordsPlayerScreenProps {
   roomId?: string | null;
+  onBackToGames?: () => void;
 }
 
-export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ roomId }) => {
+export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ roomId, onBackToGames }) => {
   const [playerRole, setPlayerRole] = useState<HeadwordsRole | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
@@ -49,7 +50,7 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
 
   const startCountdown = (roleData: HeadwordsRole) => {
     setIsCountingDown(true);
-    setCountdown(5);
+    setCountdown(10);
 
     const timer = setInterval(() => {
       setCountdown((prev) => {
@@ -119,26 +120,11 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
   if (playerRole) {
     return (
       <div className="headwords-player-screen role-screen">
-        <div className="role-container">
-          <div className="role-category">
-            {getCategoryEmoji(playerRole.category)} {getCategoryDisplayName(playerRole.category)}
-          </div>
-
-          <div className="role-main">
+        {/* Карточка с ролью на весь экран */}
+        <div className="role-card-fullscreen">
+          <div className="role-text-main">
             {playerRole.role}
           </div>
-
-          <div className="role-footer">
-            <div className="player-info">
-              Игрок {playerRole.playerNumber} из {playerRole.totalPlayers}
-            </div>
-          </div>
-        </div>
-
-        {/* Инструкция внизу экрана (для владельца телефона) */}
-        <div className="role-instructions">
-          <p>❓ Задавайте вопросы "да/нет", чтобы угадать свою роль</p>
-          <p>🚫 Не смотрите на экран! Держите телефон так, чтобы видели только другие</p>
         </div>
       </div>
     );
@@ -160,7 +146,7 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
                 <h3>📖 Правила игры:</h3>
                 <ul>
                   <li>🎲 <strong>Получение роли:</strong> Нажмите кнопку и получите роль</li>
-                  <li>📱 <strong>Таймер:</strong> У вас будет 5 секунд, чтобы приложить телефон ко лбу</li>
+                  <li>📱 <strong>Таймер:</strong> У вас будет 10 секунд, чтобы приложить телефон ко лбу</li>
                   <li>🔄 <strong>Поворот:</strong> Поверните телефон горизонтально для лучшей видимости</li>
                   <li>❓ <strong>Вопросы:</strong> Задавайте вопросы "да/нет", чтобы угадать роль</li>
                   <li>🎯 <strong>Цель:</strong> Угадать, кто вы, не глядя на экран</li>
