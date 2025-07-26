@@ -1,0 +1,833 @@
+/* Spy Game Styles */
+
+/* Host Setup */
+.spy-host-setup {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.spy-host-setup .setup-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.spy-host-setup .setup-header h2 {
+  margin: 20px 0 10px 0;
+  font-size: 32px;
+  font-weight: 800;
+  color: #2c3e50;
+}
+
+.spy-host-setup .setup-header p {
+  color: #7f8c8d;
+  font-size: 16px;
+}
+
+.spy-host-setup .back-button {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #34495e;
+  cursor: pointer;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.spy-host-setup .back-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.spy-host-setup .setup-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.spy-host-setup .setting-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.spy-host-setup .setting-section h3 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.spy-host-setup .player-count-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.spy-host-setup .count-button {
+  width: 50px;
+  height: 50px;
+  border: none;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border-radius: 50%;
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+}
+
+.spy-host-setup .count-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.spy-host-setup .player-count {
+  font-size: 36px;
+  font-weight: 800;
+  color: #2c3e50;
+  min-width: 60px;
+  text-align: center;
+}
+
+.spy-host-setup .game-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.spy-host-setup .rule-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 20px;
+  background: rgba(102, 126, 234, 0.05);
+  border-radius: 16px;
+  border-left: 4px solid #667eea;
+}
+
+.spy-host-setup .rule-icon {
+  font-size: 24px;
+  min-width: 24px;
+}
+
+.spy-host-setup .rule-text h4 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.spy-host-setup .rule-text p {
+  margin: 0;
+  font-size: 14px;
+  color: #34495e;
+  line-height: 1.5;
+}
+
+.spy-host-setup .start-game-button {
+  width: 100%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 20px;
+  border-radius: 16px;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.spy-host-setup .start-game-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
+}
+
+.spy-host-setup .start-game-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.spy-host-setup .errors {
+  background: rgba(231, 76, 60, 0.1);
+  border: 2px solid #e74c3c;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.spy-host-setup .errors h4 {
+  margin: 0 0 10px 0;
+  color: #e74c3c;
+  font-size: 16px;
+}
+
+.spy-host-setup .errors ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.spy-host-setup .errors li {
+  color: #e74c3c;
+  margin: 5px 0;
+}
+
+/* Host Game */
+.spy-host-game {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.spy-host-game .game-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.spy-host-game .game-header h2 {
+  margin: 20px 0 10px 0;
+  font-size: 32px;
+  font-weight: 800;
+  color: #2c3e50;
+}
+
+.spy-host-game .game-header p {
+  color: #7f8c8d;
+  font-size: 16px;
+}
+
+.spy-host-game .server-status {
+  max-width: 600px;
+  margin: 0 auto 30px auto;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.spy-host-game .create-game-button {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 20px 40px;
+  border-radius: 16px;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.spy-host-game .create-game-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
+}
+
+.spy-host-game .access-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.spy-host-game .show-qr-button,
+.spy-host-game .get-role-here-button {
+  background: linear-gradient(135deg, #27ae60, #229954);
+  color: white;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(39, 174, 96, 0.3);
+}
+
+.spy-host-game .show-qr-button:hover,
+.spy-host-game .get-role-here-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+}
+
+.spy-host-game .access-hint {
+  margin: 15px 0 0 0;
+  font-size: 14px;
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+.spy-host-game .game-management {
+  max-width: 600px;
+  margin: 0 auto 30px auto;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.spy-host-game .reset-game-button,
+.spy-host-game .new-setup-button {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  color: white;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(243, 156, 18, 0.3);
+}
+
+.spy-host-game .reset-game-button:hover,
+.spy-host-game .new-setup-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+}
+
+.spy-host-game .instructions {
+  max-width: 600px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.spy-host-game .instructions h3 {
+  margin: 0 0 20px 0;
+  color: #2c3e50;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.spy-host-game .instructions ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.spy-host-game .instructions li {
+  margin: 10px 0;
+  color: #34495e;
+  line-height: 1.5;
+}
+
+/* Role Display */
+.spy-host-game .role-display {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.spy-host-game .role-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border: 4px solid;
+  margin-bottom: 24px;
+}
+
+.spy-host-game .role-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.spy-host-game .role-emoji {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.spy-host-game .role-name {
+  margin: 0 0 12px 0;
+  font-size: 36px;
+  font-weight: 800;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.spy-host-game .player-info {
+  font-size: 16px;
+  color: #7f8c8d;
+  font-weight: 600;
+}
+
+.spy-host-game .role-content {
+  margin-bottom: 24px;
+}
+
+.spy-host-game .role-description,
+.spy-host-game .location-info,
+.spy-host-game .instruction-info {
+  margin-bottom: 24px;
+  padding: 20px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.spy-host-game .role-description h3,
+.spy-host-game .location-info h3,
+.spy-host-game .instruction-info h3 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.spy-host-game .role-description p,
+.spy-host-game .instruction-info p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #34495e;
+  font-weight: 500;
+}
+
+.spy-host-game .location-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.spy-host-game .warning-message {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  color: white;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.spy-host-game .game-actions {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.spy-host-game .back-to-game-button {
+  background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(149, 165, 166, 0.3);
+}
+
+.spy-host-game .back-to-game-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(149, 165, 166, 0.4);
+}
+
+/* Player Screen */
+.spy-player-screen {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-sizing: border-box;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.spy-player-screen .welcome-card,
+.spy-player-screen .role-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  margin: auto;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.spy-player-screen .role-card {
+  border: 4px solid;
+  margin: auto auto 24px auto;
+}
+
+.spy-player-screen .welcome-header h1 {
+  margin: 0 0 16px 0;
+  font-size: 32px;
+  font-weight: 800;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.spy-player-screen .welcome-header p {
+  margin: 0 0 32px 0;
+  font-size: 18px;
+  color: #7f8c8d;
+  font-weight: 500;
+}
+
+.spy-player-screen .game-rules {
+  text-align: left;
+  margin-bottom: 32px;
+  padding: 24px;
+  background: rgba(52, 152, 219, 0.05);
+  border-radius: 16px;
+  border-left: 4px solid #3498db;
+}
+
+.spy-player-screen .game-rules h3 {
+  margin: 0 0 16px 0;
+  color: #3498db;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.spy-player-screen .game-rules ul {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.spy-player-screen .game-rules li {
+  margin: 12px 0;
+  padding: 8px 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #34495e;
+}
+
+.spy-player-screen .game-rules strong {
+  font-weight: 700;
+}
+
+.spy-player-screen .get-role-button {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 20px 40px;
+  border-radius: 16px;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.spy-player-screen .get-role-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
+  background: linear-gradient(135deg, #5a67d8, #6b46c1);
+}
+
+.spy-player-screen .loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 40px;
+}
+
+.spy-player-screen .loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(102, 126, 234, 0.2);
+  border-top: 5px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spy-player-screen .loading-state p {
+  margin: 0;
+  font-size: 18px;
+  color: #7f8c8d;
+  font-weight: 600;
+}
+
+.spy-player-screen .error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 40px;
+}
+
+.spy-player-screen .error-icon {
+  font-size: 48px;
+}
+
+.spy-player-screen .error-state h3 {
+  margin: 0;
+  font-size: 24px;
+  color: #e74c3c;
+  font-weight: 700;
+}
+
+.spy-player-screen .error-state p {
+  margin: 0;
+  font-size: 16px;
+  color: #7f8c8d;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.spy-player-screen .retry-button {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(231, 76, 60, 0.3);
+}
+
+.spy-player-screen .retry-button:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+}
+
+.spy-player-screen .role-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.spy-player-screen .role-emoji {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.spy-player-screen .role-name {
+  margin: 0 0 12px 0;
+  font-size: 36px;
+  font-weight: 800;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.spy-player-screen .player-info {
+  font-size: 16px;
+  color: #7f8c8d;
+  font-weight: 600;
+}
+
+.spy-player-screen .role-content {
+  margin-bottom: 24px;
+}
+
+.spy-player-screen .role-description,
+.spy-player-screen .location-info,
+.spy-player-screen .spy-tips,
+.spy-player-screen .resident-tips,
+.spy-player-screen .instruction-info {
+  margin-bottom: 24px;
+  padding: 20px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.02);
+  text-align: left;
+}
+
+.spy-player-screen .role-description h3,
+.spy-player-screen .location-info h3,
+.spy-player-screen .spy-tips h3,
+.spy-player-screen .resident-tips h3,
+.spy-player-screen .instruction-info h3 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.spy-player-screen .role-description p,
+.spy-player-screen .instruction-info p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #34495e;
+  font-weight: 500;
+}
+
+.spy-player-screen .location-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #27ae60, #229954);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.spy-player-screen .spy-tips ul,
+.spy-player-screen .resident-tips ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.spy-player-screen .spy-tips li,
+.spy-player-screen .resident-tips li {
+  margin: 8px 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #34495e;
+  font-weight: 500;
+}
+
+.spy-player-screen .role-footer {
+  text-align: center;
+  padding-top: 24px;
+  border-top: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.spy-player-screen .warning-message {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  color: white;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .spy-player-screen {
+    padding: 16px;
+  }
+  
+  .spy-player-screen .welcome-card,
+  .spy-player-screen .role-card {
+    padding: 24px;
+    border-radius: 16px;
+    max-height: calc(100vh - 32px);
+    margin: 0 auto 16px auto;
+  }
+  
+  .spy-player-screen .welcome-header h1 {
+    font-size: 28px;
+  }
+  
+  .spy-player-screen .welcome-header p {
+    font-size: 16px;
+  }
+  
+  .spy-player-screen .role-emoji {
+    font-size: 48px;
+  }
+  
+  .spy-player-screen .role-name {
+    font-size: 28px;
+  }
+  
+  .spy-player-screen .get-role-button {
+    padding: 16px 32px;
+    font-size: 18px;
+  }
+  
+  .spy-host-setup,
+  .spy-host-game {
+    padding: 16px;
+  }
+  
+  .spy-host-setup .setting-section,
+  .spy-host-game .server-status,
+  .spy-host-game .instructions {
+    padding: 20px;
+  }
+  
+  .spy-host-game .access-buttons,
+  .spy-host-game .game-management {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .spy-host-game .show-qr-button,
+  .spy-host-game .get-role-here-button,
+  .spy-host-game .reset-game-button,
+  .spy-host-game .new-setup-button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .spy-player-screen {
+    padding: 12px;
+  }
+  
+  .spy-player-screen .welcome-card,
+  .spy-player-screen .role-card {
+    padding: 20px;
+    max-height: calc(100vh - 24px);
+    margin: 0 auto 12px auto;
+  }
+  
+  .spy-player-screen .welcome-header h1 {
+    font-size: 24px;
+  }
+  
+  .spy-player-screen .role-name {
+    font-size: 24px;
+  }
+  
+  .spy-player-screen .role-emoji {
+    font-size: 40px;
+  }
+  
+  .spy-player-screen .get-role-button {
+    padding: 14px 28px;
+    font-size: 16px;
+  }
+  
+  .spy-host-setup .rule-item {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .spy-host-setup .rule-icon {
+    align-self: center;
+  }
+}

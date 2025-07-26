@@ -28,11 +28,13 @@ import { PoetEnd } from './components/poet/PoetEnd';
 import { YershGame } from './components/YershGame';
 import { AuthScreen } from './components/AuthScreen';
 import { MafiaGame } from './components/mafia/MafiaGame';
-import { MafiaPlayerScreen } from './components/mafia/MafiaPlayerScreen';
+import { SpyGame } from './components/spy/SpyGame';
+import { SpyPlayerScreen } from './components/spy/SpyPlayerScreen';
 import './components/mafia/MafiaHost.css';
 import './components/mafia/MafiaPlayer.css';
+import './components/spy/Spy.css';
 
-type AppPhase = 'home' | 'alias' | 'fants' | 'krocodil' | 'this-or-that' | 'poet' | 'yersh' | 'mafia';
+type AppPhase = 'home' | 'alias' | 'fants' | 'krocodil' | 'this-or-that' | 'poet' | 'yersh' | 'mafia' | 'spy';
 
 function App() {
   const [appPhase, setAppPhase] = useState<AppPhase>('home');
@@ -125,6 +127,8 @@ function App() {
       setAppPhase('yersh');
     } else if (game === 'mafia') {
       setAppPhase('mafia');
+    } else if (game === 'spy') {
+      setAppPhase('spy');
     }
   };
 
@@ -154,7 +158,7 @@ function App() {
   if (isPlayerMode) {
     return (
       <div className="app">
-        <MafiaPlayerScreen />
+        <SpyPlayerScreen />
       </div>
     );
   }
@@ -347,6 +351,10 @@ function App() {
 
       {appPhase === 'mafia' && (
         <MafiaGame onBack={handleBackToHome} />
+      )}
+
+      {appPhase === 'spy' && (
+        <SpyGame onBack={handleBackToHome} />
       )}
 
       <ConfirmModal

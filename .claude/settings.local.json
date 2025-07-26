@@ -32,7 +32,8 @@
       "Bash(npm install:*)",
       "Bash(git init:*)",
       "Bash(git rm:*)",
-      "Bash(git remote get-url:*)"
+      "Bash(git remote get-url:*)",
+      "Bash(npm run:*)"
     ],
     "deny": []
   }
