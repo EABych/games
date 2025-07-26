@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/games/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
     
     <!-- iOS specific meta tags -->
@@ -17,26 +17,18 @@
     
     <!-- GitHub Pages SPA redirect script -->
     <script>
-      // Простой редирект для GitHub Pages SPA
-      // Перенаправляем все запросы на /games/ с сохранением пути
+      // Single Page Apps for GitHub Pages
+      // https://github.com/rafgraph/spa-github-pages
+      var pathSegmentsToKeep = 1;
+
       var l = window.location;
-      var path = l.pathname;
-      
-      // Если мы уже на /games/, не делаем редирект
-      if (path.startsWith('/games/')) {
-        // Кодируем путь в query параметр для SPA
-        var redirectPath = path.slice(6); // убираем /games
-        if (redirectPath === '' || redirectPath === '/') {
-          // Главная страница
-          l.replace(l.origin + '/games/?/');
-        } else {
-          // Другие страницы
-          l.replace(l.origin + '/games/?/' + redirectPath + l.search + l.hash);
-        }
-      } else {
-        // Редиректим на /games/
-        l.replace(l.origin + '/games/?/' + path.slice(1) + l.search + l.hash);
-      }
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
     </script>
   </head>
   <body>
