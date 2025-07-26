@@ -55,10 +55,13 @@ export const MafiaHostTimer: React.FC<MafiaHostTimerProps> = ({ settings, onBack
         setRoomId(data.roomId);
         setGameStarted(true);
       } else {
-        setServerStatus('❌ Ошибка создания игры');
+        const errorData = await response.json().catch(() => ({ error: 'Неизвестная ошибка' }));
+        setServerStatus(`❌ Ошибка создания игры: ${errorData.error || response.statusText}`);
+        setGameStarted(false); // Сбрасываем состояние при ошибке
       }
     } catch (error) {
       setServerStatus('❌ Ошибка соединения с сервером');
+      setGameStarted(false); // Сбрасываем состояние при ошибке
     }
   };
 

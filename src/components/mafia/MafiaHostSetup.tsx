@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface MafiaHostSetupProps {
   onStartGame: (settings: MafiaGameSettings) => void;
@@ -29,6 +29,29 @@ export const MafiaHostSetup: React.FC<MafiaHostSetupProps> = ({ onStartGame, onB
   });
 
   const [errors, setErrors] = useState<string[]>([]);
+
+  // Автоматически отключаем недоступные роли при изменении количества игроков
+  useEffect(() => {
+    setSettings(prevSettings => {
+      const newSettings = { ...prevSettings };
+      let changed = false;
+      
+      if (newSettings.includeDoctor && prevSettings.playerCount < 6) {
+        newSettings.includeDoctor = false;
+        changed = true;
+      }
+      if (newSettings.includeDetective && prevSettings.playerCount < 5) {
+        newSettings.includeDetective = false;
+        changed = true;
+      }
+      if (newSettings.includeSheriff && prevSettings.playerCount < 6) {
+        newSettings.includeSheriff = false;
+        changed = true;
+      }
+      
+      return changed ? newSettings : prevSettings;
+    });
+  }, [settings.playerCount]);
 
   const validateSettings = (): boolean => {
     const newErrors: string[] = [];
@@ -114,56 +137,113 @@ export const MafiaHostSetup: React.FC<MafiaHostSetupProps> = ({ onStartGame, onB
           <div className="special-roles">
             <h4>Специальные роли</h4>
             
-            <label className="role-checkbox">
-              <input
-                type="checkbox"
-                checked={settings.includeDoctor}
-                onChange={(e) => setSettings({...settings, includeDoctor: e.target.checked})}
-                disabled={settings.playerCount < 6}
-              />
-              <span>👨‍⚕️ Доктор (защищает от убийства)</span>
+            <div 
+              className={`role-card ${settings.includeDoctor ? 'selected' : ''} ${settings.playerCount < 6 ? 'disabled' : ''}`}
+              tabIndex={settings.playerCount >= 6 ? 0 : -1}
+              onClick={() => {
+                if (settings.playerCount >= 6) {
+                  setSettings({...settings, includeDoctor: !settings.includeDoctor});
+                }
+              }}
+              onKeyDown={(e) => {
+                if ((e.key === 'Enter' || e.key === ' ') && settings.playerCount >= 6) {
+                  e.preventDefault();
+                  setSettings({...settings, includeDoctor: !settings.includeDoctor});
+                }
+              }}
+            >
+              <span className="role-icon">👨‍⚕️</span>
+              <div className="role-info">
+                <span className="role-name">Доктор</span>
+                <span className="role-description">Защищает от убийства</span>
+              </div>
+              <div className="selection-indicator"></div>
               {settings.playerCount < 6 && <span className="role-requirement">Нужно 6+ игроков</span>}
-            </label>
+            </div>
 
-            <label className="role-checkbox">
-              <input
-                type="checkbox"
-                checked={settings.includeDetective}
-                onChange={(e) => setSettings({
-                  ...settings, 
-                  includeDetective: e.target.checked,
-                  includeSheriff: e.target.checked ? false : settings.includeSheriff
-                })}
-                disabled={settings.playerCount < 5}
-              />
-              <span>🕵️ Детектив (проверяет игроков)</span>
+            <div 
+              className={`role-card ${settings.includeDetective ? 'selected' : ''} ${settings.playerCount < 5 ? 'disabled' : ''}`}
+              tabIndex={settings.playerCount >= 5 ? 0 : -1}
+              onClick={() => {
+                if (settings.playerCount >= 5) {
+                  setSettings({
+                    ...settings, 
+                    includeDetective: !settings.includeDetective,
+                    includeSheriff: !settings.includeDetective ? false : settings.includeSheriff
+                  });
+                }
+              }}
+              onKeyDown={(e) => {
+                if ((e.key === 'Enter' || e.key === ' ') && settings.playerCount >= 5) {
+                  e.preventDefault();
+                  setSettings({
+                    ...settings, 
+                    includeDetective: !settings.includeDetective,
+                    includeSheriff: !settings.includeDetective ? false : settings.includeSheriff
+                  });
+                }
+              }}
+            >
+              <span className="role-icon">🕵️</span>
+              <div className="role-info">
+                <span className="role-name">Детектив</span>
+                <span className="role-description">Проверяет игроков</span>
+              </div>
+              <div className="selection-indicator"></div>
               {settings.playerCount < 5 && <span className="role-requirement">Нужно 5+ игроков</span>}
-            </label>
+            </div>
 
-            <label className="role-checkbox">
-              <input
-                type="checkbox"
-                checked={settings.includeSheriff}
-                onChange={(e) => setSettings({
-                  ...settings, 
-                  includeSheriff: e.target.checked,
-                  includeDetective: e.target.checked ? false : settings.includeDetective
-                })}
-                disabled={settings.playerCount < 6 || settings.includeDetective}
-              />
-              <span>🤠 Шериф (альтернатива детективу)</span>
+            <div 
+              className={`role-card ${settings.includeSheriff ? 'selected' : ''} ${(settings.playerCount < 6 || settings.includeDetective) ? 'disabled' : ''}`}
+              tabIndex={(settings.playerCount >= 6 && !settings.includeDetective) ? 0 : -1}
+              onClick={() => {
+                if (settings.playerCount >= 6 && !settings.includeDetective) {
+                  setSettings({
+                    ...settings, 
+                    includeSheriff: !settings.includeSheriff,
+                    includeDetective: !settings.includeSheriff ? false : settings.includeDetective
+                  });
+                }
+              }}
+              onKeyDown={(e) => {
+                if ((e.key === 'Enter' || e.key === ' ') && settings.playerCount >= 6 && !settings.includeDetective) {
+                  e.preventDefault();
+                  setSettings({
+                    ...settings, 
+                    includeSheriff: !settings.includeSheriff,
+                    includeDetective: !settings.includeSheriff ? false : settings.includeDetective
+                  });
+                }
+              }}
+            >
+              <span className="role-icon">🤠</span>
+              <div className="role-info">
+                <span className="role-name">Шериф</span>
+                <span className="role-description">Альтернатива детективу</span>
+              </div>
+              <div className="selection-indicator"></div>
               {settings.playerCount < 6 && <span className="role-requirement">Нужно 6+ игроков</span>}
               {settings.includeDetective && <span className="role-requirement">Нельзя с детективом</span>}
-            </label>
+            </div>
 
-            <label className="role-checkbox">
-              <input
-                type="checkbox"
-                checked={settings.includeDon}
-                onChange={(e) => setSettings({...settings, includeDon: e.target.checked})}
-              />
-              <span>👑 Дон мафии (заменяет одного мафиози)</span>
-            </label>
+            <div 
+              className={`role-card ${settings.includeDon ? 'selected' : ''}`}
+              tabIndex={0}
+              onClick={() => setSettings({...settings, includeDon: !settings.includeDon})}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setSettings({...settings, includeDon: !settings.includeDon});
+                }
+              }}
+            >
+              <span className="role-icon">👑</span>
+              <div className="role-info">
+                <span className="role-name">Дон мафии</span>
+                <span className="role-description">Заменяет одного мафиози</span>
+              </div>
+              <div className="selection-indicator"></div>
+            </div>
           </div>
         </div>
 
