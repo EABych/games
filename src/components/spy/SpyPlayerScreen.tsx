@@ -14,7 +14,11 @@ interface SpyRole {
   };
 }
 
-export const SpyPlayerScreen: React.FC = () => {
+interface SpyPlayerScreenProps {
+  roomId?: string | null;
+}
+
+export const SpyPlayerScreen: React.FC<SpyPlayerScreenProps> = ({ roomId }) => {
   const [playerRole, setPlayerRole] = useState<SpyRole | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
@@ -24,7 +28,11 @@ export const SpyPlayerScreen: React.FC = () => {
     setError('');
     
     try {
-      const response = await fetch('https://mafia-backend-5z0e.onrender.com/api/spy/get-role');
+      const url = roomId 
+        ? `https://mafia-backend-5z0e.onrender.com/api/spy/get-role?roomId=${roomId}`
+        : 'https://mafia-backend-5z0e.onrender.com/api/spy/get-role';
+      
+      const response = await fetch(url);
       
       if (response.ok) {
         const data = await response.json();

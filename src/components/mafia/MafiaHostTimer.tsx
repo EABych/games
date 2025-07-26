@@ -28,6 +28,7 @@ export const MafiaHostTimer: React.FC<MafiaHostTimerProps> = ({ settings, onBack
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [serverStatus, setServerStatus] = useState<string>('');
   const [showQRModal, setShowQRModal] = useState<boolean>(false);
+  const [roomId, setRoomId] = useState<string>('');
 
   // Создание игры на сервере
   const createGameOnServer = async () => {
@@ -50,7 +51,8 @@ export const MafiaHostTimer: React.FC<MafiaHostTimerProps> = ({ settings, onBack
 
       if (response.ok) {
         const data = await response.json();
-        setServerStatus(`✅ Роли созданы: ${data.mafiaCount} мафии, ${data.citizensCount} мирных`);
+        setServerStatus(`✅ Роли созданы: ${data.mafiaCount} мафии, ${data.citizensCount} мирных. ID комнаты: ${data.roomId}`);
+        setRoomId(data.roomId);
         setGameStarted(true);
       } else {
         setServerStatus('❌ Ошибка создания игры');
@@ -68,6 +70,7 @@ export const MafiaHostTimer: React.FC<MafiaHostTimerProps> = ({ settings, onBack
       });
       setServerStatus('🔄 Игра сброшена');
       setGameStarted(false);
+      setRoomId('');
     } catch (error) {
       setServerStatus('❌ Ошибка сброса игры');
     }
@@ -275,6 +278,8 @@ export const MafiaHostTimer: React.FC<MafiaHostTimerProps> = ({ settings, onBack
       <QRCodeModal 
         isOpen={showQRModal}
         onClose={() => setShowQRModal(false)}
+        roomId={roomId}
+        gameType="mafia"
       />
     </div>
   );

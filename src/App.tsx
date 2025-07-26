@@ -30,11 +30,15 @@ import { AuthScreen } from './components/AuthScreen';
 import { MafiaGame } from './components/mafia/MafiaGame';
 import { SpyGame } from './components/spy/SpyGame';
 import { SpyPlayerScreen } from './components/spy/SpyPlayerScreen';
+import { MafiaPlayerScreen } from './components/mafia/MafiaPlayerScreen';
+import { HeadwordsGame } from './components/headwords/HeadwordsGame';
+import { HeadwordsPlayerScreen } from './components/headwords/HeadwordsPlayerScreen';
 import './components/mafia/MafiaHost.css';
 import './components/mafia/MafiaPlayer.css';
 import './components/spy/Spy.css';
+import './components/headwords/Headwords.css';
 
-type AppPhase = 'home' | 'alias' | 'fants' | 'krocodil' | 'this-or-that' | 'poet' | 'yersh' | 'mafia' | 'spy';
+type AppPhase = 'home' | 'alias' | 'fants' | 'krocodil' | 'this-or-that' | 'poet' | 'yersh' | 'mafia' | 'spy' | 'headwords';
 
 function App() {
   const [appPhase, setAppPhase] = useState<AppPhase>('home');
@@ -44,6 +48,8 @@ function App() {
   // Проверяем query параметры для режима игрока
   const urlParams = new URLSearchParams(window.location.search);
   const isPlayerMode = urlParams.get('mode') === 'player';
+  const roomId = urlParams.get('roomId');
+  const gameType = urlParams.get('gameType') as 'mafia' | 'spy' | 'headwords';
   const { 
     gameState, 
     startNewGame, 
@@ -129,6 +135,8 @@ function App() {
       setAppPhase('mafia');
     } else if (game === 'spy') {
       setAppPhase('spy');
+    } else if (game === 'headwords') {
+      setAppPhase('headwords');
     }
   };
 
@@ -158,7 +166,15 @@ function App() {
   if (isPlayerMode) {
     return (
       <div className="app">
-        <SpyPlayerScreen />
+        {gameType === 'mafia' ? (
+          <MafiaPlayerScreen roomId={roomId} />
+        ) : gameType === 'spy' ? (
+          <SpyPlayerScreen roomId={roomId} />
+        ) : gameType === 'headwords' ? (
+          <HeadwordsPlayerScreen roomId={roomId} />
+        ) : (
+          <SpyPlayerScreen roomId={roomId} />
+        )}
       </div>
     );
   }
@@ -355,6 +371,10 @@ function App() {
 
       {appPhase === 'spy' && (
         <SpyGame onBack={handleBackToHome} />
+      )}
+
+      {appPhase === 'headwords' && (
+        <HeadwordsGame onBack={handleBackToHome} />
       )}
 
       <ConfirmModal

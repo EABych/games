@@ -4,15 +4,22 @@ import QRCode from 'qrcode';
 interface QRCodeModalProps {
   isOpen: boolean;
   onClose: () => void;
+  roomId?: string;
+  gameType?: 'mafia' | 'spy' | 'headwords';
 }
 
-export const QRCodeModal: React.FC<QRCodeModalProps> = ({ isOpen, onClose }) => {
+export const QRCodeModal: React.FC<QRCodeModalProps> = ({ isOpen, onClose, roomId, gameType }) => {
   const [qrCodeDataURL, setQrCodeDataURL] = useState<string>('');
 
   useEffect(() => {
     if (isOpen) {
-      // Генерируем ссылку для игроков
-      const playerUrl = `${window.location.origin}${window.location.pathname}?mode=player`;
+      // Генерируем ссылку для игроков с roomId и gameType
+      const params = new URLSearchParams();
+      params.set('mode', 'player');
+      if (roomId) params.set('roomId', roomId);
+      if (gameType) params.set('gameType', gameType);
+      
+      const playerUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
       
       // Генерируем QR-код
       QRCode.toDataURL(playerUrl, {
@@ -30,11 +37,17 @@ export const QRCodeModal: React.FC<QRCodeModalProps> = ({ isOpen, onClose }) => 
         console.error('Ошибка генерации QR-кода:', err);
       });
     }
-  }, [isOpen]);
+  }, [isOpen, roomId, gameType]);
 
   if (!isOpen) return null;
 
-  const playerUrl = `${window.location.origin}${window.location.pathname}?mode=player`;
+  // Генерируем ссылку для отображения
+  const params = new URLSearchParams();
+  params.set('mode', 'player');
+  if (roomId) params.set('roomId', roomId);
+  if (gameType) params.set('gameType', gameType);
+  
+  const playerUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
 
   return (
     <div className="qr-modal-overlay" onClick={onClose}>

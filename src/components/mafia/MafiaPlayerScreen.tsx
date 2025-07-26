@@ -13,7 +13,11 @@ interface MafiaRole {
   isLastPlayer: boolean;
 }
 
-export const MafiaPlayerScreen: React.FC = () => {
+interface MafiaPlayerScreenProps {
+  roomId?: string | null;
+}
+
+export const MafiaPlayerScreen: React.FC<MafiaPlayerScreenProps> = ({ roomId }) => {
   const [playerRole, setPlayerRole] = useState<MafiaRole | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
@@ -23,7 +27,11 @@ export const MafiaPlayerScreen: React.FC = () => {
     setError('');
     
     try {
-      const response = await fetch('https://mafia-backend-5z0e.onrender.com/api/mafia/get-role');
+      const url = roomId 
+        ? `https://mafia-backend-5z0e.onrender.com/api/mafia/get-role?roomId=${roomId}`
+        : 'https://mafia-backend-5z0e.onrender.com/api/mafia/get-role';
+      
+      const response = await fetch(url);
       
       if (response.ok) {
         const data = await response.json();

@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
 import { QRCodeModal } from '../mafia/QRCodeModal';
+import { HeadwordsGameSettings } from './HeadwordsHostSetup';
 
-interface SpyHostGameProps {
-  settings: SpyGameSettings;
+interface HeadwordsHostGameProps {
+  settings: HeadwordsGameSettings;
   onBack: () => void;
   onNewGame: () => void;
 }
 
-interface SpyGameSettings {
-  playerCount: number;
-}
-
-export const SpyHostGame: React.FC<SpyHostGameProps> = ({ settings, onBack, onNewGame }) => {
+export const HeadwordsHostGame: React.FC<HeadwordsHostGameProps> = ({ settings, onBack, onNewGame }) => {
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [serverStatus, setServerStatus] = useState<string>('');
   const [showQRModal, setShowQRModal] = useState<boolean>(false);
@@ -21,23 +18,25 @@ export const SpyHostGame: React.FC<SpyHostGameProps> = ({ settings, onBack, onNe
   // Создание игры на сервере
   const createGameOnServer = async () => {
     try {
-      const response = await fetch('https://mafia-backend-5z0e.onrender.com/api/spy/generate-game', {
+      const response = await fetch('https://mafia-backend-5z0e.onrender.com/api/headwords/generate-game', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          playerCount: settings.playerCount
+          playerCount: settings.playerCount,
+          category: settings.category
         })
       });
 
       if (response.ok) {
         const data = await response.json();
-        setServerStatus(`✅ Игра создана для ${data.playerCount} игроков. Локация: ${data.location}. ID комнаты: ${data.roomId}`);
+        setServerStatus(`✅ Игра создана для ${data.playerCount} игроков. Категория: ${getCategoryDisplayName(data.category)}. ID комнаты: ${data.roomId}`);
         setRoomId(data.roomId);
         setGameStarted(true);
       } else {
-        setServerStatus('❌ Ошибка создания игры');
+        const errorData = await response.json();
+        setServerStatus(`❌ Ошибка: ${errorData.error}`);
       }
     } catch (error) {
       setServerStatus('❌ Ошибка соединения с сервером');
@@ -47,7 +46,7 @@ export const SpyHostGame: React.FC<SpyHostGameProps> = ({ settings, onBack, onNe
   // Сброс игры на сервере
   const resetGameOnServer = async () => {
     try {
-      await fetch('https://mafia-backend-5z0e.onrender.com/api/spy/reset', {
+      await fetch('https://mafia-backend-5z0e.onrender.com/api/headwords/reset', {
         method: 'POST'
       });
       setServerStatus('🔄 Игра сброшена');
@@ -63,8 +62,8 @@ export const SpyHostGame: React.FC<SpyHostGameProps> = ({ settings, onBack, onNe
   const getRoleOnThisDevice = async () => {
     try {
       const url = roomId 
-        ? `https://mafia-backend-5z0e.onrender.com/api/spy/get-role?roomId=${roomId}`
-        : 'https://mafia-backend-5z0e.onrender.com/api/spy/get-role';
+        ? `https://mafia-backend-5z0e.onrender.com/api/headwords/get-role?roomId=${roomId}`
+        : 'https://mafia-backend-5z0e.onrender.com/api/headwords/get-role';
       
       const response = await fetch(url);
       
@@ -80,47 +79,38 @@ export const SpyHostGame: React.FC<SpyHostGameProps> = ({ settings, onBack, onNe
     }
   };
 
-  const getRoleColor = (isSpy: boolean): string => {
-    return isSpy ? '#e74c3c' : '#27ae60';
-  };
-
-  const getRoleEmoji = (isSpy: boolean): string => {
-    return isSpy ? '🕵️' : '🏠';
+  const getCategoryDisplayName = (categoryId: string): string => {
+    const displayNames: Record<string, string> = {
+      celebrities: 'Знаменитости',
+      cartoons: 'Мультфильмы',
+      movies: 'Кино и сериалы',
+      animals: 'Животные',
+      professions: 'Профессии',
+      objects: 'Предметы'
+    };
+    
+    return displayNames[categoryId] || categoryId;
   };
 
   if (currentRole) {
     return (
-      <div className="spy-host-game">
+      <div className="headwords-host-game">
         <div className="role-display">
-          <div className="role-card" style={{ borderColor: getRoleColor(currentRole.isSpy) }}>
+          <div className="role-card">
             <div className="role-header">
-              <div className="role-emoji">{getRoleEmoji(currentRole.isSpy)}</div>
-              <h2 className="role-name" style={{ color: getRoleColor(currentRole.isSpy) }}>
-                {currentRole.roleInfo.name}
-              </h2>
+              <div className="role-emoji">🎭</div>
+              <h2 className="role-name">Ваша роль</h2>
               <div className="player-info">
                 Игрок {currentRole.playerNumber} из {currentRole.totalPlayers}
               </div>
             </div>
             
             <div className="role-content">
-              <div className="role-description">
-                <h3>📋 Ваша задача:</h3>
-                <p>{currentRole.roleInfo.description}</p>
+              <div className="role-text">
+                {currentRole.role}
               </div>
-              
-              {currentRole.location && (
-                <div className="location-info">
-                  <h3>📍 Локация:</h3>
-                  <div className="location-badge">
-                    {currentRole.location}
-                  </div>
-                </div>
-              )}
-              
-              <div className="instruction-info">
-                <h3>💡 Инструкция:</h3>
-                <p>{currentRole.roleInfo.instruction}</p>
+              <div className="category-info">
+                Категория: {getCategoryDisplayName(currentRole.category)}
               </div>
             </div>
             
@@ -142,11 +132,11 @@ export const SpyHostGame: React.FC<SpyHostGameProps> = ({ settings, onBack, onNe
   }
 
   return (
-    <div className="spy-host-game">
+    <div className="headwords-host-game">
       <div className="game-header">
         <button onClick={onBack} className="back-button">← Настройки</button>
-        <h2>🕵️ Ведущий Шпиона</h2>
-        <p>Игроков: {settings.playerCount}</p>
+        <h2>🎭 Ведущий "Слова на лоб"</h2>
+        <p>Игроков: {settings.playerCount} | Категория: {getCategoryDisplayName(settings.category)}</p>
       </div>
 
       <div className="server-status">
@@ -197,9 +187,9 @@ export const SpyHostGame: React.FC<SpyHostGameProps> = ({ settings, onBack, onNe
         <ul>
           <li>Сначала создайте игру на сервере</li>
           <li>Дайте игрокам доступ к ролям через QR-код или на этом устройстве</li>
-          <li>Когда все роли розданы - начинайте игру</li>
-          <li>Игроки задают друг другу вопросы о локации</li>
-          <li>Цель: найти шпиона или угадать локацию</li>
+          <li>Игроки увидят таймер, затем роль появится на экране</li>
+          <li>Игрок должен приложить телефон ко лбу горизонтально</li>
+          <li>Остальные видят роль и отвечают на вопросы игрока</li>
         </ul>
       </div>
 
@@ -207,7 +197,7 @@ export const SpyHostGame: React.FC<SpyHostGameProps> = ({ settings, onBack, onNe
         isOpen={showQRModal}
         onClose={() => setShowQRModal(false)}
         roomId={roomId}
-        gameType="spy"
+        gameType="headwords"
       />
     </div>
   );

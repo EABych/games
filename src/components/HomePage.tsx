@@ -45,6 +45,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onSelectGame }) => {
       id: 'spy',
       title: 'Шпион',
       description: 'Найди шпиона или угадай локацию'
+    },
+    {
+      id: 'headwords',
+      title: 'Слова на лоб',
+      description: 'Угадай роль, держа телефон на лбу'
     }
   ];
 

@@ -258,6 +258,13 @@ app.get('/', (req, res) => {
         playerCount: currentSpyGame.playerCount,
         rolesGiven: currentSpyGame.rolesGiven,
         rolesRemaining: Math.max(0, currentSpyGame.playerCount - currentSpyGame.rolesGiven)
+      },
+      headwords: {
+        hasGame: !!currentHeadwordsGame.category,
+        category: currentHeadwordsGame.category || null,
+        playerCount: currentHeadwordsGame.playerCount,
+        rolesGiven: currentHeadwordsGame.rolesGiven,
+        rolesRemaining: Math.max(0, currentHeadwordsGame.playerCount - currentHeadwordsGame.rolesGiven)
       }
     },
     timestamp: new Date().toISOString()
@@ -399,6 +406,285 @@ app.post('/api/mafia/reset', (req, res) => {
     message: 'Игра сброшена'
   });
 });
+
+// === ЭНДПОИНТЫ ДЛЯ ИГРЫ СЛОВА НА ЛОБ ===
+
+// Категории ролей для игры "Слова на лоб"
+const headwordsCategories = {
+  celebrities: [
+    'Владимир Путин', 'Анджелина Джоли', 'Леонардо ДиКаприо', 'Мадонна', 'Элон Мск',
+    'Опра Уинфри', 'Дональд Трамп', 'Бейонсе', 'Джонни Депп', 'Тейлор Свифт',
+    'Роберт Дауни мл.', 'Скарлетт Йоханссон', 'Брэд Питт', 'Дженнифер Лоуренс', 'Том Круз',
+    'Мерил Стрип', 'Уилл Смит', 'Эмма Стоун', 'Джордж Клуни', 'Натали Портман',
+    'Кристиан Бейл', 'Шарлиз Терон', 'Морган Фриман', 'Хелен Миррен', 'Сэмюэл Л. Джексон',
+    'Киану Ривз', 'Гвинет Пэлтроу', 'Мэтт Дэймон', 'Кейт Уинслет', 'Хью Джекман'
+  ],
+  cartoons: [
+    'Микки Маус', 'Спанч Боб', 'Том и Джерри', 'Багз Банни', 'Покемон Пикачу',
+    'Шрек', 'Симпсоны Гомер', 'Винни-Пух', 'Дональд Дак', 'Скуби-Ду',
+    'Гарфилд', 'Розовая Пантера', 'Лунтик', 'Маша и Медведь', 'Чебурашка',
+    'Крокодил Гена', 'Карлсон', 'Незнайка', 'Буратино', 'Колобок',
+    'Три поросенка', 'Красная Шапочка', 'Золушка', 'Белоснежка', 'Русалочка',
+    'Алладин', 'Симба', 'Немо', 'Валли', 'Бэтмен'
+  ],
+  movies: [
+    'Гарри Поттер', 'Дарт Вейдер', 'Джеймс Бонд', 'Индиана Джонс', 'Терминатор',
+    'Рэмбо', 'Рокки Бальбоа', 'Форрест Гамп', 'Джокер', 'Бэтмен',
+    'Супермен', 'Человек-паук', 'Железный человек', 'Капитан Америка', 'Тор',
+    'Халк', 'Дэдпул', 'Росомаха', 'Черная вдова', 'Чудо-женщина',
+    'Гендальф', 'Фродо', 'Леголас', 'Арагорн', 'Голлум',
+    'Люк Скайуокер', 'Принцесса Лея', 'Хан Соло', 'Йода', 'Чубакка'
+  ],
+  animals: [
+    'Лев', 'Тигр', 'Слон', 'Жираф', 'Бегемот',
+    'Крокодил', 'Зебра', 'Кенгуру', 'Панда', 'Коала',
+    'Пингвин', 'Фламинго', 'Орел', 'Попугай', 'Сова',
+    'Дельфин', 'Акула', 'Кит', 'Осьминог', 'Медуза',
+    'Собака', 'Кот', 'Хомяк', 'Кролик', 'Лошадь',
+    'Корова', 'Свинья', 'Овца', 'Коза', 'Петух'
+  ],
+  professions: [
+    'Врач', 'Учитель', 'Полицейский', 'Пожарный', 'Пилот',
+    'Программист', 'Дизайнер', 'Повар', 'Официант', 'Продавец',
+    'Строитель', 'Электрик', 'Сантехник', 'Механик', 'Водитель',
+    'Журналист', 'Фотограф', 'Актер', 'Музыкант', 'Художник',
+    'Юрист', 'Бухгалтер', 'Менеджер', 'Секретарь', 'Уборщик',
+    'Охранник', 'Массажист', 'Парикмахер', 'Стоматолог', 'Ветеринар'
+  ],
+  objects: [
+    'Телефон', 'Компьютер', 'Телевизор', 'Холодильник', 'Микроволновка',
+    'Стиральная машина', 'Пылесос', 'Утюг', 'Фен', 'Тостер',
+    'Чайник', 'Кофеварка', 'Блендер', 'Миксер', 'Духовка',
+    'Автомобиль', 'Велосипед', 'Самолет', 'Поезд', 'Корабль',
+    'Часы', 'Очки', 'Шляпа', 'Сумка', 'Рюкзак',
+    'Книга', 'Ручка', 'Карандаш', 'Ножницы', 'Линейка'
+  ]
+};
+
+// Совместимость со старым API (временно)
+let currentHeadwordsGame = {
+  category: '',
+  roles: [],
+  playerCount: 0,
+  rolesGiven: 0
+};
+
+// Создание структуры игры "Слова на лоб"
+function createHeadwordsGame(roomId, category, roles, playerCount) {
+  return {
+    id: roomId,
+    type: 'headwords',
+    category: category,
+    roles: roles,
+    playerCount: playerCount,
+    rolesGiven: 0,
+    createdAt: new Date()
+  };
+}
+
+// Создать новую игру "Слова на лоб"
+app.post('/api/headwords/generate-game', (req, res) => {
+  try {
+    const { playerCount, category } = req.body;
+    
+    if (!playerCount || typeof playerCount !== 'number') {
+      return res.status(400).json({ 
+        error: 'Требуется указать количество игроков' 
+      });
+    }
+    
+    if (playerCount < 2 || playerCount > 20) {
+      return res.status(400).json({ 
+        error: 'Количество игроков должно быть от 2 до 20' 
+      });
+    }
+    
+    if (!category || !headwordsCategories[category]) {
+      return res.status(400).json({ 
+        error: 'Требуется указать корректную категорию' 
+      });
+    }
+    
+    // Получаем роли из выбранной категории
+    const availableRoles = [...headwordsCategories[category]];
+    
+    if (playerCount > availableRoles.length) {
+      return res.status(400).json({ 
+        error: `В категории "${category}" недостаточно ролей для ${playerCount} игроков` 
+      });
+    }
+    
+    // Перемешиваем и выбираем нужное количество уникальных ролей
+    const selectedRoles = [];
+    for (let i = 0; i < playerCount; i++) {
+      const randomIndex = Math.floor(Math.random() * availableRoles.length);
+      selectedRoles.push(availableRoles.splice(randomIndex, 1)[0]);
+    }
+    
+    // Создаем комнату
+    const roomId = generateRoomId();
+    const headwordsGame = createHeadwordsGame(roomId, category, selectedRoles, playerCount);
+    
+    // Сохраняем игру в активных играх
+    activeGames.set(roomId, headwordsGame);
+    
+    // Обновляем старые переменные для совместимости
+    currentHeadwordsGame = {
+      category: category,
+      roles: selectedRoles,
+      playerCount: playerCount,
+      rolesGiven: 0
+    };
+    
+    console.log(`Создана игра "Слова на лоб" ${roomId}: категория "${category}", ${playerCount} игроков`);
+    
+    res.json({
+      success: true,
+      message: `Игра "Слова на лоб" создана для ${playerCount} игроков`,
+      roomId: roomId,
+      playerCount,
+      category: category,
+      rolesCount: selectedRoles.length
+    });
+    
+  } catch (error) {
+    res.status(400).json({ 
+      error: error.message 
+    });
+  }
+});
+
+// Получить свою роль в игре "Слова на лоб"
+app.get('/api/headwords/get-role', (req, res) => {
+  try {
+    const { roomId } = req.query;
+    
+    if (roomId) {
+      // Новый API с roomId
+      const game = activeGames.get(roomId);
+      if (!game || game.type !== 'headwords') {
+        return res.status(404).json({ 
+          error: 'Игра "Слова на лоб" не найдена. Проверьте ID комнаты.' 
+        });
+      }
+      
+      if (game.rolesGiven >= game.playerCount) {
+        return res.status(404).json({ 
+          error: 'Все роли уже розданы. Создайте новую игру.' 
+        });
+      }
+      
+      const currentPlayerIndex = game.rolesGiven;
+      const role = game.roles[currentPlayerIndex];
+      
+      game.rolesGiven++;
+      
+      console.log(`Выдана роль в комнате ${roomId}: игрок ${currentPlayerIndex + 1} - "${role}"`);
+      
+      const response = {
+        playerNumber: currentPlayerIndex + 1,
+        totalPlayers: game.playerCount,
+        role: role,
+        category: game.category,
+        isLastPlayer: game.rolesGiven === game.playerCount,
+        roomId: roomId
+      };
+      
+      res.json(response);
+    } else {
+      // Старый API для совместимости
+      if (!currentHeadwordsGame.category || currentHeadwordsGame.roles.length === 0) {
+        return res.status(404).json({ 
+          error: 'Игра "Слова на лоб" не была создана. Сначала создайте игру.' 
+        });
+      }
+      
+      if (currentHeadwordsGame.rolesGiven >= currentHeadwordsGame.playerCount) {
+        return res.status(404).json({ 
+          error: 'Все роли уже розданы. Создайте новую игру.' 
+        });
+      }
+      
+      const currentPlayerIndex = currentHeadwordsGame.rolesGiven;
+      const role = currentHeadwordsGame.roles[currentPlayerIndex];
+      
+      currentHeadwordsGame.rolesGiven++;
+      
+      console.log(`Выдана роль в игре "Слова на лоб": игрок ${currentPlayerIndex + 1} - "${role}"`);
+      
+      const response = {
+        playerNumber: currentPlayerIndex + 1,
+        totalPlayers: currentHeadwordsGame.playerCount,
+        role: role,
+        category: currentHeadwordsGame.category,
+        isLastPlayer: currentHeadwordsGame.rolesGiven === currentHeadwordsGame.playerCount
+      };
+      
+      res.json(response);
+    }
+    
+  } catch (error) {
+    res.status(500).json({ 
+      error: 'Ошибка при получении роли' 
+    });
+  }
+});
+
+// Получить список доступных категорий
+app.get('/api/headwords/categories', (req, res) => {
+  const categories = Object.keys(headwordsCategories).map(key => ({
+    id: key,
+    name: getCategoryDisplayName(key),
+    rolesCount: headwordsCategories[key].length
+  }));
+  
+  res.json({
+    categories: categories
+  });
+});
+
+// Получить статус игры "Слова на лоб"
+app.get('/api/headwords/status', (req, res) => {
+  res.json({
+    hasActiveGame: !!currentHeadwordsGame.category,
+    category: currentHeadwordsGame.category || null,
+    playerCount: currentHeadwordsGame.playerCount,
+    rolesGiven: currentHeadwordsGame.rolesGiven,
+    rolesRemaining: Math.max(0, currentHeadwordsGame.playerCount - currentHeadwordsGame.rolesGiven),
+    allRolesGiven: currentHeadwordsGame.rolesGiven >= currentHeadwordsGame.playerCount
+  });
+});
+
+// Сбросить игру "Слова на лоб"
+app.post('/api/headwords/reset', (req, res) => {
+  currentHeadwordsGame = {
+    category: '',
+    roles: [],
+    playerCount: 0,
+    rolesGiven: 0
+  };
+  
+  console.log('Игра "Слова на лоб" сброшена');
+  
+  res.json({
+    success: true,
+    message: 'Игра "Слова на лоб" сброшена'
+  });
+});
+
+// Функция для получения отображаемого имени категории
+function getCategoryDisplayName(categoryId) {
+  const displayNames = {
+    celebrities: 'Знаменитости',
+    cartoons: 'Мультфильмы',
+    movies: 'Кино и сериалы',
+    animals: 'Животные',
+    professions: 'Профессии',
+    objects: 'Предметы'
+  };
+  
+  return displayNames[categoryId] || categoryId;
+}
 
 // === ЭНДПОИНТЫ ДЛЯ ИГРЫ ШПИОН ===
 
@@ -611,4 +897,10 @@ app.listen(PORT, () => {
   console.log(`   GET  /api/spy/get-role - Получить роль`);
   console.log(`   GET  /api/spy/status - Статус игры`);
   console.log(`   POST /api/spy/reset - Сбросить игру`);
+  console.log(`   === СЛОВА НА ЛОБ ===`);
+  console.log(`   POST /api/headwords/generate-game - Создать игру "Слова на лоб"`);
+  console.log(`   GET  /api/headwords/get-role - Получить роль`);
+  console.log(`   GET  /api/headwords/categories - Получить категории`);
+  console.log(`   GET  /api/headwords/status - Статус игры`);
+  console.log(`   POST /api/headwords/reset - Сбросить игру`);
 });
