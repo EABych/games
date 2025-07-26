@@ -1,10 +1,13 @@
 /* Mafia Host Setup Styles */
 .mafia-host-setup {
   padding: 20px;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom));
   max-width: 600px;
   margin: 0 auto;
   min-height: 100vh;
+  min-height: 100dvh;
   max-height: 100vh;
+  max-height: 100dvh;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   color: #2c3e50;
   border-radius: 0;
@@ -13,6 +16,16 @@
   -webkit-overflow-scrolling: touch;
   position: relative;
   box-sizing: border-box;
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 768px) {
+  .mafia-host-setup {
+    padding: 16px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    padding-left: calc(16px + env(safe-area-inset-left));
+    padding-right: calc(16px + env(safe-area-inset-right));
+  }
 }
 
 .setup-header {
@@ -41,12 +54,29 @@
   font-weight: 600;
   box-shadow: 0 2px 8px rgba(52, 73, 94, 0.3);
   transition: all 0.2s ease;
+  /* Better touch target for mobile */
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .back-button:hover {
   background: #2c3e50;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(52, 73, 94, 0.4);
+}
+
+/* Mobile touch improvements */
+@media (max-width: 768px) {
+  .back-button {
+    padding: 14px 24px;
+    font-size: 17px;
+    margin-bottom: 20px;
+    /* Prevent double-tap zoom */
+    touch-action: manipulation;
+  }
 }
 
 .setup-content {
@@ -153,39 +183,182 @@
   margin-top: 15px;
 }
 
-.role-checkbox {
+/* Role Selection Cards */
+.role-card {
   display: flex;
   align-items: center;
-  margin: 12px 0;
+  margin: 8px 0;
   cursor: pointer;
-  padding: 10px;
-  border-radius: 8px;
-  transition: background-color 0.2s;
+  padding: 12px 14px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px solid transparent;
+  position: relative;
+  user-select: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  /* Better touch target */
+  min-height: 56px;
+  touch-action: manipulation;
 }
 
-.role-checkbox:hover {
-  background: rgba(52, 152, 219, 0.1);
+/* Mobile touch improvements for role cards */
+@media (max-width: 768px) {
+  .role-card {
+    padding: 16px;
+    margin: 12px 0;
+    min-height: 64px;
+    border-radius: 16px;
+    /* Better touch target */
+    touch-action: manipulation;
+  }
 }
 
-.role-checkbox input[type="checkbox"] {
-  margin-right: 12px;
-  transform: scale(1.2);
+.role-card:hover:not(.disabled) {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(52, 152, 219, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.12);
 }
 
-.role-checkbox input[type="checkbox"]:disabled {
+.role-card:active:not(.disabled) {
+  transform: translateY(0px);
+  transition: all 0.1s ease;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.15);
+}
+
+.role-card:focus:not(.disabled) {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  outline: none;
+}
+
+.role-card.selected {
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.08), rgba(52, 152, 219, 0.04));
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.12);
+}
+
+.role-card.selected:hover:not(.disabled) {
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.12), rgba(52, 152, 219, 0.06));
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.18), 0 0 0 3px rgba(52, 152, 219, 0.15);
+}
+
+.role-card.selected:active:not(.disabled) {
+  transform: translateY(0px);
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2), 0 0 0 3px rgba(52, 152, 219, 0.15);
+}
+
+.role-card.disabled {
   opacity: 0.5;
+  cursor: not-allowed;
+  background: rgba(248, 249, 250, 0.6);
+  border-color: transparent;
 }
 
-.role-checkbox span {
+.role-card.disabled:hover,
+.role-card.disabled:active,
+.role-card.disabled:focus {
+  transform: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+
+/* Role icon */
+.role-card .role-icon {
+  font-size: 24px;
+  margin-right: 12px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.role-card.disabled .role-icon {
+  opacity: 0.6;
+}
+
+/* Role text and info */
+.role-card .role-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 2px;
+}
+
+.role-card .role-name {
   font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+  line-height: 1.2;
+}
+
+.role-card.disabled .role-name {
+  color: #95a5a6;
+}
+
+.role-card.selected .role-name {
+  color: #2980b9;
+}
+
+.role-card .role-description {
+  font-size: 13px;
+  color: #7f8c8d;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.role-card.disabled .role-description {
+  color: #bdc3c7;
+}
+
+.role-card.selected .role-description {
+  color: #34495e;
+}
+
+/* Selection indicator */
+.role-card .selection-indicator {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.role-card.selected .selection-indicator {
+  background: #3498db;
+  border-color: #3498db;
+}
+
+.role-card.selected .selection-indicator::after {
+  content: "✓";
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.role-card.disabled .selection-indicator {
+  border-color: transparent;
+  background: transparent;
 }
 
 .role-requirement {
-  margin-left: auto;
-  font-size: 12px;
-  color: #7f8c8d;
-  font-style: italic;
-  font-weight: 500;
+  margin-left: 12px;
+  font-size: 11px;
+  color: #e74c3c;
+  background: rgba(231, 76, 60, 0.1);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+  align-self: flex-start;
+  border: 1px solid rgba(231, 76, 60, 0.2);
 }
 
 /* Time Settings */
@@ -262,6 +435,9 @@
   box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
   text-transform: uppercase;
   letter-spacing: 1px;
+  /* Better touch target */
+  min-height: 56px;
+  touch-action: manipulation;
 }
 
 .start-game-button:hover:not(:disabled) {
@@ -280,10 +456,13 @@
 /* Mafia Host Timer Styles */
 .mafia-host-timer {
   padding: 20px;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom));
   max-width: 800px;
   margin: 0 auto;
   min-height: 100vh;
+  min-height: 100dvh;
   max-height: 100vh;
+  max-height: 100dvh;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   color: #2c3e50;
   border-radius: 0;
@@ -330,6 +509,9 @@
   cursor: pointer;
   box-shadow: 0 4px 16px rgba(39, 174, 96, 0.3);
   transition: all 0.2s ease;
+  /* Better touch target */
+  min-height: 56px;
+  touch-action: manipulation;
 }
 
 .create-game-button:hover {
@@ -384,6 +566,9 @@
   margin-bottom: 12px;
   display: block;
   width: 100%;
+  /* Better touch target */
+  min-height: 56px;
+  touch-action: manipulation;
 }
 
 .show-qr-button:hover {
@@ -457,6 +642,9 @@
   font-weight: 700;
   transition: all 0.2s ease;
   box-shadow: 0 4px 16px rgba(52, 73, 94, 0.3);
+  /* Better touch target */
+  min-height: 64px;
+  touch-action: manipulation;
 }
 
 .phase-button:hover:not(:disabled) {
@@ -505,6 +693,9 @@
   font-weight: 700;
   box-shadow: 0 4px 12px rgba(149, 165, 166, 0.3);
   transition: all 0.2s ease;
+  /* Better touch target */
+  min-height: 48px;
+  touch-action: manipulation;
 }
 
 .control-button:hover:not(:disabled) {
@@ -594,16 +785,21 @@
 @media (max-width: 768px) {
   .mafia-host-setup, .mafia-host-timer {
     padding: 16px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    padding-left: calc(16px + env(safe-area-inset-left));
+    padding-right: calc(16px + env(safe-area-inset-right));
     margin: 0;
     min-height: 100vh;
+    min-height: 100dvh;
     max-height: 100vh;
+    max-height: 100dvh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
   
   .setup-header, .timer-header {
     margin-bottom: 20px;
-    padding-top: 10px;
+    padding-top: calc(10px + env(safe-area-inset-top));
   }
   
   .setup-header h2, .timer-header h2 {
@@ -693,6 +889,9 @@
 @media (max-width: 480px) {
   .mafia-host-setup, .mafia-host-timer {
     padding: 12px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    padding-left: calc(12px + env(safe-area-inset-left));
+    padding-right: calc(12px + env(safe-area-inset-right));
   }
   
   .setup-header h2, .timer-header h2 {
