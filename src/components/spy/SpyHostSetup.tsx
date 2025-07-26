@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 
 interface SpyHostSetupProps {
   onStartGame: (settings: SpyGameSettings) => void;
-  onBack: () => void;
 }
 
 interface SpyGameSettings {
   playerCount: number;
 }
 
-export const SpyHostSetup: React.FC<SpyHostSetupProps> = ({ onStartGame, onBack }) => {
+export const SpyHostSetup: React.FC<SpyHostSetupProps> = ({ onStartGame }) => {
   const [settings, setSettings] = useState<SpyGameSettings>({
     playerCount: 5
   });

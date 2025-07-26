@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 interface MafiaHostSetupProps {
   onStartGame: (settings: MafiaGameSettings) => void;
-  onBack: () => void;
 }
 
 interface MafiaGameSettings {
@@ -16,7 +15,7 @@ interface MafiaGameSettings {
   nightTime: number;
 }
 
-export const MafiaHostSetup: React.FC<MafiaHostSetupProps> = ({ onStartGame, onBack }) => {
+export const MafiaHostSetup: React.FC<MafiaHostSetupProps> = ({ onStartGame }) => {
   const [settings, setSettings] = useState<MafiaGameSettings>({
     playerCount: 6,
     includeDoctor: true,

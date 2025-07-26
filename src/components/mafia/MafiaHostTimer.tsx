@@ -4,7 +4,6 @@ import './QRCodeModal.css';
 
 interface MafiaHostTimerProps {
   settings: MafiaGameSettings;
-  onBack: () => void;
   onNewGame: () => void;
 }
 
@@ -21,12 +20,11 @@ interface MafiaGameSettings {
 
 type TimerPhase = 'ready' | 'discussion' | 'voting' | 'night';
 
-export const MafiaHostTimer: React.FC<MafiaHostTimerProps> = ({ settings, onBack, onNewGame }) => {
+export const MafiaHostTimer: React.FC<MafiaHostTimerProps> = ({ settings, onNewGame }) => {
   const [phase, setPhase] = useState<TimerPhase>('ready');
   const [timeLeft, setTimeLeft] = useState<number>(0);
   const [isActive, setIsActive] = useState<boolean>(false);
   const [gameStarted, setGameStarted] = useState<boolean>(false);
-  const [serverStatus, setServerStatus] = useState<string>('');
   const [showQRModal, setShowQRModal] = useState<boolean>(false);
   const [isCreatingGame, setIsCreatingGame] = useState<boolean>(false);
   const [roomId, setRoomId] = useState<string>('');
@@ -55,16 +53,12 @@ export const MafiaHostTimer: React.FC<MafiaHostTimerProps> = ({ settings, onBack
 
       if (response.ok) {
         const data = await response.json();
-        setServerStatus(`Роли созданы: ${data.mafiaCount} мафии, ${data.citizensCount} мирных. ID комнаты: ${data.roomId}`);
         setRoomId(data.roomId);
         setGameStarted(true);
       } else {
-        const errorData = await response.json().catch(() => ({ error: 'Неизвестная ошибка' }));
-        setServerStatus(`Ошибка создания игры: ${errorData.error || response.statusText}`);
         setGameStarted(false); // Сбрасываем состояние при ошибке
       }
     } catch (error) {
-      setServerStatus('Ошибка соединения с сервером');
       setGameStarted(false); // Сбрасываем состояние при ошибке
     } finally {
       setIsCreatingGame(false);
@@ -77,11 +71,10 @@ export const MafiaHostTimer: React.FC<MafiaHostTimerProps> = ({ settings, onBack
       await fetch('https://mafia-backend-5z0e.onrender.com/api/mafia/reset', {
         method: 'POST'
       });
-      setServerStatus('Игра сброшена');
       setGameStarted(false);
       setRoomId('');
     } catch (error) {
-      setServerStatus('Ошибка сброса игры');
+      // Игнорируем ошибки сброса
     }
   };
 

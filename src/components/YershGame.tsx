@@ -18,11 +18,9 @@ interface GameState {
   showCardBack: boolean;
 }
 
-interface YershGameProps {
-  onBackToHome: () => void;
-}
+interface YershGameProps {}
 
-export const YershGame: React.FC<YershGameProps> = ({ onBackToHome }) => {
+export const YershGame: React.FC<YershGameProps> = () => {
   const [gameState, setGameState] = useState<GameState>({
     deck: [],
     playerHand: [],

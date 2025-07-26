@@ -13,10 +13,9 @@ interface HeadwordsCategory {
 
 interface HeadwordsHostSetupProps {
   onGameStart: (settings: HeadwordsGameSettings) => void;
-  onBack: () => void;
 }
 
-export const HeadwordsHostSetup: React.FC<HeadwordsHostSetupProps> = ({ onGameStart, onBack }) => {
+export const HeadwordsHostSetup: React.FC<HeadwordsHostSetupProps> = ({ onGameStart }) => {
   const [playerCount, setPlayerCount] = useState<number>(4);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [categories, setCategories] = useState<HeadwordsCategory[]>([]);
