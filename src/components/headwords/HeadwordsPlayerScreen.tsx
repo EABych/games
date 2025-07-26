@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-interface HeadwordsRole {
-  playerNumber: number;
-  totalPlayers: number;
-  role: string;
-  category: string;
-  isLastPlayer: boolean;
-  roomId?: string;
-}
+import { HeadwordsRole } from './types';
 
 interface HeadwordsPlayerScreenProps {
   roomId?: string | null;

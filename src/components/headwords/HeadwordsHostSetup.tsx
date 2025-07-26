@@ -1,15 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-export interface HeadwordsGameSettings {
-  playerCount: number;
-  category: string;
-}
-
-interface HeadwordsCategory {
-  id: string;
-  name: string;
-  rolesCount: number;
-}
+import { HeadwordsGameSettings, HeadwordsCategory } from './types';
 
 interface HeadwordsHostSetupProps {
   onGameStart: (settings: HeadwordsGameSettings) => void;
