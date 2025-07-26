@@ -14,7 +14,7 @@ interface HeadwordsPlayerScreenProps {
   onBackToGames?: () => void;
 }
 
-export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ roomId, onBackToGames }) => {
+export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ roomId }) => {
   const [playerRole, setPlayerRole] = useState<HeadwordsRole | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
@@ -66,31 +66,6 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
     }, 1000);
   };
 
-  const getCategoryDisplayName = (categoryId: string): string => {
-    const displayNames: Record<string, string> = {
-      celebrities: 'Знаменитости',
-      cartoons: 'Мультфильмы',
-      movies: 'Кино и сериалы',
-      animals: 'Животные',
-      professions: 'Профессии',
-      objects: 'Предметы'
-    };
-
-    return displayNames[categoryId] || categoryId;
-  };
-
-  const getCategoryEmoji = (categoryId: string): string => {
-    const emojis: Record<string, string> = {
-      celebrities: '⭐',
-      cartoons: '🎬',
-      movies: '🎭',
-      animals: '🐾',
-      professions: '💼',
-      objects: '🔧'
-    };
-
-    return emojis[categoryId] || '🎯';
-  };
 
   // Обратный отсчет
   if (isCountingDown) {

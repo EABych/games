@@ -182,6 +182,3 @@ export const HeadwordsHostSetup: React.FC<HeadwordsHostSetupProps> = ({ onGameSt
     </div>
   );
 };
-
-// Дополнительный экспорт для совместимости
-export type { HeadwordsGameSettings };
