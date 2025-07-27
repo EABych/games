@@ -167,10 +167,7 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
               
               const clipPath = `polygon(50% 50%, ${x1}% ${y1}%, ${x2}% ${y2}%)`;
               
-              // Логирование для первого сектора
-              if (index === 0) {
-                console.log(`Сектор ${index}: угол ${sectorAngle}°, clipPath: ${clipPath}`);
-              }
+              // Убираем логирование - все работает!
               
               return (
                 <div

@@ -544,20 +544,20 @@
 
 .sector-content {
     position: absolute;
-    top: 25%;
+    top: 35%;
     left: 50%;
     transform: translateX(-50%);
     color: white;
     font-weight: var(--adult-font-weight-bold);
-    font-size: 0.9rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     letter-spacing: -0.01em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 120px;
+    max-width: 100px;
     text-align: center;
-    z-index: 10; /* Убедимся что текст поверх всего */
+    z-index: 10;
     pointer-events: none;
 }
 
