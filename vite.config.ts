@@ -5,4 +5,5 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: '/', // Используем корневой путь
+  publicDir: 'public', // Убеждаемся что public папка копируется
 })

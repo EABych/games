@@ -51,7 +51,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Предотвращаем скролл всего контейнера */
+  /* Убираем overflow: hidden чтобы разрешить скролл на мобильных */
 }
 
 /* Header */
@@ -93,6 +93,9 @@
   flex-direction: column;
   min-height: 0;
   justify-content: start;
+  /* Дополнительные стили для лучшего скролла на мобильных */
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
 }
 
 /* Glass Card Style */
@@ -242,7 +245,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Предотвращаем скролл всего контейнера */
+  /* Убираем overflow: hidden чтобы разрешить скролл на мобильных */
 }
 
 /* Header */
@@ -307,6 +310,9 @@
   flex-direction: column;
   gap: 4px;
   min-height: 0;
+  /* Дополнительные стили для лучшего скролла на мобильных */
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
 }
 
 .headwords-host-game .server-status {
@@ -791,7 +797,7 @@
   .headwords-host-setup,
   .headwords-host-game {
     padding: env(safe-area-inset-top, 16px) env(safe-area-inset-right, 16px) env(safe-area-inset-bottom, 16px) env(safe-area-inset-left, 16px);
-    overflow: hidden; /* Предотвращаем скролл всего контейнера */
+    /* Убираем overflow: hidden чтобы разрешить скролл на мобильных */
   }
 
   .headwords-host-setup .setup-header,
@@ -835,7 +841,7 @@
 @media (max-width: 480px) {
   .headwords-host-setup,
   .headwords-host-game {
-    overflow: hidden; /* Предотвращаем скролл всего контейнера */
+    /* Убираем overflow: hidden чтобы разрешить скролл на мобильных */
   }
 
   .headwords-player-screen {
