@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import QRCode from 'qrcode';
-import { useEveningRoleGame } from '../../hooks/useEveningRoleGame';
+import { getRandomGroupTask } from '../../data/evening-role-tasks';
+import type { EveningRoleTask } from '../../types/evening-role';
 import './EveningRole.css';
 
 interface EveningRoleHostProps {
@@ -9,9 +10,9 @@ interface EveningRoleHostProps {
 }
 
 export const EveningRoleHost: React.FC<EveningRoleHostProps> = ({ roomId, onBackToSetup }) => {
-  const { gameState, startGame, generateNewGroupTask, getGameStats } = useEveningRoleGame();
   const [qrCodeUrl, setQrCodeUrl] = useState<string>('');
   const [showQR, setShowQR] = useState(false);
+  const [groupTask, setGroupTask] = useState<EveningRoleTask | null>(null);
 
   useEffect(() => {
     // Генерируем QR код для участников
@@ -36,17 +37,15 @@ export const EveningRoleHost: React.FC<EveningRoleHostProps> = ({ roomId, onBack
   }, [roomId]);
 
   useEffect(() => {
-    // Автоматически начинаем игру при создании комнаты
-    if (!gameState.isGameStarted && gameState.roomId) {
-      startGame();
-    }
-  }, [gameState.isGameStarted, gameState.roomId, startGame]);
+    // Генерируем первое групповое задание при загрузке
+    const initialGroupTask = getRandomGroupTask();
+    setGroupTask(initialGroupTask);
+  }, []);
 
   const handleGenerateNewGroupTask = () => {
-    generateNewGroupTask();
+    const newGroupTask = getRandomGroupTask();
+    setGroupTask(newGroupTask);
   };
-
-  const stats = getGameStats();
 
   return (
     <div className="evening-role-host">
@@ -112,13 +111,13 @@ export const EveningRoleHost: React.FC<EveningRoleHostProps> = ({ roomId, onBack
           <div className="group-task-card">
             <h2>Общее задание для всей компании</h2>
             
-            {gameState.groupTask ? (
+            {groupTask ? (
               <div className="current-group-task">
                 <div className="task-content">
-                  <p className="task-text">{gameState.groupTask.text}</p>
-                  {gameState.groupTask.hasTimer && gameState.groupTask.timerDuration && (
+                  <p className="task-text">{groupTask.text}</p>
+                  {groupTask.hasTimer && groupTask.timerDuration && (
                     <div className="task-timer-info">
-                      ⏱️ Задание с таймером: {Math.round(gameState.groupTask.timerDuration / 60)} мин
+                      ⏱️ Задание с таймером: {Math.round(groupTask.timerDuration / 60)} мин
                     </div>
                   )}
                 </div>
@@ -139,19 +138,19 @@ export const EveningRoleHost: React.FC<EveningRoleHostProps> = ({ roomId, onBack
         </div>
 
         <div className="game-stats">
-          <h3>Статистика игры</h3>
+          <h3>Информация об игре</h3>
           <div className="stats-grid">
             <div className="stat-item">
-              <div className="stat-number">{stats.totalPlayers}</div>
-              <div className="stat-label">Всего игроков</div>
+              <div className="stat-number">150+</div>
+              <div className="stat-label">Индивидуальных заданий</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number">{stats.playersWithTasks}</div>
-              <div className="stat-label">Получили задания</div>
+              <div className="stat-number">60+</div>
+              <div className="stat-label">Групповых заданий</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number">{stats.completionPercentage}%</div>
-              <div className="stat-label">Прогресс</div>
+              <div className="stat-number">{roomId}</div>
+              <div className="stat-label">ID комнаты</div>
             </div>
           </div>
         </div>

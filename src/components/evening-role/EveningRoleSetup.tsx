@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useEveningRoleGame } from '../../hooks/useEveningRoleGame';
 import './EveningRole.css';
 
 interface EveningRoleSetupProps {
@@ -7,16 +6,15 @@ interface EveningRoleSetupProps {
 }
 
 export const EveningRoleSetup: React.FC<EveningRoleSetupProps> = ({ onStartGame }) => {
-  const { settings, updateSettings, createRoom } = useEveningRoleGame();
-  const [playerCount, setPlayerCount] = useState(settings.playerCount);
+  const [playerCount, setPlayerCount] = useState(6);
 
   const handlePlayerCountChange = (count: number) => {
     setPlayerCount(count);
-    updateSettings({ playerCount: count });
   };
 
   const handleStartGame = () => {
-    const roomId = createRoom();
+    // Генерируем простой ID комнаты
+    const roomId = Math.random().toString(36).substring(2, 8).toUpperCase();
     onStartGame(roomId);
   };
 
