@@ -10,6 +10,7 @@ import {
   THIS_OR_THAT_CATEGORY_INFO, 
   THIS_OR_THAT_INTENSITY_INFO 
 } from '../../types/this-or-that';
+import './ThisOrThat.css';
 
 interface ThisOrThatSetupProps {
   onStartGame: (players: ThisOrThatPlayer[], settings: ThisOrThatSettings) => void;
@@ -19,7 +20,6 @@ export const ThisOrThatSetup: React.FC<ThisOrThatSetupProps> = ({ onStartGame })
   const [players, setPlayers] = useState<ThisOrThatPlayer[]>([]);
   const [newPlayerName, setNewPlayerName] = useState('');
   const [settings, setSettings] = useState<ThisOrThatSettings>(DEFAULT_THIS_OR_THAT_SETTINGS);
-  const [showSettings, setShowSettings] = useState(false);
 
   const addPlayer = () => {
     if (newPlayerName.trim() && players.length < 20) {
@@ -67,184 +67,136 @@ export const ThisOrThatSetup: React.FC<ThisOrThatSetupProps> = ({ onStartGame })
 
   return (
     <div className="this-or-that-setup">
-      <h1>То или То</h1>
-      <p className="subtitle">Провокационные дилеммы для глубоких размышлений</p>
-      <p className="warning">⚠️ Игра содержит философские и провокационные вопросы для взрослой аудитории</p>
+      <div className="setup-header">
+        <h2>То или То</h2>
+        <p>Провокационные дилеммы для глубоких размышлений</p>
+      </div>
+      
+      <div className="setup-content">
 
-      <div className="players-setup">
-        <h2>Участники</h2>
-        <p className="players-subtitle">Добавьте участников игры (минимум 2)</p>
-        
-        <div className="add-player">
-          <input
-            type="text"
-            placeholder="Имя участника"
-            value={newPlayerName}
-            onChange={(e) => setNewPlayerName(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && addPlayer()}
-            maxLength={20}
-          />
-          <button 
-            onClick={addPlayer}
-            disabled={!newPlayerName.trim() || players.length >= 20}
-            className="add-player-btn"
-          >
-            +
-          </button>
-        </div>
-
-        <div className="players-list">
-          {players.map((player) => (
-            <div key={player.id} className="player-item">
-              <span className="player-name">{player.name}</span>
-              <button
-                onClick={() => removePlayer(player.id)}
-                className="remove-player"
-                title="Удалить участника"
+        <div className="setting-section">
+          <h3>Участники</h3>
+          <div className="players-section">
+            <div className="players-input">
+              <input
+                type="text"
+                placeholder="Имя участника"
+                value={newPlayerName}
+                onChange={(e) => setNewPlayerName(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && addPlayer()}
+                maxLength={20}
+                className="player-input"
+              />
+              <button 
+                onClick={addPlayer}
+                disabled={!newPlayerName.trim() || players.length >= 20}
+                className="add-player-btn"
               >
-                ×
+                +
               </button>
             </div>
-          ))}
-        </div>
 
-        {players.length === 0 && (
-          <div className="no-players">
-            Добавьте участников для начала игры
-          </div>
-        )}
-        
-        {players.length < 2 && players.length > 0 && (
-          <div className="requirement">
-            ⚠️ Необходимо минимум 2 участника для начала игры
-          </div>
-        )}
-      </div>
-
-      <div className="game-settings">
-        <button
-          className="settings-toggle"
-          onClick={() => setShowSettings(true)}
-          type="button"
-        >
-          <span>⚙️ Настройки игры</span>
-        </button>
-
-        {showSettings && (
-          <div className="modal-overlay" onClick={() => setShowSettings(false)}>
-            <div className="modal-content settings-modal" onClick={(e) => e.stopPropagation()}>
-              <div className="modal-header">
-                <h3>Настройки игры</h3>
-                <button
-                  className="modal-close"
-                  onClick={() => setShowSettings(false)}
-                  type="button"
-                >
-                  ×
-                </button>
-              </div>
-              <div className="modal-body settings-modal-body">
-                <div className="setting-group">
-                  <h3>Количество вопросов</h3>
-                  <div className="questions-options">
-                    {[10, 15, 20, 25, 30, 50].map(count => (
-                      <button
-                        key={count}
-                        className={`questions-option ${settings.questionsCount === count ? 'active' : ''}`}
-                        onClick={() => setSettings(prev => ({ ...prev, questionsCount: count }))}
-                        type="button"
-                      >
-                        {count}
-                      </button>
-                    ))}
-                  </div>
+            <div className="players-list">
+              {players.map((player) => (
+                <div key={player.id} className="player-item">
+                  <span className="player-name">{player.name}</span>
+                  <button
+                    onClick={() => removePlayer(player.id)}
+                    className="remove-player-btn"
+                    title="Удалить участника"
+                  >
+                    Удалить
+                  </button>
                 </div>
-
-                <div className="setting-group">
-                  <h3>Категории вопросов</h3>
-                  <div className="categories-grid">
-                    {(Object.keys(THIS_OR_THAT_CATEGORY_INFO) as ThisOrThatCategory[]).map(category => (
-                      <button
-                        key={category}
-                        className={`category-option ${settings.categories.includes(category) ? 'active' : ''}`}
-                        onClick={() => toggleCategory(category)}
-                        style={{ '--category-color': THIS_OR_THAT_CATEGORY_INFO[category].color } as React.CSSProperties}
-                        type="button"
-                      >
-                        <span className="category-emoji">{THIS_OR_THAT_CATEGORY_INFO[category].emoji}</span>
-                        <span className="category-name">{THIS_OR_THAT_CATEGORY_INFO[category].name}</span>
-                        <span className="category-description">{THIS_OR_THAT_CATEGORY_INFO[category].description}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="setting-group">
-                  <h3>Интенсивность вопросов</h3>
-                  <div className="intensity-options">
-                    {(Object.keys(THIS_OR_THAT_INTENSITY_INFO) as ThisOrThatIntensity[]).map(intensity => (
-                      <button
-                        key={intensity}
-                        className={`intensity-option ${settings.intensities.includes(intensity) ? 'active' : ''}`}
-                        onClick={() => toggleIntensity(intensity)}
-                        style={{ '--intensity-color': THIS_OR_THAT_INTENSITY_INFO[intensity].color } as React.CSSProperties}
-                        type="button"
-                      >
-                        <span className="intensity-name">{THIS_OR_THAT_INTENSITY_INFO[intensity].name}</span>
-                        <span className="intensity-description">{THIS_OR_THAT_INTENSITY_INFO[intensity].description}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="setting-group">
-                  <label className="checkbox-label">
-                    <input
-                      type="checkbox"
-                      checked={settings.allowSkip}
-                      onChange={(e) => setSettings(prev => ({ ...prev, allowSkip: e.target.checked }))}
-                    />
-                    <span>Разрешить пропускать вопросы</span>
-                  </label>
-                  <p className="setting-hint">
-                    Участники смогут пропустить вопрос, если он слишком личный или неудобный
-                  </p>
-                </div>
-
-                <div className="setting-group">
-                  <label className="checkbox-label">
-                    <input
-                      type="checkbox"
-                      checked={settings.showResults}
-                      onChange={(e) => setSettings(prev => ({ ...prev, showResults: e.target.checked }))}
-                    />
-                    <span>Показывать статистику ответов</span>
-                  </label>
-                  <p className="setting-hint">
-                    В конце игры будут показаны статистики ответов участников
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
-        )}
+        </div>
+
+        <div className="setting-section">
+          <h3>Количество вопросов</h3>
+          <div className="setting-item">
+            <span className="setting-label">Вопросов в игре</span>
+            <input
+              type="number"
+              min="5"
+              max="50"
+              value={settings.questionsCount}
+              onChange={(e) => setSettings(prev => ({ ...prev, questionsCount: parseInt(e.target.value) || 10 }))}
+              className="setting-input"
+            />
+          </div>
+        </div>
+
+        <div className="setting-section">
+          <h3>Категории вопросов</h3>
+          <div className="categories-grid">
+            {(Object.keys(THIS_OR_THAT_CATEGORY_INFO) as ThisOrThatCategory[]).map(category => (
+              <div
+                key={category}
+                className={`category-card ${settings.categories.includes(category) ? 'selected' : ''}`}
+                onClick={() => toggleCategory(category)}
+              >
+                <div className="category-name">{THIS_OR_THAT_CATEGORY_INFO[category].name}</div>
+                <div className="category-description">{THIS_OR_THAT_CATEGORY_INFO[category].description}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="setting-section">
+          <h3>Интенсивность вопросов</h3>
+          <div className="intensity-grid">
+            {(Object.keys(THIS_OR_THAT_INTENSITY_INFO) as ThisOrThatIntensity[]).map(intensity => (
+              <div
+                key={intensity}
+                className={`intensity-card ${settings.intensities.includes(intensity) ? 'selected' : ''}`}
+                onClick={() => toggleIntensity(intensity)}
+              >
+                <div className="intensity-name">{THIS_OR_THAT_INTENSITY_INFO[intensity].name}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="setting-section">
+          <h3>Дополнительные настройки</h3>
+          <div className="setting-item">
+            <span className="setting-label">Разрешить пропуск вопросов</span>
+            <label className="switch">
+              <input
+                type="checkbox"
+                checked={settings.allowSkip}
+                onChange={(e) => setSettings(prev => ({ ...prev, allowSkip: e.target.checked }))}
+              />
+              <span className="slider"></span>
+            </label>
+          </div>
+          <div className="setting-item">
+            <span className="setting-label">Показывать статистику ответов</span>
+            <label className="switch">
+              <input
+                type="checkbox"
+                checked={settings.showResults}
+                onChange={(e) => setSettings(prev => ({ ...prev, showResults: e.target.checked }))}
+              />
+              <span className="slider"></span>
+            </label>
+          </div>
+        </div>
+
+      </div>
+      
+      <div className="setup-footer">
+        <button
+          className="start-game-btn"
+          onClick={handleStartGame}
+          disabled={!canStartGame}
+        >
+          Начать игру
+        </button>
       </div>
 
-      <button
-        className="start-game"
-        onClick={handleStartGame}
-        disabled={!canStartGame}
-      >
-        Начать игру
-      </button>
-
-      {!canStartGame && (
-        <div className="requirements">
-          {players.length < 2 && <div>• Добавьте минимум 2 участников</div>}
-          {settings.categories.length === 0 && <div>• Выберите минимум 1 категорию</div>}
-          {settings.intensities.length === 0 && <div>• Выберите минимум 1 уровень интенсивности</div>}
-        </div>
-      )}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { ThisOrThatGameState } from '../../types/this-or-that';
-import { THIS_OR_THAT_CATEGORY_INFO, THIS_OR_THAT_INTENSITY_INFO } from '../../types/this-or-that';
+import { THIS_OR_THAT_CATEGORY_INFO } from '../../types/this-or-that';
+import './ThisOrThat.css';
 
 interface ThisOrThatGameProps {
   gameState: ThisOrThatGameState;
@@ -112,106 +113,87 @@ export const ThisOrThatGame: React.FC<ThisOrThatGameProps> = ({
   return (
     <div className="this-or-that-game">
       <div className="game-header">
-        <div className="progress-container">
-          <div className="progress-bar">
-            <div 
-              className="progress-fill" 
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <span className="progress-text">
-            {gameState.currentQuestionIndex + 1} / {gameState.questions.length}
-          </span>
+        <div className="progress-info">
+          Вопрос {gameState.currentQuestionIndex + 1} из {gameState.questions.length}
         </div>
-
-        <div className="question-info">
-          <span 
-            className="category-badge"
-            style={{ backgroundColor: THIS_OR_THAT_CATEGORY_INFO[currentQuestion.category].color }}
-          >
-            {THIS_OR_THAT_CATEGORY_INFO[currentQuestion.category].emoji} {THIS_OR_THAT_CATEGORY_INFO[currentQuestion.category].name}
-          </span>
-          <span 
-            className="intensity-badge"
-            style={{ backgroundColor: THIS_OR_THAT_INTENSITY_INFO[currentQuestion.intensity].color }}
-          >
-            {THIS_OR_THAT_INTENSITY_INFO[currentQuestion.intensity].name}
-          </span>
+        <div className="progress-bar">
+          <div 
+            className="progress-fill" 
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+        <div className="current-player">
+          Ходит: {currentPlayer?.name}
         </div>
       </div>
 
       {!showResults ? (
-        <div className="question-section">
-          <div className="current-player">
-            <h2>Ходит: <span className="player-highlight">{currentPlayer?.name}</span></h2>
-            <p className="turn-instruction">Выберите один из вариантов</p>
-          </div>
-
-          <div className="question-container">
+        <>
+        <div className="question-card">
+          <div className="question-content">
+            <div className="question-category">
+              {THIS_OR_THAT_CATEGORY_INFO[currentQuestion.category].name}
+            </div>
+            
             {questionParts.isChoice ? (
-              <div className="choice-question">
-                <h1 className="question-title">Что вы выберете?</h1>
-                <div className="choices">
+              <>
+                <div className="question-text">
+                  Что вы выберете?
+                </div>
+                <div className="choices-container">
                   <button 
-                    className="choice-btn this-choice"
+                    className="choice-btn option-a"
                     onClick={() => handleAnswer('this')}
                     disabled={hasAnswered}
                   >
-                    <span className="choice-label">ЭТО</span>
-                    <span className="choice-text">{questionParts.this}</span>
+                    {questionParts.this}
                   </button>
                   
-                  <div className="or-divider">ИЛИ</div>
-                  
                   <button 
-                    className="choice-btn that-choice"
+                    className="choice-btn option-b"
                     onClick={() => handleAnswer('that')}
                     disabled={hasAnswered}
                   >
-                    <span className="choice-label">ТО</span>
-                    <span className="choice-text">{questionParts.that}</span>
+                    {questionParts.that}
                   </button>
                 </div>
-              </div>
+              </>
             ) : (
-              <div className="single-question">
-                <h1 className="question-text">{currentQuestion.question}</h1>
-                <div className="answer-buttons">
+              <>
+                <div className="question-text">{currentQuestion.question}</div>
+                <div className="choices-container">
                   <button 
-                    className="answer-btn agree-btn"
+                    className="choice-btn option-a"
                     onClick={() => handleAnswer('this')}
                     disabled={hasAnswered}
                   >
                     Да / Согласен
                   </button>
                   <button 
-                    className="answer-btn disagree-btn"
+                    className="choice-btn option-b"
                     onClick={() => handleAnswer('that')}
                     disabled={hasAnswered}
                   >
                     Нет / Не согласен
                   </button>
                 </div>
-              </div>
+              </>
             )}
           </div>
+        </div>
 
-          {gameState.settings.allowSkip && (
+        {gameState.settings.allowSkip && (
+          <div className="skip-section">
             <button 
               className="skip-btn"
               onClick={handleSkip}
               disabled={hasAnswered}
             >
-              🤐 Пропустить вопрос
+              Пропустить вопрос
             </button>
-          )}
-
-          {hasAnswered && (
-            <div className="waiting-message">
-              <p>Ждём ответов других участников...</p>
-            </div>
-          )}
-        </div>
+          </div>
+        )}
+        </>
       ) : (
         <div className="question-results">
           <h2>Результаты вопроса</h2>
@@ -265,15 +247,17 @@ export const ThisOrThatGame: React.FC<ThisOrThatGameProps> = ({
             </div>
           )}
 
-          <button 
-            className="next-question-btn"
-            onClick={handleNextQuestion}
-          >
-            {gameState.currentQuestionIndex < gameState.questions.length - 1 
-              ? 'Следующий вопрос' 
-              : 'Завершить игру'
-            }
-          </button>
+          <div className="end-actions">
+            <button 
+              className="new-game-btn"
+              onClick={handleNextQuestion}
+            >
+              {gameState.currentQuestionIndex < gameState.questions.length - 1 
+                ? 'Следующий вопрос' 
+                : 'Завершить игру'
+              }
+            </button>
+          </div>
         </div>
       )}
     </div>
