@@ -79,6 +79,10 @@
     color: black;
 }
 
+.adult-fants-setup .timer-time {
+    color: black;
+}
+
 .adult-fants-game {
     height: 100vh;
     height: 100dvh;
@@ -536,7 +540,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
-    transition: transform 4s cubic-bezier(0.25, 0.1, 0.25, 1);
     transform-origin: center center;
     pointer-events: none;
 }

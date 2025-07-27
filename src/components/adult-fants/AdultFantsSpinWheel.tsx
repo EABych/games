@@ -36,16 +36,32 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
     const task = getRandomAdultFantsTask();
 
     // Вычисляем угол для выбранного игрока
-    // Стрелка указывает вверх (12 часов), нужно повернуть к выбранному сектору
-    const targetAngle = randomPlayerIndex * sectorAngle + (sectorAngle / 2);
+    // Первый сектор начинается сверху (0°), затем по часовой стрелке
+    // Стрелка должна указать в центр выбранного сектора
+    const sectorStartAngle = randomPlayerIndex * sectorAngle;
+    const targetAngle = sectorStartAngle + (sectorAngle / 2);
     
-    // Добавляем несколько полных оборотов + целевой угол
+    // Добавляем несколько полных оборотов для эффекта вращения
     const spins = 4 + Math.random() * 3; // 4-7 оборотов
     const finalAngle = spins * 360 + targetAngle;
 
+    console.log(`Выбран игрок ${randomPlayerIndex} (${selectedPlayer.name}), угол: ${targetAngle}°, финальный: ${finalAngle}°`);
+
     if (arrowRef.current) {
-      arrowRef.current.style.transition = 'transform 4s cubic-bezier(0.25, 0.1, 0.25, 1)';
-      arrowRef.current.style.transform = `translate(-50%, -50%) rotate(${finalAngle}deg)`;
+      // Сначала сбрасываем позицию стрелки
+      arrowRef.current.style.transition = 'none';
+      arrowRef.current.style.transform = 'translate(-50%, -50%) rotate(0deg)';
+      
+      // Принудительный reflow для применения изменений
+      arrowRef.current.offsetHeight;
+      
+      // Затем запускаем анимацию
+      requestAnimationFrame(() => {
+        if (arrowRef.current) {
+          arrowRef.current.style.transition = 'transform 4s cubic-bezier(0.25, 0.1, 0.25, 1)';
+          arrowRef.current.style.transform = `translate(-50%, -50%) rotate(${finalAngle}deg)`;
+        }
+      });
     }
 
     // После завершения анимации показываем результат
