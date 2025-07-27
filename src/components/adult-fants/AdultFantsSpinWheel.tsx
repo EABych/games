@@ -56,6 +56,9 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
       clearInterval(fastSpin);
       console.log('ФАЗА 2: Замедление подсветки');
       
+      // Корректируем текущий сектор - он может быть неточным после быстрой фазы
+      currentSector = currentSector % players.length;
+      
       let slowInterval = 150; // начальная скорость замедления
       const slowdownFactor = 1.15; // коэффициент замедления
       const maxSlowInterval = 800; // максимальная задержка
@@ -63,33 +66,36 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
       // Сколько дополнительных оборотов сделать в фазе замедления
       const additionalSpins = 2 + Math.floor(Math.random() * 2); // 2-3 оборота
       
-      // Рассчитываем общее количество шагов до остановки на целевом игроке
-      let totalSteps = additionalSpins * players.length;
-      
-      // Добавляем шаги чтобы попасть точно на целевого игрока
+      // Рассчитываем сколько шагов нужно до целевого игрока
       const stepsToTarget = (randomPlayerIndex - currentSector + players.length) % players.length;
-      totalSteps += stepsToTarget;
       
+      // Общее количество шагов = дополнительные обороты + точное попадание
+      const totalSteps = additionalSpins * players.length + stepsToTarget;
       let remainingSteps = totalSteps;
       
       console.log(`Текущий сектор: ${currentSector}, целевой: ${randomPlayerIndex}`);
-      console.log(`Дополнительных оборотов: ${additionalSpins}, всего шагов: ${totalSteps}`);
+      console.log(`Шагов до цели: ${stepsToTarget}, дополнительных оборотов: ${additionalSpins}`);
+      console.log(`Всего шагов: ${totalSteps}`);
       
       const slowSpin = () => {
+        // Сначала уменьшаем счетчик и переходим к следующему сектору
+        remainingSteps--;
+        currentSector = (currentSector + 1) % players.length;
+        
         console.log(`Подсвечиваем сектор ${currentSector}, осталось шагов: ${remainingSteps}`);
         setHighlightedSector(currentSector);
         
-        if (remainingSteps <= 1) {
+        if (remainingSteps <= 0) {
           // Остановились - сейчас должны быть на целевом игроке
           console.log(`ОСТАНОВКА: текущий сектор ${currentSector}, целевой игрок ${randomPlayerIndex} (${selectedPlayer.name})`);
           
           // Проверим что мы действительно на правильном секторе
           if (currentSector !== randomPlayerIndex) {
             console.log(`ОШИБКА: остановились на ${currentSector}, а должны на ${randomPlayerIndex}`);
+            console.log(`Принудительно устанавливаем подсветку на ${randomPlayerIndex}`);
+            setHighlightedSector(randomPlayerIndex);
           }
           
-          // Устанавливаем подсветку на правильном игроке в любом случае
-          setHighlightedSector(randomPlayerIndex);
           setIsSpinning(false);
           setSelectedPlayer(selectedPlayer);
           
@@ -98,10 +104,6 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
           }, 2000);
           return;
         }
-        
-        // Переходим к следующему сектору
-        currentSector = (currentSector + 1) % players.length;
-        remainingSteps--;
         
         // Увеличиваем интервал (замедляем)
         slowInterval = Math.min(slowInterval * slowdownFactor, maxSlowInterval);
