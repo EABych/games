@@ -16,8 +16,8 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
 }) => {
   const [isSpinning, setIsSpinning] = useState(false);
   const [selectedPlayer, setSelectedPlayer] = useState<AdultFantsPlayer | null>(null);
+  const [highlightedSector, setHighlightedSector] = useState<number>(-1);
   const wheelRef = useRef<HTMLDivElement>(null);
-  const arrowRef = useRef<HTMLDivElement>(null);
 
   const playerCount = players.length;
   const sectorAngle = 360 / playerCount;
@@ -25,12 +25,12 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
   const spinWheel = () => {
     if (isSpinning) return;
 
-    console.log('=== НОВАЯ ДВУХФАЗНАЯ АНИМАЦИЯ ===');
+    console.log('=== АНИМАЦИЯ ПОДСВЕТКИ СЕКТОРОВ ===');
     console.log('Количество игроков:', players.length);
-    console.log('Угол сектора:', sectorAngle);
 
     setIsSpinning(true);
     setSelectedPlayer(null);
+    setHighlightedSector(-1);
 
     // Случайный игрок
     const randomPlayerIndex = Math.floor(Math.random() * players.length);
@@ -38,83 +38,72 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
 
     // Случайное задание
     const task = getRandomAdultFantsTask();
-
-    // Вычисляем точный угол остановки на выбранном игроке
-    const targetAngle = randomPlayerIndex * sectorAngle + (sectorAngle / 2);
     
     console.log(`Выбран игрок ${randomPlayerIndex} (${selectedPlayer.name})`);
-    console.log(`Будем останавливаться на угле: ${targetAngle}°`);
 
-    if (arrowRef.current) {
-      // Сбрасываем стрелку в исходное положение
-      arrowRef.current.style.transition = 'none';
-      arrowRef.current.style.transform = 'translateX(-50%) translateY(-100%) rotate(0deg)';
-      arrowRef.current.offsetHeight; // force reflow
-      
-      console.log('ФАЗА 1: Быстрое вращение 3 секунды');
-      
-      // ФАЗА 1: Быстрое вращение (3 секунды, много оборотов)
-      setTimeout(() => {
-        if (arrowRef.current) {
-          arrowRef.current.style.transition = 'transform 3s linear';
-          arrowRef.current.style.transform = 'translateX(-50%) translateY(-100%) rotate(1080deg)'; // 3 оборота
-        }
-      }, 50);
+    // ФАЗА 1: Быстрая подсветка секторов (3 секунды)
+    console.log('ФАЗА 1: Быстрая подсветка секторов');
+    let currentSector = 0;
+    let fastInterval = 100; // начальная скорость 100ms
 
-      // ФАЗА 2: Замедление до остановки на выбранном игроке
-      setTimeout(() => {
-        console.log('ФАЗА 2: Замедление до остановки');
+    const fastSpin = setInterval(() => {
+      setHighlightedSector(currentSector);
+      currentSector = (currentSector + 1) % players.length;
+    }, fastInterval);
+
+    // ФАЗА 2: Замедление подсветки до остановки на выбранном игроке
+    setTimeout(() => {
+      clearInterval(fastSpin);
+      console.log('ФАЗА 2: Замедление подсветки');
+      
+      let slowInterval = 150; // начальная скорость замедления
+      const slowdownFactor = 1.15; // коэффициент замедления
+      const maxSlowInterval = 800; // максимальная задержка
+      
+      // Сколько дополнительных оборотов сделать в фазе замедления
+      const additionalSpins = 2 + Math.floor(Math.random() * 2); // 2-3 оборота
+      let remainingSteps = additionalSpins * players.length;
+      
+      // Вычисляем когда остановиться на целевом игроке
+      const stepsToTarget = remainingSteps - (players.length - randomPlayerIndex - currentSector + players.length) % players.length;
+      
+      console.log(`Дополнительных шагов: ${remainingSteps}, остановка на шаге: ${stepsToTarget}`);
+      
+      const slowSpin = () => {
+        setHighlightedSector(currentSector);
+        currentSector = (currentSector + 1) % players.length;
+        remainingSteps--;
         
-        if (arrowRef.current) {
-          // Случайное время замедления (1-3 секунды)
-          const slowdownTime = 1.5 + Math.random() * 1.5;
-          console.log(`Время замедления: ${slowdownTime.toFixed(1)} сек`);
-          
-          // Добавляем еще немного оборотов + точную остановку
-          const additionalSpins = 1 + Math.random(); // 1-2 доп. оборота
-          const finalAngle = 1080 + (additionalSpins * 360) + targetAngle;
-          
-          console.log(`Финальный угол остановки: ${finalAngle}°`);
-          
-          arrowRef.current.style.transition = `transform ${slowdownTime}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
-          arrowRef.current.style.transform = `translateX(-50%) translateY(-100%) rotate(${finalAngle}deg)`;
-        }
-        
-        // Показываем результат после завершения замедления
-        setTimeout(() => {
+        if (remainingSteps <= 0) {
+          // Остановились на целевом игроке
+          console.log(`Остановились на игроке ${currentSector}`);
+          setHighlightedSector(randomPlayerIndex);
           setIsSpinning(false);
           setSelectedPlayer(selectedPlayer);
           
           setTimeout(() => {
             onTaskSelected(selectedPlayer, task);
           }, 2000);
-        }, (1.5 + Math.random() * 1.5) * 1000 + 500); // время замедления + 0.5 сек
+          return;
+        }
         
-      }, 3000); // после завершения быстрого вращения
+        // Увеличиваем интервал (замедляем)
+        slowInterval = Math.min(slowInterval * slowdownFactor, maxSlowInterval);
+        setTimeout(slowSpin, slowInterval);
+      };
       
-    } else {
-      console.log('ERROR: Стрелка не найдена!');
-    }
+      setTimeout(slowSpin, slowInterval);
+      
+    }, 3000); // после 3 секунд быстрой подсветки
 
-  };
-
-  const resetArrow = () => {
-    console.log('=== СБРОС СТРЕЛКИ ===');
-    if (arrowRef.current) {
-      console.log('Сбрасываем стрелку в исходное положение');
-      arrowRef.current.style.transition = 'none';
-      arrowRef.current.style.transform = 'translateX(-50%) translateY(-100%) rotate(0deg)';
-      console.log('Стрелка сброшена');
-    } else {
-      console.log('ERROR: Стрелка не найдена при сбросе!');
-    }
   };
 
   useEffect(() => {
     console.log('=== useEffect: изменились игроки ===');
     console.log('Новый список игроков:', players.map(p => p.name));
-    // Сбрасываем стрелку при изменении игроков
-    resetArrow();
+    // Сбрасываем подсветку при изменении игроков
+    setHighlightedSector(-1);
+    setSelectedPlayer(null);
   }, [players]);
 
   return (
@@ -137,10 +126,13 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
           <div ref={wheelRef} className="wheel">
             {players.map((player, index) => {
               const rotation = index * sectorAngle;
+              const isHighlighted = highlightedSector === index;
+              const isSelected = selectedPlayer?.id === player.id;
+              
               return (
                 <div
                   key={player.id}
-                  className={`wheel-sector ${selectedPlayer?.id === player.id ? 'selected' : ''}`}
+                  className={`wheel-sector ${isHighlighted ? 'highlighted' : ''} ${isSelected ? 'selected' : ''}`}
                   style={{
                     transform: `rotate(${rotation}deg)`,
                     backgroundColor: player.color,
@@ -154,12 +146,6 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
               );
             })}
           </div>
-
-          {/* Стрелка */}
-          <div 
-            ref={arrowRef}
-            className={`wheel-arrow ${isSpinning ? 'spinning' : ''}`}
-          ></div>
 
           {/* Центральная кнопка */}
           <button
