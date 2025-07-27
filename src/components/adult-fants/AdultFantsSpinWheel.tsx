@@ -25,6 +25,11 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
   const spinWheel = () => {
     if (isSpinning) return;
 
+    console.log('=== НАЧАЛО АНИМАЦИИ ===');
+    console.log('Количество игроков:', players.length);
+    console.log('Угол сектора:', sectorAngle);
+    console.log('Список игроков:', players.map((p, i) => `${i}: ${p.name}`));
+
     setIsSpinning(true);
     setSelectedPlayer(null);
 
@@ -45,12 +50,20 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
     const spins = 4 + Math.random() * 3; // 4-7 оборотов
     const finalAngle = spins * 360 + targetAngle;
 
-    console.log(`Выбран игрок ${randomPlayerIndex} (${selectedPlayer.name}), угол: ${targetAngle}°, финальный: ${finalAngle}°`);
+    console.log(`Выбран игрок ${randomPlayerIndex} (${selectedPlayer.name})`);
+    console.log(`Начальный угол сектора: ${sectorStartAngle}°`);
+    console.log(`Целевой угол: ${targetAngle}°`);
+    console.log(`Количество оборотов: ${spins}`);
+    console.log(`Финальный угол: ${finalAngle}°`);
 
     if (arrowRef.current) {
+      console.log('Стрелка найдена, начинаем анимацию...');
+      console.log('Текущий transform:', arrowRef.current.style.transform);
+      
       // Сначала сбрасываем позицию стрелки
       arrowRef.current.style.transition = 'none';
       arrowRef.current.style.transform = 'translate(-50%, -50%) rotate(0deg)';
+      console.log('Сброшено в 0°');
       
       // Принудительный reflow для применения изменений
       arrowRef.current.offsetHeight;
@@ -58,10 +71,14 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
       // Затем запускаем анимацию
       requestAnimationFrame(() => {
         if (arrowRef.current) {
+          console.log('Запускаем анимацию к углу:', finalAngle);
           arrowRef.current.style.transition = 'transform 4s cubic-bezier(0.25, 0.1, 0.25, 1)';
           arrowRef.current.style.transform = `translate(-50%, -50%) rotate(${finalAngle}deg)`;
+          console.log('Новый transform:', arrowRef.current.style.transform);
         }
       });
+    } else {
+      console.log('ERROR: Стрелка не найдена!');
     }
 
     // После завершения анимации показываем результат
@@ -77,13 +94,20 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
   };
 
   const resetArrow = () => {
+    console.log('=== СБРОС СТРЕЛКИ ===');
     if (arrowRef.current) {
+      console.log('Сбрасываем стрелку в исходное положение');
       arrowRef.current.style.transition = 'none';
       arrowRef.current.style.transform = 'translate(-50%, -50%) rotate(0deg)';
+      console.log('Стрелка сброшена');
+    } else {
+      console.log('ERROR: Стрелка не найдена при сбросе!');
     }
   };
 
   useEffect(() => {
+    console.log('=== useEffect: изменились игроки ===');
+    console.log('Новый список игроков:', players.map(p => p.name));
     // Сбрасываем стрелку при изменении игроков
     resetArrow();
   }, [players]);
@@ -108,6 +132,7 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
           <div ref={wheelRef} className="wheel">
             {players.map((player, index) => {
               const rotation = index * sectorAngle;
+              console.log(`Сектор ${index} (${player.name}): поворот ${rotation}°`);
               return (
                 <div
                   key={player.id}
