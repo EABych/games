@@ -36,7 +36,6 @@ export const SpyGame: React.FC<SpyGameProps> = () => {
     return (
       <SpyHostGame
         settings={gameSettings}
-        onBack={() => setPhase('setup')}
         onNewGame={handleNewGame}
       />
     );
