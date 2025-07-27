@@ -557,6 +557,16 @@
     text-overflow: ellipsis;
     max-width: 120px;
     text-align: center;
+    z-index: 10; /* Убедимся что текст поверх всего */
+    pointer-events: none;
+}
+
+/* Усилить контрастность текста в подсвеченных секторах */
+.wheel-sector.highlighted .sector-content,
+.wheel-sector.selected .sector-content {
+    color: white;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+    font-weight: var(--adult-font-weight-bold);
 }
 
 
