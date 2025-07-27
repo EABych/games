@@ -8,7 +8,34 @@ interface AdultFantsSetupProps {
 }
 
 export const AdultFantsSetup: React.FC<AdultFantsSetupProps> = ({ onStartGame }) => {
-  const [players, setPlayers] = useState<AdultFantsPlayer[]>([]);
+  // Предустановленные игроки для тестирования
+  const [players, setPlayers] = useState<AdultFantsPlayer[]>([
+    {
+      id: 'preset_1',
+      name: 'Анна',
+      color: PLAYER_COLORS[0]
+    },
+    {
+      id: 'preset_2', 
+      name: 'Борис',
+      color: PLAYER_COLORS[1]
+    },
+    {
+      id: 'preset_3',
+      name: 'Катя',
+      color: PLAYER_COLORS[2]
+    },
+    {
+      id: 'preset_4',
+      name: 'Денис',
+      color: PLAYER_COLORS[3]
+    },
+    {
+      id: 'preset_5',
+      name: 'Елена',
+      color: PLAYER_COLORS[4]
+    }
+  ]);
   const [currentPlayerName, setCurrentPlayerName] = useState('');
 
   const addPlayer = () => {

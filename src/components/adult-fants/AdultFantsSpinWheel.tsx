@@ -180,13 +180,42 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
                     '--sector-angle': `${sectorAngle}deg`
                   } as React.CSSProperties}
                 >
-                  <div className="sector-content">
-                    <span className="player-name">{player.name}</span>
-                  </div>
                 </div>
               );
             })}
           </div>
+
+          {/* Текстовые лейблы поверх колеса */}
+          {players.map((player, index) => {
+            const rotation = index * sectorAngle;
+            const labelAngle = rotation + sectorAngle / 2; // Центр сектора
+            
+            // Рассчитываем позицию текста
+            const radius = 120; // Расстояние от центра
+            const x = 50 + (radius / 200) * 50 * Math.cos((labelAngle - 90) * Math.PI / 180);
+            const y = 50 + (radius / 200) * 50 * Math.sin((labelAngle - 90) * Math.PI / 180);
+            
+            return (
+              <div
+                key={`label_${player.id}`}
+                className="sector-label"
+                style={{
+                  position: 'absolute',
+                  left: `${x}%`,
+                  top: `${y}%`,
+                  transform: 'translate(-50%, -50%)',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  textShadow: '0 2px 4px rgba(0, 0, 0, 0.8)',
+                  fontSize: '14px',
+                  zIndex: 20,
+                  pointerEvents: 'none'
+                }}
+              >
+                {player.name}
+              </div>
+            );
+          })}
 
           {/* Центральная кнопка */}
           <button
