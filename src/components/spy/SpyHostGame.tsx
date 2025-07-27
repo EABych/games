@@ -3,7 +3,6 @@ import { QRCodeModal } from '../mafia/QRCodeModal';
 
 interface SpyHostGameProps {
   settings: SpyGameSettings;
-  onBack: () => void;
   onNewGame: () => void;
 }
 
@@ -11,7 +10,7 @@ interface SpyGameSettings {
   playerCount: number;
 }
 
-export const SpyHostGame: React.FC<SpyHostGameProps> = ({ settings, onBack, onNewGame }) => {
+export const SpyHostGame: React.FC<SpyHostGameProps> = ({ settings, onNewGame }) => {
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [serverStatus, setServerStatus] = useState<string>('');
   const [showQRModal, setShowQRModal] = useState<boolean>(false);
@@ -80,13 +79,6 @@ export const SpyHostGame: React.FC<SpyHostGameProps> = ({ settings, onBack, onNe
     }
   };
 
-  const getRoleColor = (isSpy: boolean): string => {
-    return isSpy ? '#e74c3c' : '#27ae60';
-  };
-
-  const getRoleEmoji = (isSpy: boolean): string => {
-    return isSpy ? '🕵️' : '🏠';
-  };
 
   if (currentRole) {
     return (
