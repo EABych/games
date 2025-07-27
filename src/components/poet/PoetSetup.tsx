@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { PoetPlayer, PoetSettings, PoetCategory, PoetDifficulty } from '../../types/poet';
 import { POET_CATEGORY_INFO, POET_DIFFICULTY_INFO } from '../../types/poet';
+import './Poet.css';
 
 interface PoetSetupProps {
   onStartGame: (players: PoetPlayer[], settings: PoetSettings) => void;
@@ -64,50 +65,56 @@ export const PoetSetup: React.FC<PoetSetupProps> = ({ onStartGame }) => {
   return (
     <div className="poet-setup">
       <div className="setup-header">
-        <h1>🎭 Поэт</h1>
-        <p>Придумайте рифму к строке стиха и набирайте очки за успешное выполнение!</p>
+        <h2>Поэт</h2>
+        <p>Настройте параметры игры</p>
       </div>
 
       <div className="setup-content">
-        {/* Добавление игроков */}
-        <div className="setup-section">
-          <h2>Игроки ({players.length}/8)</h2>
-          <div className="players-input">
-            <input
-              type="text"
-              value={newPlayerName}
-              onChange={(e) => setNewPlayerName(e.target.value)}
-              placeholder="Имя игрока"
-              maxLength={20}
-              onKeyPress={(e) => e.key === 'Enter' && addPlayer()}
-            />
-            <button 
-              onClick={addPlayer}
-              disabled={!newPlayerName.trim() || players.length >= 8}
-              className="add-player-btn"
-            >
-              Добавить
-            </button>
-          </div>
-          
-          <div className="players-list">
-            {players.map((player) => (
-              <div key={player.id} className="player-item">
-                <span>{player.name}</span>
-                <button onClick={() => removePlayer(player.id)} className="remove-btn">
-                  ✕
+        <div className="setting-section">
+          <h3>Игроки ({players.length}/8)</h3>
+          <div className="players-section">
+            <div className="players-input-section">
+              <div className="players-input">
+                <input
+                  type="text"
+                  value={newPlayerName}
+                  onChange={(e) => setNewPlayerName(e.target.value)}
+                  placeholder="Имя игрока"
+                  maxLength={20}
+                  onKeyPress={(e) => e.key === 'Enter' && addPlayer()}
+                />
+                <button 
+                  onClick={addPlayer}
+                  disabled={!newPlayerName.trim() || players.length >= 8}
+                  className="add-player-btn"
+                >
+                  +
                 </button>
               </div>
-            ))}
+              {players.length < 2 && (
+                <p className="warning-message">Необходимо минимум 2 игрока</p>
+              )}
+            </div>
+            
+            <div className="players-list-section">
+              {players.length > 0 && (
+                <div className="players-list">
+                  {players.map((player) => (
+                    <div key={player.id} className="player-item">
+                      <span>{player.name}</span>
+                      <button onClick={() => removePlayer(player.id)} className="remove-btn">
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-          {players.length < 2 && (
-            <p className="requirement-text">Необходимо минимум 2 игрока</p>
-          )}
         </div>
 
-        {/* Настройки категорий */}
-        <div className="setup-section">
-          <h2>Категории тем</h2>
+        <div className="setting-section">
+          <h3>Категории тем</h3>
           <div className="categories-grid">
             {(Object.entries(POET_CATEGORY_INFO) as [PoetCategory, typeof POET_CATEGORY_INFO[PoetCategory]][]).map(([category, info]) => (
               <button
@@ -115,7 +122,6 @@ export const PoetSetup: React.FC<PoetSetupProps> = ({ onStartGame }) => {
                 onClick={() => toggleCategory(category)}
                 className={`category-btn ${settings.categories.includes(category) ? 'selected' : ''}`}
               >
-                <span className="category-emoji">{info.emoji}</span>
                 <div className="category-info">
                   <span className="category-name">{info.name}</span>
                   <span className="category-desc">{info.description}</span>
@@ -124,13 +130,12 @@ export const PoetSetup: React.FC<PoetSetupProps> = ({ onStartGame }) => {
             ))}
           </div>
           {settings.categories.length === 0 && (
-            <p className="requirement-text">Выберите хотя бы одну категорию</p>
+            <p className="warning-message">Выберите хотя бы одну категорию</p>
           )}
         </div>
 
-        {/* Настройки сложности */}
-        <div className="setup-section">
-          <h2>Уровень сложности</h2>
+        <div className="setting-section">
+          <h3>Уровень сложности</h3>
           <div className="difficulty-grid">
             {(Object.entries(POET_DIFFICULTY_INFO) as [PoetDifficulty, typeof POET_DIFFICULTY_INFO[PoetDifficulty]][]).map(([difficulty, info]) => (
               <button
@@ -149,13 +154,12 @@ export const PoetSetup: React.FC<PoetSetupProps> = ({ onStartGame }) => {
             ))}
           </div>
           {settings.difficulty.length === 0 && (
-            <p className="requirement-text">Выберите хотя бы один уровень сложности</p>
+            <p className="warning-message">Выберите хотя бы один уровень сложности</p>
           )}
         </div>
 
-        {/* Игровые настройки */}
-        <div className="setup-section">
-          <h2>Настройки игры</h2>
+        <div className="setting-section">
+          <h3>Настройки игры</h3>
           <div className="game-settings">
             <div className="setting-item">
               <label>Количество раундов:</label>
@@ -197,14 +201,22 @@ export const PoetSetup: React.FC<PoetSetupProps> = ({ onStartGame }) => {
           </div>
         </div>
 
-        {/* Кнопка старта */}
+      </div>
+
+      <div className="setup-actions">
         <button 
           onClick={handleStartGame}
           disabled={!canStartGame}
-          className="start-game-btn"
+          className="start-game-button"
         >
           Начать игру
         </button>
+        
+        {!canStartGame && (
+          <p className="warning-message">
+            Настройте параметры игры
+          </p>
+        )}
       </div>
     </div>
   );

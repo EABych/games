@@ -1,5 +1,6 @@
 import React from 'react';
 import type { PoetGameState } from '../../types/poet';
+import './Poet.css';
 
 interface PoetGameProps {
   gameState: PoetGameState;
@@ -24,10 +25,10 @@ export const PoetGame: React.FC<PoetGameProps> = ({
 
   if (!isPlaying || !gameState.currentFirstLine || !currentPlayer) {
     return (
-      <div className="poet-game loading">
-        <div className="loading-content">
-          <h2>Подготовка раунда...</h2>
+      <div className="poet-game">
+        <div className="loading-state">
           <div className="loading-spinner"></div>
+          <p>Подготовка раунда...</p>
         </div>
       </div>
     );
@@ -35,69 +36,47 @@ export const PoetGame: React.FC<PoetGameProps> = ({
 
   return (
     <div className="poet-game">
-      {/* Заголовок игры */}
       <div className="game-header">
-        <div className="round-info">
-          <h1>Раунд {gameState.currentRound} из {gameState.settings.roundsCount}</h1>
-          <div className="current-player">
-            Ходит: <strong>{currentPlayer.name}</strong>
-          </div>
-        </div>
-        
-        <div className="score-display">
-          <div className="score-item">
-            ✅ {currentPlayer.completed}
-          </div>
-          <div className="score-item">
-            ❌ {currentPlayer.failed}
-          </div>
-          <div className="score-item total">
-            🏆 {currentPlayer.score}
-          </div>
-        </div>
+        <h2>Раунд {gameState.currentRound} из {gameState.settings.roundsCount}</h2>
+        <p>Ходит: {currentPlayer.name}</p>
       </div>
 
-      {/* Задание */}
-      <div className="task-display">
-        <h2>Ваше задание:</h2>
-        <div className="task-text">
-          Придумайте вторую строку к двустишию:
-        </div>
-        <div className="first-line">
-          "{gameState.currentFirstLine.text}"
-        </div>
-        {gameState.currentFirstLine.suggestedRhyme && (
-          <div className="rhyme-suggestion">
-            💡 Подсказка для рифмы: {gameState.currentFirstLine.suggestedRhyme}
-          </div>
-        )}
-      </div>
+      <div className="game-body">
 
-      {/* Кнопки действий */}
-      <div className="action-phase">
-        <div className="instruction">
-          <p>Подумайте над второй строкой и выберите:</p>
+        <div className="task-card">
+          <h3>Ваше задание:</h3>
+          <div className="task-text">
+            Придумайте вторую строку к двустишию:
+          </div>
+          <div className="first-line">
+            "{gameState.currentFirstLine.text}"
+          </div>
+          {gameState.currentFirstLine.suggestedRhyme && (
+            <div className="rhyme-suggestion">
+              Подсказка для рифмы: {gameState.currentFirstLine.suggestedRhyme}
+            </div>
+          )}
         </div>
-        
-        <div className="action-buttons">
-          <button 
-            onClick={handleConfirm}
-            className="confirm-btn"
-          >
-            ✅ Выполнил
-            <span className="points">+{gameState.settings.pointsForSuccess} очко</span>
-          </button>
-          
-          <button 
-            onClick={handleFail}
-            className="fail-btn"
-          >
-            ❌ Не смог
-            <span className="points">+{gameState.settings.pointsForFailure} очков</span>
-          </button>
+
+        <div className="score-card">
+          <div className="score-display">
+            <div className="score-item">
+              <span className="score-label">Успехов</span>
+              <span className="score-value">{currentPlayer.completed}</span>
+            </div>
+            <div className="score-item">
+              <span className="score-label">Неудач</span>
+              <span className="score-value">{currentPlayer.failed}</span>
+            </div>
+            <div className="score-item total">
+              <span className="score-label">Очков</span>
+              <span className="score-value">{currentPlayer.score}</span>
+            </div>
+          </div>
         </div>
-        
-        <div className="game-progress">
+
+        <div className="players-progress">
+          <h3>Результаты игроков:</h3>
           <div className="players-list">
             {gameState.players.map((player, index) => (
               <div 
@@ -109,6 +88,26 @@ export const PoetGame: React.FC<PoetGameProps> = ({
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      <div className="game-actions">
+        <div className="action-buttons">
+          <button 
+            onClick={handleConfirm}
+            className="confirm-button"
+          >
+            Выполнил
+            <span className="points">+{gameState.settings.pointsForSuccess}</span>
+          </button>
+          
+          <button 
+            onClick={handleFail}
+            className="fail-button"
+          >
+            Не смог
+            <span className="points">{gameState.settings.pointsForFailure === 0 ? '0' : gameState.settings.pointsForFailure}</span>
+          </button>
         </div>
       </div>
 

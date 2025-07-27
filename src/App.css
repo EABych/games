@@ -4974,8 +4974,8 @@ body.game-mode {
   max-width: 600px;
   margin: 0 auto;
 
-  max-height: var(--safe-max-height);
-  max-height: var(--safe-max-height-dvh);
+  /*max-height: var(--safe-max-height);*/
+  /*max-height: var(--safe-max-height-dvh);*/
   overflow: scroll;
 }
 
@@ -5604,7 +5604,7 @@ body.game-mode {
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
-  max-height: 90vh;
+  /*max-height: 90vh;*/
   overflow-y: auto;
 }
 
@@ -6063,9 +6063,12 @@ body.game-mode {
   margin: 0 auto;
   padding: 20px;
 
-  max-height: var(--safe-max-height);
-  max-height: var(--safe-max-height-dvh);
+  /*max-height: var(--safe-max-height);*/
+  /*max-height: var(--safe-max-height-dvh);*/
   overflow: scroll;
+}
+.poet-setup .category-name {
+  text-align: start;
 }
 
 .poet-setup .setup-header {
@@ -6089,7 +6092,7 @@ body.game-mode {
 .poet-setup .setup-content {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 0px;
 }
 
 .poet-setup .setup-section {
@@ -6351,8 +6354,8 @@ body.game-mode {
   max-width: 900px;
   margin: 0 auto;
   padding: 20px;
-  max-height: var(--safe-max-height);
-  max-height: var(--safe-max-height-dvh);
+  /*max-height: var(--safe-max-height);*/
+  /*max-height: var(--safe-max-height-dvh);*/
   overflow: scroll;
 }
 
@@ -6776,6 +6779,10 @@ body.game-mode {
   max-width: 900px;
   margin: 0 auto;
   padding: 20px;
+}
+
+.poet-end {
+  overflow: auto;
 }
 
 .poet-round-end .round-end-header,

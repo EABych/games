@@ -26,7 +26,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onSelectGame }) => {
     {
       id: 'this-or-that',
       title: 'То или То',
-      description: 'Провокационные дилеммы для взрослых'
+      description: 'Провокационные дилеммы \n для взрослых'
     },
     {
       id: 'poet',

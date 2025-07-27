@@ -1,0 +1,1138 @@
+/* ========================================
+   Fants Game - Apple Style Design
+   ======================================== */
+
+/* CSS Variables */
+:root {
+  --fants-primary-blue: #007AFF;
+  --fants-primary-text: #1d1d1f;
+  --fants-secondary-text: #86868b;
+  --fants-background-light: #f5f7fa;
+  --fants-card-background: rgba(255, 255, 255, 0.9);
+  --fants-border-color: rgba(0, 0, 0, 0.06);
+  --fants-shadow-light: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 20px rgba(0, 0, 0, 0.02);
+  --fants-shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --fants-gradient-primary: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  --fants-border-radius: 16px;
+  --fants-border-radius-large: 20px;
+  --fants-transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Typography System */
+.fants-typography {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================
+   FANTS SETUP SCREEN
+   ======================================== */
+
+.fants-setup {
+  max-width: 600px;
+  margin: 0 auto;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--fants-gradient-primary);
+  color: var(--fants-primary-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: calc(16px + env(safe-area-inset-top)) 20px calc(16px + env(safe-area-inset-bottom)) 20px;
+}
+
+/* Header */
+.fants-setup h1 {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--fants-primary-text);
+  text-align: center;
+  letter-spacing: -0.7px;
+}
+
+.fants-setup .subtitle {
+  margin: 0 0 32px 0;
+  font-size: 16px;
+  color: var(--fants-secondary-text);
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: -0.1px;
+}
+
+/* Players Setup */
+.fants-setup .players-setup {
+  background: var(--fants-card-background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--fants-border-color);
+  border-radius: var(--fants-border-radius-large);
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--fants-shadow-medium);
+}
+
+.fants-setup .players-setup h2 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--fants-primary-text);
+  letter-spacing: -0.3px;
+}
+
+.fants-setup .add-player {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.fants-setup .add-player input {
+  flex: 1;
+  padding: 14px 16px;
+  border: 2px solid rgba(0, 122, 255, 0.2);
+  border-radius: 12px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  transition: var(--fants-transition);
+  color: var(--fants-primary-text);
+  font-weight: 500;
+}
+
+.fants-setup .add-player input:focus {
+  outline: none;
+  border-color: var(--fants-primary-blue);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.fants-setup .add-player-btn {
+  padding: 14px 20px;
+  background: var(--fants-primary-blue);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--fants-transition);
+  letter-spacing: -0.2px;
+}
+
+.fants-setup .add-player-btn:hover {
+  background: #0051D5;
+  transform: translateY(-1px);
+}
+
+.fants-setup .add-player-btn:disabled {
+  background: rgba(0, 122, 255, 0.3);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.fants-setup .players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fants-setup .player-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: var(--fants-transition);
+}
+
+.fants-setup .player-item:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateY(-1px);
+}
+
+.fants-setup .player-number {
+  width: 24px;
+  height: 24px;
+  background: var(--fants-primary-blue);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.fants-setup .player-name {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--fants-primary-text);
+}
+
+.fants-setup .remove-player {
+  background: rgba(255, 59, 48, 0.1);
+  color: #FF3B30;
+  border: 1px solid rgba(255, 59, 48, 0.2);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--fants-transition);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fants-setup .remove-player:hover {
+  background: rgba(255, 59, 48, 0.15);
+  border-color: rgba(255, 59, 48, 0.3);
+}
+
+.fants-setup .requirement {
+  margin: 16px 0 0 0;
+  font-size: 14px;
+  color: var(--fants-secondary-text);
+  text-align: center;
+  font-style: italic;
+}
+
+/* Settings Button */
+.fants-setup .game-settings {
+  margin-bottom: 20px;
+}
+
+.fants-setup .settings-toggle {
+  width: 100%;
+  padding: 16px;
+  background: var(--fants-card-background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--fants-border-color);
+  border-radius: var(--fants-border-radius);
+  color: var(--fants-primary-text);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--fants-transition);
+  box-shadow: var(--fants-shadow-light);
+}
+
+.fants-setup .settings-toggle:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-1px);
+  box-shadow: var(--fants-shadow-medium);
+}
+
+/* Modal */
+.fants-setup .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.fants-setup .modal-content {
+  background: var(--fants-card-background);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid var(--fants-border-color);
+  border-radius: var(--fants-border-radius-large);
+  box-shadow: var(--fants-shadow-medium);
+  width: 100%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fants-setup .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--fants-border-color);
+}
+
+.fants-setup .modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fants-primary-text);
+  letter-spacing: -0.2px;
+}
+
+.fants-setup .modal-close {
+  background: rgba(142, 142, 147, 0.1);
+  color: #8E8E93;
+  border: 1px solid rgba(142, 142, 147, 0.2);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: var(--fants-transition);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fants-setup .modal-close:hover {
+  background: rgba(142, 142, 147, 0.15);
+}
+
+.fants-setup .modal-body {
+  padding: 20px 24px;
+}
+
+.fants-setup .setting-group {
+  margin-bottom: 24px;
+}
+
+.fants-setup .setting-group:last-child {
+  margin-bottom: 0;
+}
+
+.fants-setup .setting-group h3 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--fants-primary-text);
+  letter-spacing: -0.1px;
+}
+
+/* Categories */
+.fants-setup .categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.fants-setup .category-option {
+  padding: 16px 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--fants-transition);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.fants-setup .category-option:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateY(-1px);
+}
+
+.fants-setup .category-option.active {
+  background: rgba(0, 122, 255, 0.1);
+  border-color: var(--fants-primary-blue);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.fants-setup .category-emoji {
+  font-size: 24px;
+}
+
+.fants-setup .category-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--fants-primary-text);
+  letter-spacing: -0.1px;
+}
+
+/* Difficulty */
+.fants-setup .difficulty-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 12px;
+}
+
+.fants-setup .difficulty-option {
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--fants-transition);
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--fants-primary-text);
+}
+
+.fants-setup .difficulty-option:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateY(-1px);
+}
+
+.fants-setup .difficulty-option.active {
+  background: rgba(0, 122, 255, 0.1);
+  border-color: var(--fants-primary-blue);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+/* Fants per player */
+.fants-setup .fants-per-player {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+
+.fants-setup .count-option {
+  padding: 12px 8px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--fants-transition);
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--fants-primary-text);
+}
+
+.fants-setup .count-option:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateY(-1px);
+}
+
+.fants-setup .count-option.active {
+  background: rgba(0, 122, 255, 0.1);
+  border-color: var(--fants-primary-blue);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+/* Checkbox */
+.fants-setup .checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--fants-primary-text);
+}
+
+.fants-setup .checkbox-label input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--fants-primary-blue);
+}
+
+/* Start Game Button */
+.fants-setup .start-game {
+  width: 100%;
+  padding: 18px;
+  background: var(--fants-primary-blue);
+  color: white;
+  border: none;
+  border-radius: var(--fants-border-radius);
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--fants-transition);
+  letter-spacing: -0.2px;
+  margin-top: auto;
+}
+
+.fants-setup .start-game:hover {
+  background: #0051D5;
+  transform: translateY(-1px);
+}
+
+.fants-setup .start-game:disabled {
+  background: rgba(0, 122, 255, 0.3);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ========================================
+   FANTS GAME SCREEN
+   ======================================== */
+
+.fants-game {
+  max-width: 600px;
+  margin: 0 auto;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--fants-gradient-primary);
+  color: var(--fants-primary-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: calc(16px + env(safe-area-inset-top)) 20px calc(16px + env(safe-area-inset-bottom)) 20px;
+}
+
+.fants-game.error {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.fants-game.error h2 {
+  margin: 0 0 16px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #FF3B30;
+}
+
+.fants-game.error p {
+  margin: 0;
+  font-size: 16px;
+  color: var(--fants-secondary-text);
+}
+
+/* Game Header */
+.fants-game .fants-header {
+  flex-shrink: 0;
+  background: var(--fants-card-background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--fants-border-color);
+  border-radius: var(--fants-border-radius);
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--fants-shadow-light);
+}
+
+.fants-game .progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fants-game .progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.fants-game .progress-fill {
+  height: 100%;
+  background: var(--fants-primary-blue);
+  transition: width 0.3s ease;
+  border-radius: 3px;
+}
+
+.fants-game .progress-text {
+  font-size: 14px;
+  color: var(--fants-secondary-text);
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Current Player */
+.fants-game .current-player {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.fants-game .player-avatar {
+  width: 80px;
+  height: 80px;
+  background: var(--fants-primary-blue);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0 auto 16px auto;
+  box-shadow: var(--fants-shadow-medium);
+}
+
+.fants-game .player-name {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--fants-primary-text);
+  letter-spacing: -0.5px;
+}
+
+.fants-game .player-turn {
+  margin: 0;
+  font-size: 16px;
+  color: var(--fants-secondary-text);
+  font-weight: 500;
+}
+
+/* Fant Card */
+.fants-game .fant-card {
+  background: var(--fants-card-background);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid var(--fants-border-color);
+  border-radius: var(--fants-border-radius-large);
+  padding: 32px;
+  margin-bottom: 24px;
+  box-shadow: var(--fants-shadow-medium);
+}
+
+.fants-game .fant-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 12px;
+}
+
+.fants-game .fant-category {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 122, 255, 0.1);
+  padding: 8px 12px;
+  border-radius: 20px;
+  flex: 1;
+}
+
+.fants-game .category-emoji {
+  font-size: 16px;
+}
+
+.fants-game .category-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fants-primary-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.fants-game .fant-difficulty {
+  background: rgba(255, 149, 0, 0.1);
+  color: #FF9500;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.fants-game .fant-content {
+  text-align: center;
+}
+
+.fants-game .fant-text {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--fants-primary-text);
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+}
+
+/* Actions */
+.fants-game .fant-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.fants-game .skip-button {
+  flex: 1;
+  padding: 16px;
+  background: rgba(142, 142, 147, 0.1);
+  color: #8E8E93;
+  border: 1px solid rgba(142, 142, 147, 0.2);
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--fants-transition);
+}
+
+.fants-game .skip-button:hover {
+  background: rgba(142, 142, 147, 0.15);
+  border-color: rgba(142, 142, 147, 0.3);
+}
+
+.fants-game .complete-button {
+  flex: 2;
+  padding: 16px;
+  background: var(--fants-primary-blue);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--fants-transition);
+  letter-spacing: -0.2px;
+}
+
+.fants-game .complete-button:hover {
+  background: #0051D5;
+  transform: translateY(-1px);
+}
+
+/* Players Summary */
+.fants-game .players-summary {
+  background: var(--fants-card-background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--fants-border-color);
+  border-radius: var(--fants-border-radius);
+  padding: 20px;
+  box-shadow: var(--fants-shadow-light);
+}
+
+.fants-game .players-summary h3 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--fants-primary-text);
+  letter-spacing: -0.1px;
+}
+
+.fants-game .players-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.fants-game .player-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  transition: var(--fants-transition);
+}
+
+.fants-game .player-summary.current {
+  background: rgba(0, 122, 255, 0.1);
+  border: 1px solid rgba(0, 122, 255, 0.2);
+}
+
+.fants-game .player-summary-avatar {
+  width: 32px;
+  height: 32px;
+  background: var(--fants-primary-blue);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.fants-game .player-summary.current .player-summary-avatar {
+  background: #34C759;
+}
+
+.fants-game .player-summary-info {
+  flex: 1;
+}
+
+.fants-game .player-summary-name {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--fants-primary-text);
+  margin-bottom: 4px;
+}
+
+.fants-game .player-stats {
+  display: flex;
+  gap: 8px;
+}
+
+.fants-game .stat {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.fants-game .stat.completed {
+  color: #34C759;
+}
+
+.fants-game .stat.skipped {
+  color: #FF9500;
+}
+
+/* ========================================
+   FANTS END SCREEN
+   ======================================== */
+
+.fants-end {
+  max-width: 600px;
+  margin: 0 auto;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--fants-gradient-primary);
+  color: var(--fants-primary-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: calc(16px + env(safe-area-inset-top)) 20px calc(16px + env(safe-area-inset-bottom)) 20px;
+}
+
+.fants-end h1 {
+  margin: 0 0 32px 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--fants-primary-text);
+  text-align: center;
+  letter-spacing: -0.7px;
+}
+
+/* Winner Section */
+.fants-end .winner-section {
+  margin-bottom: 32px;
+}
+
+.fants-end .winner-card,
+.fants-end .draw-card {
+  background: var(--fants-card-background);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid var(--fants-border-color);
+  border-radius: var(--fants-border-radius-large);
+  padding: 32px;
+  text-align: center;
+  box-shadow: var(--fants-shadow-medium);
+}
+
+.fants-end .winner-avatar {
+  width: 80px;
+  height: 80px;
+  background: #34C759;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0 auto 20px auto;
+  box-shadow: var(--fants-shadow-medium);
+}
+
+.fants-end .draw-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.fants-end .winner-card h2,
+.fants-end .draw-card h2 {
+  margin: 0 0 12px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--fants-secondary-text);
+  letter-spacing: -0.3px;
+}
+
+.fants-end .winner-name,
+.fants-end .draw-description {
+  margin: 0 0 20px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--fants-primary-text);
+  letter-spacing: -0.5px;
+}
+
+.fants-end .draw-winners {
+  margin-bottom: 20px;
+}
+
+.fants-end .draw-winner-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fants-primary-blue);
+}
+
+.fants-end .winner-stats {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+.fants-end .winner-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.fants-end .stat-number {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--fants-primary-blue);
+}
+
+.fants-end .stat-label {
+  font-size: 12px;
+  color: var(--fants-secondary-text);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Game Stats */
+.fants-end .game-stats {
+  margin-bottom: 32px;
+}
+
+.fants-end .game-stats h3 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fants-primary-text);
+  text-align: center;
+  letter-spacing: -0.2px;
+}
+
+.fants-end .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 16px;
+}
+
+.fants-end .stat-card {
+  background: var(--fants-card-background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--fants-border-color);
+  border-radius: var(--fants-border-radius);
+  padding: 20px;
+  text-align: center;
+  box-shadow: var(--fants-shadow-light);
+  transition: var(--fants-transition);
+}
+
+.fants-end .stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--fants-shadow-medium);
+}
+
+.fants-end .stat-value {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--fants-primary-blue);
+  margin-bottom: 4px;
+}
+
+.fants-end .stat-name {
+  font-size: 12px;
+  color: var(--fants-secondary-text);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Final Results */
+.fants-end .final-results {
+  margin-bottom: 32px;
+}
+
+.fants-end .final-results h3 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fants-primary-text);
+  text-align: center;
+  letter-spacing: -0.2px;
+}
+
+.fants-end .results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fants-end .result-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--fants-card-background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--fants-border-color);
+  border-radius: var(--fants-border-radius);
+  box-shadow: var(--fants-shadow-light);
+  transition: var(--fants-transition);
+}
+
+.fants-end .result-item.winner-result {
+  background: rgba(52, 199, 89, 0.1);
+  border-color: rgba(52, 199, 89, 0.2);
+}
+
+.fants-end .result-item:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--fants-shadow-medium);
+}
+
+.fants-end .result-place {
+  width: 32px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--fants-secondary-text);
+}
+
+.fants-end .result-avatar {
+  width: 40px;
+  height: 40px;
+  background: var(--fants-primary-blue);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.fants-end .result-item.winner-result .result-avatar {
+  background: #34C759;
+}
+
+.fants-end .result-info {
+  flex: 1;
+}
+
+.fants-end .result-name {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--fants-primary-text);
+  margin-bottom: 4px;
+}
+
+.fants-end .result-stats {
+  display: flex;
+  gap: 12px;
+}
+
+.fants-end .result-stat {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.fants-end .result-stat.completed {
+  color: #34C759;
+}
+
+.fants-end .result-stat.skipped {
+  color: #FF9500;
+}
+
+/* New Game Button */
+.fants-end .new-game-button {
+  width: 100%;
+  padding: 18px;
+  background: var(--fants-primary-blue);
+  color: white;
+  border: none;
+  border-radius: var(--fants-border-radius);
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--fants-transition);
+  letter-spacing: -0.2px;
+  margin-top: auto;
+}
+
+.fants-end .new-game-button:hover {
+  background: #0051D5;
+  transform: translateY(-1px);
+}
+
+.fants-end .new-game-button:active {
+  transform: scale(0.98);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 768px) {
+  .fants-setup .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .fants-setup .fants-per-player {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .fants-game .players-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .fants-end .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .fants-game .fant-actions {
+    flex-direction: column;
+  }
+  
+  .fants-game .skip-button {
+    flex: none;
+  }
+  
+  .fants-game .complete-button {
+    flex: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .fants-setup .categories-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .fants-setup .difficulty-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .fants-setup .fants-per-player {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .fants-end .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .fants-end .winner-stats {
+    gap: 16px;
+  }
+}
