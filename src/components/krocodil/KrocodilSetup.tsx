@@ -11,6 +11,7 @@ import {
   KROCODIL_CATEGORY_INFO, 
   KROCODIL_DIFFICULTY_INFO 
 } from '../../types/krocodil';
+import './Krocodil.css';
 
 interface KrocodilSetupProps {
   onStartGame: (teams: KrocodilTeam[], players: KrocodilPlayer[], settings: KrocodilSettings) => void;
@@ -220,14 +221,14 @@ export const KrocodilSetup: React.FC<KrocodilSetupProps> = ({ onStartGame }) => 
 
         
         {teams.length < 2 && (
-          <div className="requirement">
-            ⚠️ Необходимо минимум 2 команды для начала игры
+          <div className="warning-message">
+            Необходимо минимум 2 команды для начала игры
           </div>
         )}
         
         {teams.length >= 2 && teams.some(team => getTeamPlayers(team.id).length === 0) && (
-          <div className="requirement">
-            ⚠️ В каждой команде должен быть хотя бы один игрок
+          <div className="warning-message">
+            В каждой команде должен быть хотя бы один игрок
           </div>
         )}
       </div>
@@ -238,7 +239,7 @@ export const KrocodilSetup: React.FC<KrocodilSetupProps> = ({ onStartGame }) => 
           onClick={() => setShowSettings(true)}
           type="button"
         >
-          <span>⚙️ Настройки игры</span>
+          <span>Настройки игры</span>
         </button>
 
         {showSettings && (
@@ -298,7 +299,6 @@ export const KrocodilSetup: React.FC<KrocodilSetupProps> = ({ onStartGame }) => 
                     style={{ '--category-color': KROCODIL_CATEGORY_INFO[category].color } as React.CSSProperties}
                     type="button"
                   >
-                    <span className="category-emoji">{KROCODIL_CATEGORY_INFO[category].emoji}</span>
                     <span className="category-name">{KROCODIL_CATEGORY_INFO[category].name}</span>
                   </button>
                 ))}

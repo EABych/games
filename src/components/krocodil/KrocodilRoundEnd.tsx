@@ -1,5 +1,6 @@
 import React from 'react';
 import type { KrocodilGameState } from '../../types/krocodil';
+import './Krocodil.css';
 
 interface KrocodilRoundEndProps {
   gameState: KrocodilGameState;

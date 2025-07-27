@@ -1,0 +1,671 @@
+/* ========================================
+   Krocodil Game - Apple Style Design
+   ======================================== */
+
+/* CSS Variables */
+:root {
+  --krocodil-primary-blue: #007AFF;
+  --krocodil-primary-text: #1d1d1f;
+  --krocodil-secondary-text: #86868b;
+  --krocodil-background-light: #f5f7fa;
+  --krocodil-card-background: rgba(255, 255, 255, 0.9);
+  --krocodil-border-color: rgba(0, 0, 0, 0.06);
+  --krocodil-shadow-light: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 20px rgba(0, 0, 0, 0.02);
+  --krocodil-shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --krocodil-gradient-primary: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  --krocodil-border-radius: 16px;
+  --krocodil-border-radius-large: 20px;
+  --krocodil-transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Typography System */
+.krocodil-typography {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================
+   KROCODIL SETUP SCREEN
+   ======================================== */
+
+.krocodil-setup {
+  max-width: 600px;
+  margin: 0 auto;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--krocodil-gradient-primary);
+  color: var(--krocodil-primary-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: calc(env(safe-area-inset-top)) 0px calc(env(safe-area-inset-bottom)) 0px;
+}
+
+/* Header */
+.krocodil-setup .setup-header {
+  flex-shrink: 0;
+  z-index: 100;
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: calc(16px + env(safe-area-inset-top)) 60px 20px 60px;
+  margin: 0 !important;
+}
+
+.krocodil-setup .setup-header h1 {
+  margin: 8px 0 4px 0;
+  font-size: 20px;
+  color: #1d1d1f;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  text-align: center;
+}
+
+.krocodil-setup .setup-header .subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: #86868b;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: -0.1px;
+}
+
+/* Content */
+.krocodil-setup .setup-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  justify-content: start;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+}
+
+/* Teams Setup */
+.krocodil-setup .teams-setup {
+  background: var(--krocodil-card-background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--krocodil-border-color);
+  border-radius: var(--krocodil-border-radius-large);
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--krocodil-shadow-medium);
+}
+
+.krocodil-setup .teams-setup h2 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--krocodil-primary-text);
+  letter-spacing: -0.3px;
+}
+
+.krocodil-setup .teams-subtitle {
+  margin: 0 0 20px 0;
+  font-size: 14px;
+  color: var(--krocodil-secondary-text);
+  font-weight: 500;
+  letter-spacing: -0.1px;
+}
+
+.krocodil-setup .add-team {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  align-items: stretch;
+}
+
+.krocodil-setup .add-team input {
+  flex: 1;
+  padding: 14px 16px;
+  border: 2px solid rgba(0, 122, 255, 0.2);
+  border-radius: 12px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  transition: var(--krocodil-transition);
+  color: var(--krocodil-primary-text);
+  font-weight: 500;
+}
+
+.krocodil-setup .add-team input:focus {
+  outline: none;
+  border-color: var(--krocodil-primary-blue);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.krocodil-setup .add-team-btn {
+  padding: 14px 20px;
+  background: var(--krocodil-primary-blue);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--krocodil-transition);
+  letter-spacing: -0.2px;
+}
+
+.krocodil-setup .add-team-btn:hover {
+  background: #0051D5;
+  transform: translateY(-1px);
+}
+
+.krocodil-setup .add-team-btn:disabled {
+  background: rgba(0, 122, 255, 0.3);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Teams List */
+.krocodil-setup .teams-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.krocodil-setup .team-card {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  transition: var(--krocodil-transition);
+}
+
+.krocodil-setup .team-card:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateY(-1px);
+  box-shadow: var(--krocodil-shadow-medium);
+}
+
+.krocodil-setup .team-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.krocodil-setup .team-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--krocodil-primary-text);
+  letter-spacing: -0.2px;
+}
+
+.krocodil-setup .remove-team {
+  background: rgba(255, 59, 48, 0.1);
+  color: #FF3B30;
+  border: 1px solid rgba(255, 59, 48, 0.2);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--krocodil-transition);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.krocodil-setup .remove-team:hover {
+  background: rgba(255, 59, 48, 0.15);
+  border-color: rgba(255, 59, 48, 0.3);
+}
+
+/* Team Players */
+.krocodil-setup .team-players {
+  margin-bottom: 16px;
+}
+
+.krocodil-setup .player-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  transition: var(--krocodil-transition);
+}
+
+.krocodil-setup .player-item:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.krocodil-setup .player-item:last-child {
+  margin-bottom: 0;
+}
+
+.krocodil-setup .player-item span {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--krocodil-primary-text);
+}
+
+.krocodil-setup .remove-player {
+  background: rgba(255, 59, 48, 0.1);
+  color: #FF3B30;
+  border: 1px solid rgba(255, 59, 48, 0.2);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: var(--krocodil-transition);
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.krocodil-setup .remove-player:hover {
+  background: rgba(255, 59, 48, 0.15);
+}
+
+.krocodil-setup .no-players {
+  color: var(--krocodil-secondary-text);
+  font-style: italic;
+  font-size: 14px;
+  text-align: center;
+  padding: 12px;
+}
+
+/* Add Player Form */
+.krocodil-setup .add-player-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.krocodil-setup .add-player-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 2px solid rgba(0, 122, 255, 0.2);
+  border-radius: 8px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--krocodil-primary-text);
+  transition: var(--krocodil-transition);
+}
+
+.krocodil-setup .add-player-input:focus {
+  outline: none;
+  border-color: var(--krocodil-primary-blue);
+  box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
+}
+
+.krocodil-setup .confirm-add-player {
+  background: #34C759;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: var(--krocodil-transition);
+}
+
+.krocodil-setup .confirm-add-player:hover {
+  background: #28A745;
+}
+
+.krocodil-setup .cancel-add-player {
+  background: rgba(255, 59, 48, 0.1);
+  color: #FF3B30;
+  border: 1px solid rgba(255, 59, 48, 0.2);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: var(--krocodil-transition);
+}
+
+.krocodil-setup .cancel-add-player:hover {
+  background: rgba(255, 59, 48, 0.15);
+}
+
+.krocodil-setup .add-player-btn-new {
+  width: 100%;
+  padding: 12px;
+  background: rgba(0, 122, 255, 0.1);
+  color: var(--krocodil-primary-blue);
+  border: 1px solid rgba(0, 122, 255, 0.2);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--krocodil-transition);
+}
+
+.krocodil-setup .add-player-btn-new:hover {
+  background: rgba(0, 122, 255, 0.15);
+  border-color: rgba(0, 122, 255, 0.3);
+}
+
+/* Warning Messages */
+.krocodil-setup .warning-message {
+  color: #FF3B30;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.1px;
+  line-height: 1.4;
+  margin-top: 12px;
+  background: rgba(255, 59, 48, 0.1);
+  padding: 12px 16px;
+  border-radius: 8px;
+  border-left: 4px solid #FF3B30;
+}
+
+/* Settings Button */
+.krocodil-setup .game-settings {
+  margin-bottom: 20px;
+}
+
+.krocodil-setup .settings-toggle {
+  width: 100%;
+  padding: 16px;
+  background: var(--krocodil-card-background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--krocodil-border-color);
+  border-radius: var(--krocodil-border-radius);
+  color: var(--krocodil-primary-text);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--krocodil-transition);
+  box-shadow: var(--krocodil-shadow-light);
+}
+
+.krocodil-setup .settings-toggle:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-1px);
+  box-shadow: var(--krocodil-shadow-medium);
+}
+
+/* Modal */
+.krocodil-setup .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.krocodil-setup .modal-content {
+  background: var(--krocodil-card-background);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid var(--krocodil-border-color);
+  border-radius: var(--krocodil-border-radius-large);
+  box-shadow: var(--krocodil-shadow-medium);
+  width: 100%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.krocodil-setup .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--krocodil-border-color);
+}
+
+.krocodil-setup .modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--krocodil-primary-text);
+  letter-spacing: -0.2px;
+}
+
+.krocodil-setup .modal-close {
+  background: rgba(142, 142, 147, 0.1);
+  color: #8E8E93;
+  border: 1px solid rgba(142, 142, 147, 0.2);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: var(--krocodil-transition);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.krocodil-setup .modal-close:hover {
+  background: rgba(142, 142, 147, 0.15);
+}
+
+.krocodil-setup .modal-body {
+  padding: 20px 24px;
+}
+
+.krocodil-setup .setting-group {
+  margin-bottom: 24px;
+}
+
+.krocodil-setup .setting-group:last-child {
+  margin-bottom: 0;
+}
+
+.krocodil-setup .setting-group h3 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--krocodil-primary-text);
+  letter-spacing: -0.1px;
+}
+
+/* Time and Points Options */
+.krocodil-setup .time-options,
+.krocodil-setup .points-options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.krocodil-setup .time-option,
+.krocodil-setup .points-option {
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--krocodil-transition);
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--krocodil-primary-text);
+}
+
+.krocodil-setup .time-option:hover,
+.krocodil-setup .points-option:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateY(-1px);
+}
+
+.krocodil-setup .time-option.active,
+.krocodil-setup .points-option.active {
+  background: rgba(0, 122, 255, 0.1);
+  border-color: var(--krocodil-primary-blue);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+/* Categories */
+.krocodil-setup .categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.krocodil-setup .category-option {
+  padding: 16px 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--krocodil-transition);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.krocodil-setup .category-option:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateY(-1px);
+}
+
+.krocodil-setup .category-option.active {
+  background: rgba(0, 122, 255, 0.1);
+  border-color: var(--krocodil-primary-blue);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.krocodil-setup .category-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--krocodil-primary-text);
+  letter-spacing: -0.1px;
+}
+
+/* Difficulty */
+.krocodil-setup .difficulty-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 12px;
+}
+
+.krocodil-setup .difficulty-option {
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--krocodil-transition);
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--krocodil-primary-text);
+}
+
+.krocodil-setup .difficulty-option:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateY(-1px);
+}
+
+.krocodil-setup .difficulty-option.active {
+  background: rgba(0, 122, 255, 0.1);
+  border-color: var(--krocodil-primary-blue);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+/* Checkbox */
+.krocodil-setup .checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--krocodil-primary-text);
+}
+
+.krocodil-setup .checkbox-label input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--krocodil-primary-blue);
+}
+
+/* Footer */
+.krocodil-setup .setup-footer {
+  flex-shrink: 0;
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 16px 20px calc(16px + env(safe-area-inset-bottom)) 20px;
+}
+
+.krocodil-setup .start-game {
+  width: 100%;
+  padding: 18px;
+  background: var(--krocodil-primary-blue);
+  color: white;
+  border: none;
+  border-radius: var(--krocodil-border-radius);
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--krocodil-transition);
+  letter-spacing: -0.2px;
+}
+
+.krocodil-setup .start-game:hover {
+  background: #0051D5;
+  transform: translateY(-1px);
+}
+
+.krocodil-setup .start-game:disabled {
+  background: rgba(0, 122, 255, 0.3);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 768px) {
+  .krocodil-setup .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .krocodil-setup .time-options,
+  .krocodil-setup .points-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .krocodil-setup .difficulty-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .krocodil-setup .categories-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .krocodil-setup .time-options,
+  .krocodil-setup .points-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

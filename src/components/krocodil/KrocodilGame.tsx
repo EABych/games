@@ -1,5 +1,6 @@
 import React from 'react';
 import type { KrocodilGameState } from '../../types/krocodil';
+import './Krocodil.css';
 
 interface KrocodilGameProps {
   gameState: KrocodilGameState;
@@ -111,7 +112,7 @@ export const KrocodilGame: React.FC<KrocodilGameProps> = ({
               onClick={onGuessWord}
               disabled={!gameState.isTimerRunning}
             >
-              ✓ Угадали
+Угадали
             </button>
             
             {gameState.settings.allowSkip && (
@@ -120,7 +121,7 @@ export const KrocodilGame: React.FC<KrocodilGameProps> = ({
                 onClick={onSkipWord}
                 disabled={!gameState.isTimerRunning}
               >
-                ⏭️ Пропустить
+Пропустить
               </button>
             )}
           </>

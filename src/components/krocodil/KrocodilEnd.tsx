@@ -1,5 +1,6 @@
 import React from 'react';
 import type { KrocodilGameState } from '../../types/krocodil';
+import './Krocodil.css';
 
 interface KrocodilEndProps {
   gameState: KrocodilGameState;
@@ -29,7 +30,6 @@ export const KrocodilEnd: React.FC<KrocodilEndProps> = ({ gameState, onNewGame }
       
       <div className="winner-section">
         <div className="winner-card">
-          <div className="winner-icon">🏆</div>
           <h2>Команда-победитель</h2>
           <h3 className="winner-name">{winnerTeam.name}</h3>
           <div className="winner-stats">
@@ -95,7 +95,7 @@ export const KrocodilEnd: React.FC<KrocodilEndProps> = ({ gameState, onNewGame }
               className={`result-item ${index === 0 ? 'winner-result' : ''}`}
             >
               <div className="result-place">
-                {index === 0 ? '🏆' : `${index + 1}.`}
+                {index === 0 ? '1' : `${index + 1}`}
               </div>
               
               <div className="result-team">
