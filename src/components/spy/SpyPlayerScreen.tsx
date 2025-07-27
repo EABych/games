@@ -52,75 +52,40 @@ export const SpyPlayerScreen: React.FC<SpyPlayerScreenProps> = ({ roomId: propRo
   };
 
   const getRoleColor = (isSpy: boolean): string => {
-    return isSpy ? '#e74c3c' : '#27ae60';
+    return isSpy ? '#DC2626' : '#059669';
   };
 
-  const getRoleEmoji = (isSpy: boolean): string => {
-    return isSpy ? '🕵️' : '🏠';
-  };
 
   if (playerRole) {
     return (
-      <div className="spy-player-screen">
-        <div className="role-card" style={{ borderColor: getRoleColor(playerRole.isSpy) }}>
+      <div className="spy-player-screen dark">
+        <div className="role-card">
           <div className="role-header">
-            <div className="role-emoji">{getRoleEmoji(playerRole.isSpy)}</div>
-            <h2 className="role-name" style={{ color: getRoleColor(playerRole.isSpy) }}>
+            <h1 className="role-name" style={{ color: getRoleColor(playerRole.isSpy) }}>
               {playerRole.roleInfo.name}
-            </h2>
-            <div className="player-info">
-              Игрок {playerRole.playerNumber} из {playerRole.totalPlayers}
+            </h1>
+            <div className="role-team">
+              <span className={`team-indicator ${playerRole.isSpy ? 'spy' : 'resident'}`}>
+                {playerRole.isSpy ? 'Шпион' : 'Житель'}
+              </span>
             </div>
           </div>
           
-          <div className="role-content">
-            <div className="role-description">
-              <h3>📋 Ваша задача:</h3>
-              <p>{playerRole.roleInfo.description}</p>
-            </div>
-            
-            {playerRole.location && (
-              <div className="location-info">
-                <h3>📍 Локация:</h3>
-                <div className="location-badge">
-                  {playerRole.location}
-                </div>
-              </div>
-            )}
-            
-            {playerRole.isSpy && (
-              <div className="spy-tips">
-                <h3>🕵️ Советы для шпиона:</h3>
-                <ul>
-                  <li>Слушайте внимательно вопросы других игроков</li>
-                  <li>Задавайте общие вопросы, чтобы понять локацию</li>
-                  <li>Не выдавайте себя слишком конкретными деталями</li>
-                  <li>Попробуйте понять, где вы находитесь</li>
-                </ul>
-              </div>
-            )}
-            
-            {!playerRole.isSpy && (
-              <div className="resident-tips">
-                <h3>👥 Советы для жителей:</h3>
-                <ul>
-                  <li>Задавайте вопросы о деталях локации</li>
-                  <li>Ищите игрока, который отвечает уклончиво</li>
-                  <li>Обращайте внимание на странное поведение</li>
-                  <li>Голосуйте за исключение подозрительных</li>
-                </ul>
-              </div>
-            )}
-            
-            <div className="instruction-info">
-              <h3>💡 Инструкция:</h3>
-              <p>{playerRole.roleInfo.instruction}</p>
-            </div>
+          <div className="role-description">
+            <p>{playerRole.roleInfo.description}</p>
           </div>
+          
+          {playerRole.location && (
+            <div className="location-display">
+              <div className="location-badge">
+                {playerRole.location}
+              </div>
+            </div>
+          )}
           
           <div className="role-footer">
-            <div className="warning-message">
-              ⚠️ Запомните свою роль и не показывайте её другим игрокам!
+            <div className="privacy-notice">
+              Не показывайте экран другим игрокам
             </div>
           </div>
         </div>
@@ -129,56 +94,40 @@ export const SpyPlayerScreen: React.FC<SpyPlayerScreenProps> = ({ roomId: propRo
   }
 
   return (
-    <div className="spy-player-screen">
+    <div className="spy-player-screen dark">
       <div className="welcome-card">
-        <div className="welcome-header">
-          <h1>🕵️ Добро пожаловать в игру Шпион!</h1>
-          <p>Нажмите кнопку ниже, чтобы получить свою роль</p>
-        </div>
+        {!isLoading && !error && (
+          <>
+            <h1>Шпион</h1>
+            <p>{roomId ? 'Получите свою роль для начала игры' : 'Узнайте локацию для начала игры'}</p>
+            <button 
+              onClick={getRoleFromServer}
+              className="get-role-button"
+            >
+              {roomId ? 'Получить роль' : 'Узнать локацию'}
+            </button>
+          </>
+        )}
         
-        <div className="welcome-content">
-          {!isLoading && !error && (
-            <>
-              <div className="game-rules">
-                <h3>📖 Правила игры:</h3>
-                <ul>
-                  <li>🏠 <strong>Жители:</strong> Знают локацию, ищут шпиона</li>
-                  <li>🕵️ <strong>Шпион:</strong> Не знает локацию, должен её угадать</li>
-                  <li>❓ <strong>Процесс:</strong> Задавайте вопросы друг другу</li>
-                  <li>🏆 <strong>Победа:</strong> Найти шпиона или угадать локацию</li>
-                </ul>
-              </div>
-              
-              <button 
-                onClick={getRoleFromServer}
-                className="get-role-button"
-              >
-                🎲 Получить роль
-              </button>
-            </>
-          )}
-          
-          {isLoading && (
-            <div className="loading-state">
-              <div className="loading-spinner"></div>
-              <p>Получаем роль...</p>
-            </div>
-          )}
-          
-          {error && (
-            <div className="error-state">
-              <div className="error-icon">❌</div>
-              <h3>Ошибка</h3>
-              <p>{error}</p>
-              <button 
-                onClick={getRoleFromServer}
-                className="retry-button"
-              >
-                🔄 Попробовать снова
-              </button>
-            </div>
-          )}
-        </div>
+        {isLoading && (
+          <div className="loading-state">
+            <div className="loading-spinner"></div>
+            <p>Получение роли...</p>
+          </div>
+        )}
+        
+        {error && (
+          <div className="error-state">
+            <h3>Ошибка</h3>
+            <p>{error}</p>
+            <button 
+              onClick={getRoleFromServer}
+              className="retry-button"
+            >
+              Повторить
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

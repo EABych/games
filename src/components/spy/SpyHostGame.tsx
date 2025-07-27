@@ -92,49 +92,24 @@ export const SpyHostGame: React.FC<SpyHostGameProps> = ({ settings, onBack, onNe
     return (
       <div className="spy-host-game">
         <div className="role-display">
-          <div className="role-card" style={{ borderColor: getRoleColor(currentRole.isSpy) }}>
-            <div className="role-header">
-              <div className="role-emoji">{getRoleEmoji(currentRole.isSpy)}</div>
-              <h2 className="role-name" style={{ color: getRoleColor(currentRole.isSpy) }}>
-                {currentRole.roleInfo.name}
-              </h2>
-              <div className="player-info">
-                Игрок {currentRole.playerNumber} из {currentRole.totalPlayers}
-              </div>
-            </div>
-            
-            <div className="role-content">
-              <div className="role-description">
-                <h3>📋 Ваша задача:</h3>
-                <p>{currentRole.roleInfo.description}</p>
-              </div>
-              
-              {currentRole.location && (
-                <div className="location-info">
-                  <h3>📍 Локация:</h3>
-                  <div className="location-badge">
-                    {currentRole.location}
-                  </div>
+          <div className="host-role-card">
+            {currentRole.location ? (
+              <div className="location-display">
+                <div className="location-badge">
+                  {currentRole.location}
                 </div>
-              )}
-              
-              <div className="instruction-info">
-                <h3>💡 Инструкция:</h3>
-                <p>{currentRole.roleInfo.instruction}</p>
               </div>
-            </div>
+            ) : (
+              <div className="spy-display">
+                <h1 className="spy-indicator">ШПИОН</h1>
+              </div>
+            )}
             
-            <div className="role-footer">
-              <div className="warning-message">
-                ⚠️ Не показывайте эту информацию другим игрокам!
-              </div>
+            <div className="close-actions">
+              <button onClick={() => setCurrentRole(null)} className="close-button">
+                Закрыть
+              </button>
             </div>
-          </div>
-          
-          <div className="game-actions">
-            <button onClick={() => setCurrentRole(null)} className="back-to-game-button">
-              ← Вернуться к игре
-            </button>
           </div>
         </div>
       </div>
@@ -144,34 +119,34 @@ export const SpyHostGame: React.FC<SpyHostGameProps> = ({ settings, onBack, onNe
   return (
     <div className="spy-host-game">
       <div className="game-header">
-        <button onClick={onBack} className="back-button">← Настройки</button>
-        <h2>🕵️ Ведущий Шпиона</h2>
+        <h2>Ведущий Шпиона</h2>
         <p>Игроков: {settings.playerCount}</p>
       </div>
 
-      <div className="server-status">
+      <div className="game-body">
+        <div className="server-status">
         {!gameStarted ? (
           <button onClick={createGameOnServer} className="create-game-button">
-            🎯 Создать игру на сервере
+            Создать игру на сервере
           </button>
         ) : (
           <div className="game-info">
             <p>{serverStatus}</p>
             <div className="player-access-section">
-              <h4>📱 Доступ для игроков:</h4>
+              <h4>Доступ для игроков:</h4>
               <div className="access-buttons">
                 <button 
                   onClick={() => setShowQRModal(true)}
                   className="show-qr-button"
                 >
-                  📱 Показать QR-код
+                  Показать QR-код
                 </button>
                 
                 <button 
                   onClick={getRoleOnThisDevice}
                   className="get-role-here-button"
                 >
-                  🎲 Получить роль здесь
+                  Показать роль игроку
                 </button>
               </div>
               <p className="access-hint">
@@ -180,27 +155,28 @@ export const SpyHostGame: React.FC<SpyHostGameProps> = ({ settings, onBack, onNe
             </div>
           </div>
         )}
+        </div>
+
+        <div className="instructions">
+          <h3>Инструкции:</h3>
+          <ul>
+            <li>Сначала создайте игру на сервере</li>
+            <li>Дайте игрокам доступ к ролям через QR-код или на этом устройстве</li>
+            <li>Когда все роли розданы - начинайте игру</li>
+            <li>Игроки задают друг другу вопросы о локации</li>
+            <li>Цель: найти шпиона или угадать локацию</li>
+          </ul>
+        </div>
       </div>
 
       <div className="game-management">
         <button onClick={resetGameOnServer} className="reset-game-button">
-          🆕 Новая игра (сбросить роли)
+          Новая игра (сбросить роли)
         </button>
         
         <button onClick={onNewGame} className="new-setup-button">
-          ⚙️ Новые настройки
+          Новые настройки
         </button>
-      </div>
-
-      <div className="instructions">
-        <h3>📝 Инструкции:</h3>
-        <ul>
-          <li>Сначала создайте игру на сервере</li>
-          <li>Дайте игрокам доступ к ролям через QR-код или на этом устройстве</li>
-          <li>Когда все роли розданы - начинайте игру</li>
-          <li>Игроки задают друг другу вопросы о локации</li>
-          <li>Цель: найти шпиона или угадать локацию</li>
-        </ul>
       </div>
 
       <QRCodeModal 
