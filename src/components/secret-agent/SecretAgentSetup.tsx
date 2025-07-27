@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { SecretAgentSettings } from '../../types/secret-agent';
+import { PlayerCountWidget } from '../shared/PlayerCountWidget';
 import './SecretAgent.css';
 
 interface SecretAgentSetupProps {
@@ -23,82 +24,54 @@ export const SecretAgentSetup: React.FC<SecretAgentSetupProps> = ({ onStartGame 
   return (
     <div className="secret-agent-setup">
       <div className="setup-header">
-        {/* Removed emoji icon */}
-        <h1>Тайный агент</h1>
-        <p className="setup-subtitle">
-          Секретные миссии для незабываемой вечеринки
-        </p>
-        <div className="mission-badge">
-          Выполни миссию незаметно
-        </div>
+        <h2>Тайный агент</h2>
+        <p>Секретные миссии для незабываемой вечеринки</p>
       </div>
 
       <div className="setup-content">
-        <div className="settings-section">
-          <h2>Настройки игры</h2>
-          
-          <div className="setting-group">
-            <label className="setting-label">
-              <span className="label-text">
-                <span className="label-icon">Игроки</span>
-                Количество игроков
-              </span>
-              <div className="player-counter">
-                <button 
-                  className="counter-btn"
-                  onClick={() => setPlayerCount(Math.max(3, playerCount - 1))}
-                  disabled={playerCount <= 3}
-                >
-                  −
-                </button>
-                <span className="counter-value">{playerCount}</span>
-                <button 
-                  className="counter-btn"
-                  onClick={() => setPlayerCount(Math.min(15, playerCount + 1))}
-                  disabled={playerCount >= 15}
-                >
-                  +
-                </button>
-              </div>
-            </label>
-            <div className="setting-hint">Рекомендуется: 4-8 игроков</div>
-          </div>
+        <div className="setting-section">
+          <PlayerCountWidget
+            value={playerCount}
+            min={3}
+            max={15}
+            onChange={setPlayerCount}
+            hint="Рекомендуется: 4-8 игроков для лучшего игрового опыта"
+          />
+        </div>
 
-          <div className="setting-group">
-            <label className="setting-label">
-              <span className="label-text">
-                <span className="label-icon">⏰</span>
-                Длительность игры
-              </span>
-              <select 
-                className="setting-select"
-                value={gameDuration}
-                onChange={(e) => setGameDuration(Number(e.target.value))}
-              >
-                <option value={60}>1 час</option>
-                <option value={90}>1.5 часа</option>
-                <option value={120}>2 часа</option>
-                <option value={180}>3 часа</option>
-                <option value={240}>4 часа</option>
-              </select>
-            </label>
-            <div className="setting-hint">Время на выполнение всех миссий</div>
+        <div className="setting-section">
+          <div className="setting-item">
+            <label className="setting-label">Длительность игры</label>
+            <select 
+              className="setting-select"
+              value={gameDuration}
+              onChange={(e) => setGameDuration(Number(e.target.value))}
+            >
+              <option value={60}>1 час</option>
+              <option value={90}>1.5 часа</option>
+              <option value={120}>2 часа</option>
+              <option value={180}>3 часа</option>
+              <option value={240}>4 часа</option>
+            </select>
+            <p className="setting-hint">Время на выполнение всех миссий</p>
           </div>
+        </div>
 
-          <div className="setting-group">
-            <label className="setting-checkbox">
-              <input
-                type="checkbox"
-                checked={allowHostParticipation}
-                onChange={(e) => setAllowHostParticipation(e.target.checked)}
-              />
-              <span className="checkbox-custom"></span>
-              <span className="checkbox-text">
-                <span className="label-icon">Хост</span>
-                Ведущий тоже играет
-              </span>
-            </label>
-            <div className="setting-hint">Ведущий получит свои секретные миссии</div>
+        <div className="setting-section">
+          <div className="setting-item">
+            <div className="setting-toggle">
+              <label className="toggle-label">
+                <input
+                  type="checkbox"
+                  className="toggle-input"
+                  checked={allowHostParticipation}
+                  onChange={(e) => setAllowHostParticipation(e.target.checked)}
+                />
+                <span className="toggle-slider"></span>
+                <span className="toggle-text">Ведущий тоже играет</span>
+              </label>
+            </div>
+            <p className="setting-hint">Ведущий получит свои секретные миссии</p>
           </div>
         </div>
 
@@ -118,13 +91,13 @@ export const SecretAgentSetup: React.FC<SecretAgentSetupProps> = ({ onStartGame 
               </div>
             </div>
             <div className="rule-item">
-              <span className="rule-icon">🏆</span>
+              <span className="rule-icon">3</span>
               <div className="rule-text">
                 <strong>Победа:</strong> Выполни главную миссию или не дай раскрыть прикрытие
               </div>
             </div>
             <div className="rule-item">
-              <span className="rule-icon">3</span>
+              <span className="rule-icon">4</span>
               <div className="rule-text">
                 <strong>Разоблачение:</strong> Угадай миссию другого агента
               </div>
@@ -175,7 +148,7 @@ export const SecretAgentSetup: React.FC<SecretAgentSetupProps> = ({ onStartGame 
           onClick={handleStartGame}
           className="start-game-btn"
         >
-          🚀 Начать миссию
+          Начать миссию
         </button>
       </div>
     </div>
