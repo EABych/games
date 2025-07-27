@@ -102,7 +102,7 @@ export const FantsSetup: React.FC<FantsSetupProps> = ({ onStartGame }) => {
             </div>
             
             {players.length < 2 && (
-              <p className="requirement">Минимум 2 участника</p>
+              <p className="warning-message">Минимум 2 участника</p>
             )}
           </div>
         </div>
