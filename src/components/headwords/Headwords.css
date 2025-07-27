@@ -260,6 +260,11 @@
   position: relative;
 }
 
+.headwords-host-game .game-body {
+  flex-shrink: 1;
+  overflow: scroll;
+}
+
 .headwords-host-game .back-button {
   position: absolute;
   left: 20px;
@@ -877,7 +882,7 @@
   .headwords-player-screen.role-screen .role-text-main {
     font-size: clamp(32px, 8vw, 64px);
   }
-  
+
   .headwords-player-screen.role-screen .role-card-fullscreen {
     padding: 8px;
   }
@@ -887,9 +892,9 @@
 @supports (padding: max(0px)) {
   .headwords-host-setup,
   .headwords-host-game {
-    padding: max(env(safe-area-inset-top), 20px) max(env(safe-area-inset-right), 20px) max(env(safe-area-inset-bottom), 20px) max(env(safe-area-inset-left), 20px);
+    padding: max(env(safe-area-inset-top), 0px) max(env(safe-area-inset-right), 0px) max(env(safe-area-inset-bottom), 0px) max(env(safe-area-inset-left), 0px);
   }
-  
+
   .headwords-player-screen.role-screen {
     padding: max(env(safe-area-inset-top), 0px) max(env(safe-area-inset-right), 0px) max(env(safe-area-inset-bottom), 0px) max(env(safe-area-inset-left), 0px);
   }

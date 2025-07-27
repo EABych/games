@@ -105,66 +105,67 @@ export const HeadwordsHostGame: React.FC<HeadwordsHostGameProps> = ({ settings, 
         <h2>Ведущий "Кто я?"</h2>
         <p>Игроков: {settings.playerCount} | Категории: {settings.categories.map(cat => getCategoryDisplayName(cat)).join(', ')}</p>
       </div>
+      <div className="game-body">
+        <div className="server-status">
+          {!gameStarted ? (
+              <button onClick={createGameOnServer} className="create-game-button">
+                Создать игру на сервере
+              </button>
+          ) : (
+              <div className="game-info">
+                <p>{serverStatus}</p>
+                <div className="player-access-section">
+                  <h4>Доступ для игроков:</h4>
+                  <div className="access-buttons">
+                    <button
+                        onClick={() => setShowQRModal(true)}
+                        className="show-qr-button"
+                    >
+                      Показать QR-код
+                    </button>
 
-      <div className="server-status">
-        {!gameStarted ? (
-          <button onClick={createGameOnServer} className="create-game-button">
-            Создать игру на сервере
-          </button>
-        ) : (
-          <div className="game-info">
-            <p>{serverStatus}</p>
-            <div className="player-access-section">
-              <h4>Доступ для игроков:</h4>
-              <div className="access-buttons">
-                <button
-                  onClick={() => setShowQRModal(true)}
-                  className="show-qr-button"
-                >
-                  Показать QR-код
-                </button>
-
-                <button
-                  onClick={openRoleInNewWindow}
-                  className="get-role-here-button"
-                >
-                  Показать роль игроку
-                </button>
+                    <button
+                        onClick={openRoleInNewWindow}
+                        className="get-role-here-button"
+                    >
+                      Показать роль игроку
+                    </button>
+                  </div>
+                  <p className="access-hint">
+                    Игроки могут отсканировать QR-код или нажать кнопку для открытия роли в новом окне
+                  </p>
+                </div>
               </div>
-              <p className="access-hint">
-                Игроки могут отсканировать QR-код или нажать кнопку для открытия роли в новом окне
-              </p>
-            </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
 
-      <div className="game-management">
-        <button onClick={resetGameOnServer} className="reset-game-button">
-          Новая игра (сбросить роли)
-        </button>
+        <div className="game-management">
+          <button onClick={resetGameOnServer} className="reset-game-button">
+            Новая игра (сбросить роли)
+          </button>
 
-        <button onClick={onNewGame} className="new-setup-button">
-          Новые настройки
-        </button>
-      </div>
+          <button onClick={onNewGame} className="new-setup-button">
+            Новые настройки
+          </button>
+        </div>
 
-      <div className="instructions">
-        <h3>Инструкции:</h3>
-        <ul>
-          <li>Сначала создайте игру на сервере</li>
-          <li>Дайте игрокам доступ к ролям через QR-код или откройте в новом окне</li>
-          <li>Игроки увидят таймер, затем роль появится на экране</li>
-          <li>Игрок должен приложить телефон ко лбу горизонтально</li>
-          <li>Остальные видят роль и отвечают на вопросы игрока</li>
-        </ul>
+        <div className="instructions">
+          <h3>Инструкции:</h3>
+          <ul>
+            <li>Сначала создайте игру на сервере</li>
+            <li>Дайте игрокам доступ к ролям через QR-код или откройте в новом окне</li>
+            <li>Игроки увидят таймер, затем роль появится на экране</li>
+            <li>Игрок должен приложить телефон ко лбу горизонтально</li>
+            <li>Остальные видят роль и отвечают на вопросы игрока</li>
+          </ul>
+        </div>
       </div>
 
       <QRCodeModal
-        isOpen={showQRModal}
-        onClose={() => setShowQRModal(false)}
-        roomId={roomId}
-        gameType="headwords"
+          isOpen={showQRModal}
+          onClose={() => setShowQRModal(false)}
+          roomId={roomId}
+          gameType="headwords"
       />
     </div>
   );
