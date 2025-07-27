@@ -98,10 +98,14 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
           
           setIsSpinning(false);
           setSelectedPlayer(selectedPlayer);
+          // Оставляем подсветку на выбранном игроке
+          setHighlightedSector(randomPlayerIndex);
           
           setTimeout(() => {
             onTaskSelected(selectedPlayer, task);
-          }, 2000);
+            // Сбрасываем подсветку только после показа задания
+            setHighlightedSector(-1);
+          }, 3000);
           return;
         }
         
