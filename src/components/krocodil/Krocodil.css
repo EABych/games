@@ -674,6 +674,7 @@
 
 .krocodil-game .round-info {
   text-align: left;
+  top: 20px;
 }
 
 .krocodil-game .round-number {
@@ -772,7 +773,7 @@
   align-items: center;
   justify-content: center;
   padding: 20px 16px;
-  min-height: 0;
+  /*min-height: 0;*/
 }
 
 .krocodil-game .word-card {
@@ -921,6 +922,7 @@
   cursor: pointer;
   transition: var(--krocodil-transition);
   letter-spacing: -0.2px;
+  margin: 0;
 }
 
 .krocodil-game .skip-btn:hover:not(:disabled) {
@@ -1052,7 +1054,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  padding: calc(env(safe-area-inset-top)) 16px calc(env(safe-area-inset-bottom)) 16px;
+  padding: calc(env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom)) 16px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -1306,6 +1308,7 @@
   transition: var(--krocodil-transition);
   letter-spacing: -0.2px;
   box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
+  min-height: 56px;
 }
 
 .krocodil-round-end .start-round-button:hover {
@@ -1330,7 +1333,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  padding: calc(env(safe-area-inset-top)) 16px calc(env(safe-area-inset-bottom)) 16px;
+  padding: calc(env(safe-area-inset-top)) 16px calc(32px + env(safe-area-inset-bottom)) 16px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -1640,12 +1643,12 @@
   .krocodil-setup .categories-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .krocodil-setup .time-options,
   .krocodil-setup .points-options {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .krocodil-setup .difficulty-options {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1655,33 +1658,33 @@
     gap: 12px;
     text-align: center;
   }
-  
+
   .krocodil-game .timer {
     font-size: 32px;
   }
-  
+
   .krocodil-game .scores {
     flex-direction: row;
     justify-content: center;
     gap: 16px;
   }
-  
+
   .krocodil-game .current-word {
     font-size: 36px;
   }
-  
+
   .krocodil-game .game-instructions ul {
     grid-template-columns: 1fr;
   }
-  
+
   .krocodil-end .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .krocodil-end .settings-summary {
     grid-template-columns: 1fr;
   }
-  
+
   .krocodil-round-end .team-stats {
     grid-template-columns: 1fr;
   }
@@ -1691,39 +1694,39 @@
   .krocodil-setup .categories-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .krocodil-setup .time-options,
   .krocodil-setup .points-options {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .krocodil-game .current-word {
     font-size: 28px;
   }
-  
+
   .krocodil-game .word-card {
     padding: 32px 24px;
   }
-  
+
   .krocodil-game .stats-row {
     grid-template-columns: 1fr;
     gap: 8px;
   }
-  
+
   .krocodil-end .stats-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .krocodil-end .winner-stats {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .krocodil-end .result-team {
     grid-template-columns: 1fr;
     gap: 12px;
     text-align: center;
   }
-  
+
   .krocodil-end .team-stats {
     justify-content: center;
   }

@@ -3957,7 +3957,7 @@ body.game-mode {
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 24px;
-  padding: 32px;
+  /*padding: 32px;*/
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
   width: 100%;
   max-width: 600px;
@@ -3965,6 +3965,7 @@ body.game-mode {
   margin: auto;
   /*max-height: var(--safe-max-height);*/
   /*max-height: var(--safe-max-height-dvh);*/
+  padding: calc(env(safe-area-inset-top)) 0px calc(env(safe-area-inset-bottom)) 0px;
   overflow: scroll;
 }
 
