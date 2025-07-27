@@ -119,10 +119,12 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
   useEffect(() => {
     console.log('=== useEffect: изменились игроки ===');
     console.log('Новый список игроков:', players.map(p => p.name));
-    // Сбрасываем подсветку при изменении игроков
-    setHighlightedSector(-1);
-    setSelectedPlayer(null);
-  }, [players]);
+    // Сбрасываем подсветку только если не крутится колесо
+    if (!isSpinning) {
+      setHighlightedSector(-1);
+      setSelectedPlayer(null);
+    }
+  }, [players, isSpinning]);
 
   return (
     <div className="adult-fants-spin-wheel">
@@ -147,10 +149,13 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
               const isHighlighted = highlightedSector === index;
               const isSelected = selectedPlayer?.id === player.id;
               
+              // Если игрок выбран, он должен быть подсвечен вместо highlighted
+              const shouldBeHighlighted = isHighlighted || isSelected;
+              
               return (
                 <div
                   key={player.id}
-                  className={`wheel-sector ${isHighlighted ? 'highlighted' : ''} ${isSelected ? 'selected' : ''}`}
+                  className={`wheel-sector ${shouldBeHighlighted ? 'highlighted' : ''} ${isSelected ? 'selected' : ''}`}
                   style={{
                     transform: `rotate(${rotation}deg)`,
                     backgroundColor: player.color,
