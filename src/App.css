@@ -1969,8 +1969,8 @@ body.game-mode {
   max-width: 480px;
   animation: fadeInUp 0.6s ease-out;
   margin: auto;
-  max-height: var(--safe-max-height);
-  max-height: var(--safe-max-height-dvh);
+  /*max-height: var(--safe-max-height);*/
+  /*max-height: var(--safe-max-height-dvh);*/
   overflow: scroll;
 }
 

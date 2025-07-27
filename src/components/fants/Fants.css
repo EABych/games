@@ -47,51 +47,82 @@
 }
 
 /* Header */
-.fants-setup h1 {
-  margin: 0 0 8px 0;
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--fants-primary-text);
-  text-align: center;
-  letter-spacing: -0.7px;
+.fants-setup .setup-header {
+  flex-shrink: 0;
+  z-index: 100;
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: calc(16px + env(safe-area-inset-top)) 60px 20px 60px;
+  margin: 0 !important;
 }
 
-.fants-setup .subtitle {
-  margin: 0 0 32px 0;
-  font-size: 16px;
-  color: var(--fants-secondary-text);
+.fants-setup .setup-header h2 {
+  margin: 8px 0 4px 0;
+  font-size: 20px;
+  color: #1d1d1f;
+  font-weight: 600;
+  letter-spacing: -0.3px;
   text-align: center;
-  font-weight: 500;
+}
+
+.fants-setup .setup-header p {
+  margin: 0;
+  font-size: 14px;
+  color: #86868b;
+  font-weight: 400;
+  text-align: center;
   letter-spacing: -0.1px;
 }
 
-/* Players Setup */
-.fants-setup .players-setup {
+/* Content */
+.fants-setup .setup-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  justify-content: start;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+}
+
+/* Setting Sections */
+.fants-setup .setting-section {
   background: var(--fants-card-background);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--fants-border-color);
   border-radius: var(--fants-border-radius-large);
   padding: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   box-shadow: var(--fants-shadow-medium);
 }
 
-.fants-setup .players-setup h2 {
-  margin: 0 0 20px 0;
-  font-size: 20px;
+.fants-setup .setting-section h3 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
   font-weight: 600;
   color: var(--fants-primary-text);
-  letter-spacing: -0.3px;
+  letter-spacing: -0.1px;
 }
 
-.fants-setup .add-player {
+/* Players Section */
+.fants-setup .players-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.fants-setup .players-input {
   display: flex;
   gap: 12px;
-  margin-bottom: 20px;
+  align-items: stretch;
 }
 
-.fants-setup .add-player input {
+.fants-setup .player-input {
   flex: 1;
   padding: 14px 16px;
   border: 2px solid rgba(0, 122, 255, 0.2);
@@ -104,7 +135,7 @@
   font-weight: 500;
 }
 
-.fants-setup .add-player input:focus {
+.fants-setup .player-input:focus {
   outline: none;
   border-color: var(--fants-primary-blue);
   background: rgba(255, 255, 255, 0.95);
@@ -339,6 +370,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 8px;
 }
 
@@ -443,8 +475,16 @@
   accent-color: var(--fants-primary-blue);
 }
 
-/* Start Game Button */
-.fants-setup .start-game {
+/* Footer */
+.fants-setup .setup-footer {
+  flex-shrink: 0;
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 16px 20px calc(16px + env(safe-area-inset-bottom)) 20px;
+}
+
+.fants-setup .start-game-btn {
   width: 100%;
   padding: 18px;
   background: var(--fants-primary-blue);
@@ -456,15 +496,14 @@
   cursor: pointer;
   transition: var(--fants-transition);
   letter-spacing: -0.2px;
-  margin-top: auto;
 }
 
-.fants-setup .start-game:hover {
+.fants-setup .start-game-btn:hover {
   background: #0051D5;
   transform: translateY(-1px);
 }
 
-.fants-setup .start-game:disabled {
+.fants-setup .start-game-btn:disabled {
   background: rgba(0, 122, 255, 0.3);
   cursor: not-allowed;
   transform: none;
@@ -1089,27 +1128,27 @@
   .fants-setup .categories-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .fants-setup .fants-per-player {
     grid-template-columns: repeat(3, 1fr);
   }
-  
+
   .fants-game .players-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .fants-end .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .fants-game .fant-actions {
     flex-direction: column;
   }
-  
+
   .fants-game .skip-button {
     flex: none;
   }
-  
+
   .fants-game .complete-button {
     flex: none;
   }
@@ -1119,19 +1158,19 @@
   .fants-setup .categories-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .fants-setup .difficulty-options {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .fants-setup .fants-per-player {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .fants-end .stats-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .fants-end .winner-stats {
     gap: 16px;
   }
