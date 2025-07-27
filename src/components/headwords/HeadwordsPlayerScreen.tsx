@@ -113,7 +113,7 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
     <div className="headwords-player-screen welcome-screen">
       <div className="welcome-card">
         <div className="welcome-header">
-          <h1>🎭 Добро пожаловать в "Слова на лоб"!</h1>
+          <h1>🎭 Добро пожаловать в "Кто я?"!</h1>
           <p>Нажмите кнопку ниже, чтобы получить свою роль</p>
         </div>
 

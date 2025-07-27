@@ -103,7 +103,7 @@ export const HeadwordsHostGame: React.FC<HeadwordsHostGameProps> = ({ settings, 
     <div className="headwords-host-game">
       <div className="game-header">
         <button onClick={onBack} className="back-button">← Настройки</button>
-        <h2>🎭 Ведущий "Слова на лоб"</h2>
+        <h2>🎭 Ведущий "Кто я?"</h2>
         <p>Игроков: {settings.playerCount} | Категории: {settings.categories.map(cat => getCategoryDisplayName(cat)).join(', ')}</p>
       </div>
 

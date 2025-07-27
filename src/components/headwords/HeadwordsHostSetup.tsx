@@ -83,7 +83,7 @@ export const HeadwordsHostSetup: React.FC<HeadwordsHostSetupProps> = ({ onGameSt
   return (
     <div className="headwords-host-setup">
       <div className="setup-header">
-        <h2>🎭 Слова на лоб</h2>
+        <h2>🎭 Кто я?</h2>
         <p>Настройте параметры игры</p>
       </div>
 

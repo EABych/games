@@ -422,7 +422,7 @@ app.post('/api/mafia/reset', (req, res) => {
 
 // === ЭНДПОИНТЫ ДЛЯ ИГРЫ СЛОВА НА ЛОБ ===
 
-// Категории ролей для игры "Слова на лоб"
+// Категории ролей для игры "Кто я?"
 const headwordsCategories = {
   celebrities: [
     // Политики и лидеры
@@ -548,7 +548,7 @@ let currentHeadwordsGame = {
   rolesGiven: 0
 };
 
-// Создание структуры игры "Слова на лоб"
+// Создание структуры игры "Кто я?"
 function createHeadwordsGame(roomId, categories, roles, playerCount) {
   return {
     id: roomId,
@@ -561,7 +561,7 @@ function createHeadwordsGame(roomId, categories, roles, playerCount) {
   };
 }
 
-// Создать новую игру "Слова на лоб"
+// Создать новую игру "Кто я?"
 app.post('/api/headwords/generate-game', (req, res) => {
   try {
     console.log('Получен запрос на создание игры Headwords:', req.body);
@@ -650,11 +650,11 @@ app.post('/api/headwords/generate-game', (req, res) => {
     };
     
     const categoryNames = selectedCategories.map(cat => getCategoryDisplayName(cat)).join(', ');
-    console.log(`Создана игра "Слова на лоб" ${roomId}: категории "${categoryNames}", ${playerCount} игроков`);
+    console.log(`Создана игра "Кто я?" ${roomId}: категории "${categoryNames}", ${playerCount} игроков`);
     
     res.json({
       success: true,
-      message: `Игра "Слова на лоб" создана для ${playerCount} игроков`,
+      message: `Игра "Кто я?" создана для ${playerCount} игроков`,
       roomId: roomId,
       playerCount,
       categories: selectedCategories,
@@ -670,7 +670,7 @@ app.post('/api/headwords/generate-game', (req, res) => {
   }
 });
 
-// Получить свою роль в игре "Слова на лоб"
+// Получить свою роль в игре "Кто я?"
 app.get('/api/headwords/get-role', (req, res) => {
   try {
     const { roomId } = req.query;
@@ -680,7 +680,7 @@ app.get('/api/headwords/get-role', (req, res) => {
       const game = activeGames.get(roomId);
       if (!game || game.type !== 'headwords') {
         return res.status(404).json({ 
-          error: 'Игра "Слова на лоб" не найдена. Проверьте ID комнаты.' 
+          error: 'Игра "Кто я?" не найдена. Проверьте ID комнаты.' 
         });
       }
       
@@ -719,7 +719,7 @@ app.get('/api/headwords/get-role', (req, res) => {
       // Старый API для совместимости
       if (!currentHeadwordsGame.category || currentHeadwordsGame.roles.length === 0) {
         return res.status(404).json({ 
-          error: 'Игра "Слова на лоб" не была создана. Сначала создайте игру.' 
+          error: 'Игра "Кто я?" не была создана. Сначала создайте игру.' 
         });
       }
       
@@ -734,7 +734,7 @@ app.get('/api/headwords/get-role', (req, res) => {
       
       currentHeadwordsGame.rolesGiven++;
       
-      console.log(`Выдана роль в игре "Слова на лоб": игрок ${currentPlayerIndex + 1} - "${role}"`);
+      console.log(`Выдана роль в игре "Кто я?": игрок ${currentPlayerIndex + 1} - "${role}"`);
       
       const response = {
         playerNumber: currentPlayerIndex + 1,
@@ -771,7 +771,7 @@ app.get('/api/headwords/categories', (req, res) => {
   });
 });
 
-// Получить статус игры "Слова на лоб"
+// Получить статус игры "Кто я?"
 app.get('/api/headwords/status', (req, res) => {
   res.json({
     hasActiveGame: !!currentHeadwordsGame.category,
@@ -783,7 +783,7 @@ app.get('/api/headwords/status', (req, res) => {
   });
 });
 
-// Сбросить игру "Слова на лоб"
+// Сбросить игру "Кто я?"
 app.post('/api/headwords/reset', (req, res) => {
   currentHeadwordsGame = {
     category: '',
@@ -792,11 +792,11 @@ app.post('/api/headwords/reset', (req, res) => {
     rolesGiven: 0
   };
   
-  console.log('Игра "Слова на лоб" сброшена');
+  console.log('Игра "Кто я?" сброшена');
   
   res.json({
     success: true,
-    message: 'Игра "Слова на лоб" сброшена'
+    message: 'Игра "Кто я?" сброшена'
   });
 });
 
@@ -1026,7 +1026,7 @@ app.listen(PORT, () => {
   console.log(`   GET  /api/spy/status - Статус игры`);
   console.log(`   POST /api/spy/reset - Сбросить игру`);
   console.log(`   === СЛОВА НА ЛОБ ===`);
-  console.log(`   POST /api/headwords/generate-game - Создать игру "Слова на лоб"`);
+  console.log(`   POST /api/headwords/generate-game - Создать игру "Кто я?"`);
   console.log(`   GET  /api/headwords/get-role - Получить роль`);
   console.log(`   GET  /api/headwords/categories - Получить категории`);
   console.log(`   GET  /api/headwords/status - Статус игры`);
