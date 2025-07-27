@@ -47,6 +47,7 @@ const MainApp: React.FC = () => {
   // Определяем текущую игру по URL
   const getCurrentGameFromPath = useCallback((): 'home' | 'alias' | 'fants' | 'krocodil' | 'this-or-that' | 'poet' | 'yersh' | 'mafia' | 'spy' | 'headwords' => {
     const path = location.pathname;
+    console.log('Current path:', path); // Отладка
     if (path === '/alias') return 'alias';
     if (path === '/fants') return 'fants';
     if (path === '/krocodil') return 'krocodil';
@@ -65,7 +66,9 @@ const MainApp: React.FC = () => {
 
   // Обновляем appPhase при изменении URL
   useEffect(() => {
-    setAppPhase(getCurrentGameFromPath());
+    const newPhase = getCurrentGameFromPath();
+    console.log('Setting appPhase to:', newPhase); // Отладка
+    setAppPhase(newPhase);
   }, [getCurrentGameFromPath]);
   
   const { 
