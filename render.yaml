@@ -1,10 +1,6 @@
 services:
   - type: web
-    name: games-app-spa
-    env: static
+    name: games-app-node
+    env: node
     buildCommand: npm run render-build
-    staticPublishPath: ./dist
-    routes:
-      - type: rewrite
-        source: "/*"
-        destination: "/index.html"
+    startCommand: npm start
