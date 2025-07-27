@@ -36,6 +36,7 @@ import { HeadwordsGame } from './components/headwords/HeadwordsGame';
 import { HeadwordsPlayerScreen } from './components/headwords/HeadwordsPlayerScreen';
 import { EveningRoleGame } from './components/evening-role/EveningRoleGame';
 import { EveningRolePlayer } from './components/evening-role/EveningRolePlayer';
+import { AdultFants } from './components/adult-fants/AdultFants';
 import './components/mafia/MafiaHost.css';
 import './components/mafia/MafiaPlayer.css';
 import './components/spy/Spy.css';
@@ -47,7 +48,7 @@ const MainApp: React.FC = () => {
   const location = useLocation();
   
   // Определяем текущую игру по URL
-  const getCurrentGameFromPath = useCallback((): 'home' | 'alias' | 'fants' | 'krocodil' | 'this-or-that' | 'poet' | 'yersh' | 'mafia' | 'spy' | 'headwords' | 'evening-role' => {
+  const getCurrentGameFromPath = useCallback((): 'home' | 'alias' | 'fants' | 'krocodil' | 'this-or-that' | 'poet' | 'yersh' | 'mafia' | 'spy' | 'headwords' | 'evening-role' | 'adult-fants' => {
     const path = location.pathname;
     console.log('Current path:', path); // Отладка
     if (path === '/alias') return 'alias';
@@ -60,10 +61,11 @@ const MainApp: React.FC = () => {
     if (path === '/spy') return 'spy';
     if (path === '/headwords') return 'headwords';
     if (path === '/evening-role') return 'evening-role';
+    if (path === '/adult-fants') return 'adult-fants';
     return 'home';
   }, [location.pathname]);
 
-  const [appPhase, setAppPhase] = useState<'home' | 'alias' | 'fants' | 'krocodil' | 'this-or-that' | 'poet' | 'yersh' | 'mafia' | 'spy' | 'headwords' | 'evening-role'>(getCurrentGameFromPath());
+  const [appPhase, setAppPhase] = useState<'home' | 'alias' | 'fants' | 'krocodil' | 'this-or-that' | 'poet' | 'yersh' | 'mafia' | 'spy' | 'headwords' | 'evening-role' | 'adult-fants'>(getCurrentGameFromPath());
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -405,6 +407,18 @@ const MainApp: React.FC = () => {
           </button>
           
           <EveningRoleGame />
+        </>
+      )}
+
+      {appPhase === 'adult-fants' && (
+        <>
+          <button className="home-button" onClick={handleHomeClick}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 12L5 10M5 10L12 3L19 10M5 10V20C5 20.5523 5.44772 21 6 21H9M19 10L21 12M19 10V20C19 20.5523 18.5523 21 18 21H15M9 21C9.55228 21 10 20.5523 10 20V16C10 15.4477 10.4477 15 11 15H13C13.5523 15 14 15.4477 14 16V20C14 20.5523 14.4477 21 15 21M9 21H15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+          
+          <AdultFants />
         </>
       )}
 
