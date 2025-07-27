@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import QRCode from 'qrcode';
-import { getRandomGroupTask } from '../../data/evening-role-tasks';
 import type { EveningRoleTask } from '../../types/evening-role';
 import './EveningRole.css';
 
@@ -13,6 +12,10 @@ export const EveningRoleHost: React.FC<EveningRoleHostProps> = ({ roomId, onBack
   const [qrCodeUrl, setQrCodeUrl] = useState<string>('');
   const [showQR, setShowQR] = useState(false);
   const [groupTask, setGroupTask] = useState<EveningRoleTask | null>(null);
+  const [hostTask, setHostTask] = useState<EveningRoleTask | null>(null);
+  const [hasHostReceivedTask, setHasHostReceivedTask] = useState(false);
+  const [isLoadingGroupTask, setIsLoadingGroupTask] = useState(false);
+  const [isLoadingHostTask, setIsLoadingHostTask] = useState(false);
 
   useEffect(() => {
     // Генерируем QR код для участников
@@ -37,14 +40,46 @@ export const EveningRoleHost: React.FC<EveningRoleHostProps> = ({ roomId, onBack
   }, [roomId]);
 
   useEffect(() => {
-    // Генерируем первое групповое задание при загрузке
-    const initialGroupTask = getRandomGroupTask();
-    setGroupTask(initialGroupTask);
+    // Загружаем первое групповое задание при загрузке
+    loadGroupTask();
   }, []);
 
-  const handleGenerateNewGroupTask = () => {
-    const newGroupTask = getRandomGroupTask();
-    setGroupTask(newGroupTask);
+  const loadGroupTask = async () => {
+    setIsLoadingGroupTask(true);
+    try {
+      const response = await fetch('https://mafia-backend-fbm5.onrender.com/api/evening-role/get-group-task');
+      if (response.ok) {
+        const data = await response.json();
+        setGroupTask(data.task);
+      }
+    } catch (error) {
+      console.error('Ошибка загрузки группового задания:', error);
+    } finally {
+      setIsLoadingGroupTask(false);
+    }
+  };
+
+  const handleGenerateNewGroupTask = async () => {
+    await loadGroupTask();
+  };
+
+  const handleGetHostTask = async () => {
+    setIsLoadingHostTask(true);
+    try {
+      // Генерируем уникальный ID для хоста
+      const hostUserId = `host_${roomId}`;
+      
+      const response = await fetch(`https://mafia-backend-fbm5.onrender.com/api/evening-role/get-task?roomId=${roomId}&userId=${hostUserId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setHostTask(data.task);
+        setHasHostReceivedTask(true);
+      }
+    } catch (error) {
+      console.error('Ошибка получения задания для хоста:', error);
+    } finally {
+      setIsLoadingHostTask(false);
+    }
   };
 
   return (
@@ -111,7 +146,11 @@ export const EveningRoleHost: React.FC<EveningRoleHostProps> = ({ roomId, onBack
           <div className="group-task-card">
             <h2>Общее задание для всей компании</h2>
             
-            {groupTask ? (
+            {isLoadingGroupTask ? (
+              <div className="no-group-task">
+                <p>Загрузка общего задания...</p>
+              </div>
+            ) : groupTask ? (
               <div className="current-group-task">
                 <div className="task-content">
                   <p className="task-text">{groupTask.text}</p>
@@ -125,13 +164,62 @@ export const EveningRoleHost: React.FC<EveningRoleHostProps> = ({ roomId, onBack
                 <button 
                   className="new-group-task-btn"
                   onClick={handleGenerateNewGroupTask}
+                  disabled={isLoadingGroupTask}
                 >
                   🎲 Новое общее задание
                 </button>
               </div>
             ) : (
               <div className="no-group-task">
-                <p>Загрузка общего задания...</p>
+                <p>Ошибка загрузки задания</p>
+                <button 
+                  className="new-group-task-btn"
+                  onClick={handleGenerateNewGroupTask}
+                  disabled={isLoadingGroupTask}
+                >
+                  🔄 Попробовать снова
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="host-task-section">
+          <div className="host-task-card">
+            <h2>Роль для ведущего</h2>
+            
+            {!hasHostReceivedTask ? (
+              <div className="get-host-task">
+                <p>Хотите тоже участвовать в игре?</p>
+                <button 
+                  className="get-host-task-btn"
+                  onClick={handleGetHostTask}
+                  disabled={isLoadingHostTask}
+                >
+                  {isLoadingHostTask ? '⏳ Получение роли...' : '🎭 Получить мою роль'}
+                </button>
+              </div>
+            ) : (
+              <div className="host-task-display">
+                <div className="task-content">
+                  <p className="task-text">{hostTask?.text}</p>
+                  {hostTask?.requiresOtherPlayer && (
+                    <div className="task-note">
+                      💡 Это задание требует взаимодействия с другими игроками
+                    </div>
+                  )}
+                  {hostTask?.hasTimer && hostTask.timerDuration && (
+                    <div className="task-timer-info">
+                      ⏱️ Задание с таймером: {Math.round(hostTask.timerDuration / 60)} мин
+                    </div>
+                  )}
+                </div>
+                
+                <div className="host-task-info">
+                  <p className="task-final-note">
+                    ✅ Ваша роль получена! Выполняйте её весь вечер.
+                  </p>
+                </div>
               </div>
             )}
           </div>
@@ -141,7 +229,7 @@ export const EveningRoleHost: React.FC<EveningRoleHostProps> = ({ roomId, onBack
           <h3>Информация об игре</h3>
           <div className="stats-grid">
             <div className="stat-item">
-              <div className="stat-number">150+</div>
+              <div className="stat-number">125+</div>
               <div className="stat-label">Индивидуальных заданий</div>
             </div>
             <div className="stat-item">

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import type { EveningRoleTask } from '../../types/evening-role';
-import { getRandomIndividualTask } from '../../data/evening-role-tasks';
 import './EveningRole.css';
 
 interface TimerState {
@@ -14,6 +13,10 @@ export const EveningRolePlayer: React.FC = () => {
   const { roomId } = useParams<{ roomId: string }>();
   const [playerTask, setPlayerTask] = useState<EveningRoleTask | null>(null);
   const [hasReceivedTask, setHasReceivedTask] = useState(false);
+  const [canChangeRole, setCanChangeRole] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [userId] = useState(() => `player_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
   const [timer, setTimer] = useState<TimerState>({
     isActive: false,
     timeLeft: 0,
@@ -50,39 +53,89 @@ export const EveningRolePlayer: React.FC = () => {
     return () => clearInterval(interval);
   }, [timer.isActive, timer.timeLeft, playerTask]);
 
-  const handleGetTask = () => {
-    const task = getRandomIndividualTask();
-    setPlayerTask(task);
-    setHasReceivedTask(true);
+  const loadTask = async () => {
+    if (!roomId) return;
+    
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      const response = await fetch(`https://mafia-backend-fbm5.onrender.com/api/evening-role/get-task?roomId=${roomId}&userId=${userId}`);
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Ошибка получения задания');
+      }
+      
+      const data = await response.json();
+      setPlayerTask(data.task);
+      setCanChangeRole(data.canChangeRole);
+      setHasReceivedTask(true);
 
-    // Если у задания есть таймер, запускаем его
-    if (task.hasTimer && task.timerDuration) {
-      setTimer({
-        isActive: true,
-        timeLeft: task.timerDuration,
-        totalTime: task.timerDuration
-      });
+      // Если у задания есть таймер, подготавливаем его
+      if (data.task.hasTimer && data.task.timerDuration) {
+        setTimer({
+          isActive: false,
+          timeLeft: data.task.timerDuration,
+          totalTime: data.task.timerDuration
+        });
+      }
+    } catch (err) {
+      console.error('Ошибка загрузки задания:', err);
+      setError(err instanceof Error ? err.message : 'Ошибка соединения с сервером');
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleGetNewTask = () => {
-    const newTask = getRandomIndividualTask();
-    setPlayerTask(newTask);
+  const handleGetTask = () => {
+    loadTask();
+  };
 
-    // Сбрасываем таймер
-    setTimer({
-      isActive: false,
-      timeLeft: 0,
-      totalTime: 0
-    });
-
-    // Если у нового задания есть таймер, запускаем его
-    if (newTask.hasTimer && newTask.timerDuration) {
-      setTimer({
-        isActive: true,
-        timeLeft: newTask.timerDuration,
-        totalTime: newTask.timerDuration
+  const handleChangeTask = async () => {
+    if (!roomId || !canChangeRole) return;
+    
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      const response = await fetch('https://mafia-backend-fbm5.onrender.com/api/evening-role/change-task', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ roomId, userId }),
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Ошибка смены роли');
+      }
+
+      const data = await response.json();
+      setPlayerTask(data.task);
+      setCanChangeRole(data.canChangeRole);
+
+      // Сбрасываем таймер
+      setTimer({
+        isActive: false,
+        timeLeft: 0,
+        totalTime: 0
+      });
+
+      // Если у нового задания есть таймер, подготавливаем его
+      if (data.task.hasTimer && data.task.timerDuration) {
+        setTimer({
+          isActive: false,
+          timeLeft: data.task.timerDuration,
+          totalTime: data.task.timerDuration
+        });
+      }
+    } catch (err) {
+      console.error('Ошибка смены роли:', err);
+      setError(err instanceof Error ? err.message : 'Ошибка соединения с сервером');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -143,7 +196,21 @@ export const EveningRolePlayer: React.FC = () => {
       </div>
 
       <div className="player-content">
-        {!hasReceivedTask ? (
+        {error && (
+          <div className="error-message">
+            <h2>Ошибка</h2>
+            <p>{error}</p>
+            <button 
+              className="get-task-btn"
+              onClick={handleGetTask}
+              disabled={isLoading}
+            >
+              🔄 Попробовать снова
+            </button>
+          </div>
+        )}
+
+        {!hasReceivedTask && !error ? (
           <div className="get-task-section">
             <div className="welcome-card">
               <div className="welcome-icon">🎭</div>
@@ -153,8 +220,9 @@ export const EveningRolePlayer: React.FC = () => {
               <button 
                 className="get-task-btn"
                 onClick={handleGetTask}
+                disabled={isLoading}
               >
-                🎲 Получить мою роль
+                {isLoading ? '⏳ Получение роли...' : '🎲 Получить мою роль'}
               </button>
               
               <div className="instructions">
@@ -238,12 +306,20 @@ export const EveningRolePlayer: React.FC = () => {
               )}
 
               <div className="task-actions">
-                <button 
-                  className="new-task-btn"
-                  onClick={handleGetNewTask}
-                >
-                  🎲 Получить новую роль
-                </button>
+                {canChangeRole ? (
+                  <button 
+                    className="new-task-btn"
+                    onClick={handleChangeTask}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? '⏳ Смена роли...' : '🎲 Сменить роль (один раз)'}
+                  </button>
+                ) : (
+                  <div className="role-change-disabled">
+                    <p>Вы уже использовали возможность сменить роль</p>
+                    <small>Каждый игрок может сменить роль только один раз</small>
+                  </div>
+                )}
               </div>
             </div>
 

@@ -7,15 +7,43 @@ interface EveningRoleSetupProps {
 
 export const EveningRoleSetup: React.FC<EveningRoleSetupProps> = ({ onStartGame }) => {
   const [playerCount, setPlayerCount] = useState(6);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handlePlayerCountChange = (count: number) => {
     setPlayerCount(count);
+    setError(null);
   };
 
-  const handleStartGame = () => {
-    // Генерируем простой ID комнаты
-    const roomId = Math.random().toString(36).substring(2, 8).toUpperCase();
-    onStartGame(roomId);
+  const handleStartGame = async () => {
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      // Создаем игру на сервере
+      const response = await fetch('https://mafia-backend-fbm5.onrender.com/api/evening-role/generate-game', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ playerCount }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Ошибка создания игры');
+      }
+
+      const data = await response.json();
+      console.log('Игра создана на сервере:', data);
+      
+      onStartGame(data.roomId);
+    } catch (err) {
+      console.error('Ошибка создания игры:', err);
+      setError(err instanceof Error ? err.message : 'Ошибка соединения с сервером');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const playerCountOptions = [3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20];
@@ -79,7 +107,7 @@ export const EveningRoleSetup: React.FC<EveningRoleSetupProps> = ({ onStartGame 
             <div className="feature-item">
               <div className="feature-icon">🎭</div>
               <div className="feature-text">
-                <h4>Более 150 индивидуальных заданий</h4>
+                <h4>Более 125 индивидуальных заданий</h4>
                 <p>Уникальные роли для каждого игрока</p>
               </div>
             </div>
@@ -115,15 +143,21 @@ export const EveningRoleSetup: React.FC<EveningRoleSetupProps> = ({ onStartGame 
             Минимальное количество игроков: 3 человека
           </div>
         )}
+
+        {error && (
+          <div className="warning-message">
+            {error}
+          </div>
+        )}
       </div>
 
       <div className="setup-footer">
         <button 
           className="start-game-btn"
           onClick={handleStartGame}
-          disabled={playerCount < 3}
+          disabled={playerCount < 3 || isLoading}
         >
-          Создать игру ({playerCount} игроков)
+          {isLoading ? 'Создание игры...' : `Создать игру (${playerCount} игроков)`}
         </button>
       </div>
     </div>

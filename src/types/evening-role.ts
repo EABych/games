@@ -39,7 +39,8 @@ export const EVENING_ROLE_CATEGORIES = {
   ROLEPLAY: 'roleplay',
   PHONE: 'phone',
   CLOTHING: 'clothing',
-  TIMING: 'timing'
+  TIMING: 'timing',
+  MAKEUP: 'makeup'
 } as const;
 
 export type EveningRoleCategory = typeof EVENING_ROLE_CATEGORIES[keyof typeof EVENING_ROLE_CATEGORIES];
