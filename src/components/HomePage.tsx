@@ -52,6 +52,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onSelectGame }) => {
       id: 'headwords',
       title: 'Кто я?',
       description: 'Угадай роль, держа телефон на лбу'
+    },
+    {
+      id: 'evening-role',
+      title: 'Роль на вечер',
+      description: 'Веселые задания для всей вечеринки'
     }
   ];
 
@@ -79,7 +84,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onSelectGame }) => {
             <p>{game.description}</p>
             {(game.id === 'alias' || game.id === 'fants' || game.id === 'krocodil' || game.id === 'this-or-that' || game.id === 'poet' || game.id === 'yersh') && <span className="available-badge">Доступно</span>}
             {game.id === 'this-or-that' && <span className="adult-badge">18+</span>}
-            {(game.id === 'mafia' || game.id === 'spy' || game.id === 'headwords') && <span className="available-badge">Доступно</span>}
+            {(game.id === 'mafia' || game.id === 'spy' || game.id === 'headwords' || game.id === 'evening-role') && <span className="available-badge">Доступно</span>}
+            {game.id === 'evening-role' && <span className="adult-badge">18+</span>}
           </button>
         ))}
       </div>

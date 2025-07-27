@@ -1,0 +1,945 @@
+/* ========================================
+   Evening Role Game - Apple Style Design
+   ======================================== */
+
+/* CSS Variables */
+:root {
+  --evening-role-primary-blue: #007AFF;
+  --evening-role-primary-text: #1d1d1f;
+  --evening-role-secondary-text: #86868b;
+  --evening-role-background-light: #f5f7fa;
+  --evening-role-card-background: rgba(255, 255, 255, 0.9);
+  --evening-role-border-color: rgba(0, 0, 0, 0.06);
+  --evening-role-shadow-light: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 20px rgba(0, 0, 0, 0.02);
+  --evening-role-shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --evening-role-gradient-primary: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  --evening-role-border-radius: 16px;
+  --evening-role-border-radius-large: 20px;
+  --evening-role-transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --evening-role-green: #34C759;
+  --evening-role-orange: #FF9500;
+  --evening-role-red: #FF3B30;
+}
+
+/* Typography System */
+.evening-role-typography {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================
+   EVENING ROLE SETUP SCREEN
+   ======================================== */
+
+.evening-role-setup {
+  max-width: 700px;
+  margin: 0 auto;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--evening-role-gradient-primary);
+  color: var(--evening-role-primary-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: calc(env(safe-area-inset-top)) 0px calc(env(safe-area-inset-bottom)) 0px;
+}
+
+/* Header */
+.evening-role-setup .setup-header {
+  flex-shrink: 0;
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: calc(16px + env(safe-area-inset-top)) 20px 20px 20px;
+  text-align: center;
+}
+
+.evening-role-setup .setup-header h1 {
+  margin: 8px 0 4px 0;
+  font-size: 28px;
+  color: var(--evening-role-primary-text);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.evening-role-setup .subtitle {
+  margin: 0;
+  font-size: 16px;
+  color: var(--evening-role-secondary-text);
+  font-weight: 500;
+  letter-spacing: -0.1px;
+}
+
+/* Content */
+.evening-role-setup .setup-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 0;
+}
+
+/* Game Info */
+.evening-role-setup .game-info {
+  background: var(--evening-role-card-background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--evening-role-border-color);
+  border-radius: var(--evening-role-border-radius-large);
+  padding: 24px;
+  box-shadow: var(--evening-role-shadow-medium);
+}
+
+.evening-role-setup .info-card h2 {
+  margin: 0 0 16px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--evening-role-primary-text);
+  letter-spacing: -0.3px;
+}
+
+.evening-role-setup .info-text {
+  color: var(--evening-role-primary-text);
+  line-height: 1.5;
+}
+
+.evening-role-setup .info-text p {
+  margin: 0 0 12px 0;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.evening-role-setup .info-text ul {
+  margin: 8px 0 16px 20px;
+  padding: 0;
+}
+
+.evening-role-setup .info-text li {
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: var(--evening-role-secondary-text);
+  line-height: 1.4;
+}
+
+/* Settings Section */
+.evening-role-setup .settings-section {
+  background: var(--evening-role-card-background);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--evening-role-border-color);
+  border-radius: var(--evening-role-border-radius-large);
+  padding: 24px;
+  box-shadow: var(--evening-role-shadow-light);
+}
+
+.evening-role-setup .settings-section h2 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--evening-role-primary-text);
+  letter-spacing: -0.3px;
+}
+
+.evening-role-setup .setting-group h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--evening-role-primary-text);
+  letter-spacing: -0.2px;
+}
+
+/* Player Count Options */
+.evening-role-setup .player-count-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.evening-role-setup .count-option {
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--evening-role-transition);
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--evening-role-primary-text);
+}
+
+.evening-role-setup .count-option:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateY(-1px);
+}
+
+.evening-role-setup .count-option.active {
+  background: rgba(0, 122, 255, 0.1);
+  border-color: var(--evening-role-primary-blue);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+/* Game Features */
+.evening-role-setup .game-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.evening-role-setup .feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  transition: var(--evening-role-transition);
+}
+
+.evening-role-setup .feature-item:hover {
+  background: rgba(255, 255, 255, 0.7);
+  transform: translateY(-1px);
+}
+
+.evening-role-setup .feature-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.evening-role-setup .feature-text h4 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--evening-role-primary-text);
+  letter-spacing: -0.1px;
+}
+
+.evening-role-setup .feature-text p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--evening-role-secondary-text);
+  line-height: 1.3;
+}
+
+/* Warning Messages */
+.evening-role-setup .warning-message {
+  color: var(--evening-role-red);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.1px;
+  line-height: 1.4;
+  background: rgba(255, 59, 48, 0.1);
+  padding: 12px 16px;
+  border-radius: 8px;
+  border-left: 4px solid var(--evening-role-red);
+}
+
+/* Footer */
+.evening-role-setup .setup-footer {
+  flex-shrink: 0;
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 16px 20px calc(16px + env(safe-area-inset-bottom)) 20px;
+}
+
+.evening-role-setup .start-game-btn {
+  width: 100%;
+  padding: 18px;
+  background: var(--evening-role-primary-blue);
+  color: white;
+  border: none;
+  border-radius: var(--evening-role-border-radius);
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--evening-role-transition);
+  letter-spacing: -0.2px;
+}
+
+.evening-role-setup .start-game-btn:hover:not(:disabled) {
+  background: #0051D5;
+  transform: translateY(-1px);
+}
+
+.evening-role-setup .start-game-btn:disabled {
+  background: rgba(0, 122, 255, 0.3);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ========================================
+   EVENING ROLE HOST SCREEN
+   ======================================== */
+
+.evening-role-host {
+  max-width: 1000px;
+  margin: 0 auto;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--evening-role-gradient-primary);
+  color: var(--evening-role-primary-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: calc(env(safe-area-inset-top)) 0px calc(env(safe-area-inset-bottom)) 0px;
+}
+
+/* Header */
+.evening-role-host .host-header {
+  flex-shrink: 0;
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: calc(16px + env(safe-area-inset-top)) 20px 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.evening-role-host .room-info h1 {
+  margin: 0 0 4px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--evening-role-primary-text);
+  letter-spacing: -0.4px;
+}
+
+.evening-role-host .room-id {
+  font-size: 14px;
+  color: var(--evening-role-secondary-text);
+  font-weight: 500;
+}
+
+.evening-role-host .room-id span {
+  color: var(--evening-role-primary-blue);
+  font-weight: 700;
+  font-family: monospace;
+}
+
+.evening-role-host .back-btn {
+  padding: 8px 16px;
+  background: rgba(142, 142, 147, 0.2);
+  color: var(--evening-role-primary-text);
+  border: 1px solid rgba(142, 142, 147, 0.3);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--evening-role-transition);
+}
+
+.evening-role-host .back-btn:hover {
+  background: rgba(142, 142, 147, 0.3);
+}
+
+/* Content */
+.evening-role-host .host-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  min-height: 0;
+}
+
+/* QR Section */
+.evening-role-host .qr-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.evening-role-host .qr-card {
+  background: var(--evening-role-card-background);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--evening-role-border-color);
+  border-radius: var(--evening-role-border-radius-large);
+  padding: 24px;
+  box-shadow: var(--evening-role-shadow-medium);
+  text-align: center;
+  height: fit-content;
+}
+
+.evening-role-host .qr-card h2 {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--evening-role-primary-text);
+  letter-spacing: -0.2px;
+}
+
+.evening-role-host .show-qr-btn {
+  padding: 16px 24px;
+  background: var(--evening-role-primary-blue);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--evening-role-transition);
+  margin-bottom: 16px;
+}
+
+.evening-role-host .show-qr-btn:hover {
+  background: #0051D5;
+  transform: translateY(-1px);
+}
+
+.evening-role-host .qr-instruction {
+  margin: 0;
+  font-size: 14px;
+  color: var(--evening-role-secondary-text);
+  line-height: 1.4;
+}
+
+.evening-role-host .qr-code {
+  width: 200px;
+  height: 200px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  box-shadow: var(--evening-role-shadow-light);
+}
+
+.evening-role-host .manual-link {
+  margin: 16px 0;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+}
+
+.evening-role-host .manual-link span {
+  display: block;
+  font-size: 12px;
+  color: var(--evening-role-secondary-text);
+  margin-bottom: 8px;
+}
+
+.evening-role-host .manual-link code {
+  font-size: 11px;
+  color: var(--evening-role-primary-blue);
+  background: rgba(0, 122, 255, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+  word-break: break-all;
+}
+
+.evening-role-host .hide-qr-btn {
+  padding: 8px 16px;
+  background: rgba(142, 142, 147, 0.2);
+  color: var(--evening-role-primary-text);
+  border: 1px solid rgba(142, 142, 147, 0.3);
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: var(--evening-role-transition);
+}
+
+/* Group Task Section */
+.evening-role-host .group-task-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.evening-role-host .group-task-card {
+  background: var(--evening-role-card-background);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--evening-role-border-color);
+  border-radius: var(--evening-role-border-radius-large);
+  padding: 24px;
+  box-shadow: var(--evening-role-shadow-medium);
+  height: fit-content;
+}
+
+.evening-role-host .group-task-card h2 {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--evening-role-primary-text);
+  letter-spacing: -0.2px;
+  text-align: center;
+}
+
+.evening-role-host .task-content {
+  margin-bottom: 20px;
+}
+
+.evening-role-host .task-text {
+  font-size: 16px;
+  color: var(--evening-role-primary-text);
+  font-weight: 500;
+  line-height: 1.5;
+  padding: 16px;
+  background: rgba(0, 122, 255, 0.05);
+  border-radius: 12px;
+  border-left: 4px solid var(--evening-role-primary-blue);
+  margin-bottom: 12px;
+}
+
+.evening-role-host .task-timer-info {
+  font-size: 14px;
+  color: var(--evening-role-secondary-text);
+  font-weight: 500;
+  text-align: center;
+}
+
+.evening-role-host .new-group-task-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--evening-role-green);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--evening-role-transition);
+}
+
+.evening-role-host .new-group-task-btn:hover {
+  background: #28A745;
+  transform: translateY(-1px);
+}
+
+/* Game Stats */
+.evening-role-host .game-stats {
+  grid-column: 1 / -1;
+  background: var(--evening-role-card-background);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--evening-role-border-color);
+  border-radius: var(--evening-role-border-radius-large);
+  padding: 24px;
+  box-shadow: var(--evening-role-shadow-light);
+}
+
+.evening-role-host .game-stats h3 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--evening-role-primary-text);
+  text-align: center;
+}
+
+.evening-role-host .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.evening-role-host .stat-item {
+  text-align: center;
+}
+
+.evening-role-host .stat-number {
+  display: block;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--evening-role-primary-blue);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 4px;
+}
+
+.evening-role-host .stat-label {
+  display: block;
+  font-size: 13px;
+  color: var(--evening-role-secondary-text);
+  font-weight: 500;
+  letter-spacing: -0.1px;
+}
+
+/* Game Tips */
+.evening-role-host .game-tips {
+  grid-column: 1 / -1;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: var(--evening-role-border-radius);
+  padding: 20px;
+}
+
+.evening-role-host .game-tips h3 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--evening-role-primary-text);
+  text-align: center;
+}
+
+.evening-role-host .tips-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.evening-role-host .tip-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--evening-role-secondary-text);
+  line-height: 1.3;
+}
+
+.evening-role-host .tip-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+/* ========================================
+   EVENING ROLE PLAYER SCREEN
+   ======================================== */
+
+.evening-role-player {
+  max-width: 600px;
+  margin: 0 auto;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--evening-role-gradient-primary);
+  color: var(--evening-role-primary-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: calc(env(safe-area-inset-top)) 0px calc(env(safe-area-inset-bottom)) 0px;
+}
+
+/* Header */
+.evening-role-player .player-header {
+  flex-shrink: 0;
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: calc(16px + env(safe-area-inset-top)) 20px 16px 20px;
+  text-align: center;
+}
+
+.evening-role-player .player-header h1 {
+  margin: 0 0 4px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--evening-role-primary-text);
+  letter-spacing: -0.4px;
+}
+
+.evening-role-player .room-id {
+  font-size: 14px;
+  color: var(--evening-role-secondary-text);
+  font-weight: 500;
+}
+
+/* Content */
+.evening-role-player .player-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 0;
+}
+
+/* Welcome Section */
+.evening-role-player .welcome-card {
+  background: var(--evening-role-card-background);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--evening-role-border-color);
+  border-radius: var(--evening-role-border-radius-large);
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: var(--evening-role-shadow-medium);
+}
+
+.evening-role-player .welcome-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.evening-role-player .welcome-card h2 {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--evening-role-primary-text);
+  letter-spacing: -0.4px;
+}
+
+.evening-role-player .welcome-card p {
+  margin: 0 0 24px 0;
+  font-size: 16px;
+  color: var(--evening-role-secondary-text);
+  line-height: 1.4;
+}
+
+.evening-role-player .get-task-btn {
+  padding: 18px 32px;
+  background: var(--evening-role-primary-blue);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--evening-role-transition);
+  margin-bottom: 24px;
+}
+
+.evening-role-player .get-task-btn:hover {
+  background: #0051D5;
+  transform: translateY(-1px);
+}
+
+.evening-role-player .instructions h3 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--evening-role-primary-text);
+  text-align: left;
+}
+
+.evening-role-player .instructions ul {
+  margin: 0;
+  padding: 0 0 0 20px;
+  text-align: left;
+}
+
+.evening-role-player .instructions li {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--evening-role-secondary-text);
+  line-height: 1.4;
+}
+
+/* Task Section */
+.evening-role-player .task-card {
+  background: var(--evening-role-card-background);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--evening-role-border-color);
+  border-radius: var(--evening-role-border-radius-large);
+  padding: 24px;
+  box-shadow: var(--evening-role-shadow-medium);
+}
+
+.evening-role-player .task-card h2 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--evening-role-primary-text);
+  text-align: center;
+  letter-spacing: -0.3px;
+}
+
+.evening-role-player .task-text {
+  font-size: 18px;
+  color: var(--evening-role-primary-text);
+  font-weight: 500;
+  line-height: 1.5;
+  padding: 20px;
+  background: rgba(0, 122, 255, 0.05);
+  border-radius: 12px;
+  border-left: 4px solid var(--evening-role-primary-blue);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.evening-role-player .task-note {
+  font-size: 14px;
+  color: var(--evening-role-orange);
+  background: rgba(255, 149, 0, 0.1);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.evening-role-player .task-category {
+  font-size: 12px;
+  color: var(--evening-role-secondary-text);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Timer Section */
+.evening-role-player .timer-section {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.evening-role-player .timer-section h3 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--evening-role-primary-text);
+}
+
+.evening-role-player .timer-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--timer-color, var(--evening-role-primary-blue));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px auto;
+  box-shadow: var(--evening-role-shadow-medium);
+}
+
+.evening-role-player .timer-text {
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  font-variant-numeric: tabular-nums;
+}
+
+.evening-role-player .timer-controls {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.evening-role-player .timer-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--evening-role-transition);
+}
+
+.evening-role-player .timer-btn.start {
+  background: var(--evening-role-green);
+  color: white;
+}
+
+.evening-role-player .timer-btn.stop {
+  background: var(--evening-role-orange);
+  color: white;
+}
+
+.evening-role-player .timer-btn.reset {
+  background: rgba(142, 142, 147, 0.2);
+  color: var(--evening-role-primary-text);
+}
+
+.evening-role-player .timer-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.evening-role-player .timer-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.evening-role-player .timer-info {
+  font-size: 12px;
+  color: var(--evening-role-secondary-text);
+}
+
+/* Task Actions */
+.evening-role-player .task-actions {
+  text-align: center;
+}
+
+.evening-role-player .new-task-btn {
+  padding: 14px 24px;
+  background: var(--evening-role-green);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--evening-role-transition);
+}
+
+.evening-role-player .new-task-btn:hover {
+  background: #28A745;
+  transform: translateY(-1px);
+}
+
+/* Error Message */
+.evening-role-player .error-message {
+  background: var(--evening-role-card-background);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--evening-role-border-color);
+  border-radius: var(--evening-role-border-radius-large);
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: var(--evening-role-shadow-medium);
+}
+
+.evening-role-player .error-message h2 {
+  margin: 0 0 12px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--evening-role-red);
+}
+
+.evening-role-player .error-message p {
+  margin: 0;
+  font-size: 16px;
+  color: var(--evening-role-secondary-text);
+  line-height: 1.4;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 768px) {
+  .evening-role-setup .game-features {
+    grid-template-columns: 1fr;
+  }
+  
+  .evening-role-setup .player-count-options {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .evening-role-host .host-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .evening-role-host .stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .evening-role-host .tips-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .evening-role-setup .player-count-options {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .evening-role-host .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .evening-role-player .timer-circle {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .evening-role-player .timer-text {
+    font-size: 20px;
+  }
+}
