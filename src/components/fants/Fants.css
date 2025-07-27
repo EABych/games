@@ -1058,6 +1058,7 @@
 /* Game Stats */
 .fants-end .game-stats {
   margin-bottom: 32px;
+  justify-content: center;
 }
 
 .fants-end .game-stats h3 {
@@ -1220,7 +1221,7 @@
   cursor: pointer;
   transition: var(--fants-transition);
   letter-spacing: -0.2px;
-  margin-top: auto;
+  margin: auto;
 }
 
 .fants-end .new-game-button:hover {
