@@ -36,6 +36,7 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
     const task = getRandomAdultFantsTask();
 
     // Вычисляем угол для выбранного игрока
+    // Стрелка указывает вверх (12 часов), нужно повернуть к выбранному сектору
     const targetAngle = randomPlayerIndex * sectorAngle + (sectorAngle / 2);
     
     // Добавляем несколько полных оборотов + целевой угол
@@ -44,7 +45,7 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
 
     if (arrowRef.current) {
       arrowRef.current.style.transition = 'transform 4s cubic-bezier(0.25, 0.1, 0.25, 1)';
-      arrowRef.current.style.transform = `rotate(${finalAngle}deg)`;
+      arrowRef.current.style.transform = `translate(-50%, -50%) rotate(${finalAngle}deg)`;
     }
 
     // После завершения анимации показываем результат
@@ -62,7 +63,7 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
   const resetArrow = () => {
     if (arrowRef.current) {
       arrowRef.current.style.transition = 'none';
-      arrowRef.current.style.transform = 'rotate(0deg)';
+      arrowRef.current.style.transform = 'translate(-50%, -50%) rotate(0deg)';
     }
   };
 
@@ -125,13 +126,13 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
           >
             {isSpinning ? (
               <>
-                <div className="spin-icon">🌀</div>
-                <span>Крутится...</span>
+                <div className="spin-icon">...</div>
+                <span>Крутится</span>
               </>
             ) : (
               <>
                 <div className="spin-icon">SPIN</div>
-                <span>КРУТИТЬ</span>
+                <span>Крутить</span>
               </>
             )}
           </button>
@@ -169,11 +170,11 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
           <span>Нажмите красную кнопку в центре для запуска</span>
         </div>
         <div className="instruction-item">
-          <span className="instruction-icon">⏰</span>
+          <span className="instruction-icon">2</span>
           <span>Подождите пока стрелка остановится</span>
         </div>
         <div className="instruction-item">
-          <span className="instruction-icon">🎭</span>
+          <span className="instruction-icon">3</span>
           <span>Через 3 секунды откроется задание</span>
         </div>
       </div>

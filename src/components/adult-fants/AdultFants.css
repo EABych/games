@@ -7,34 +7,34 @@
     --adult-accent: #007AFF;
     --adult-success: #34C759;
     --adult-warning: #FFCC00;
-    
+
     /* Text Colors */
     --adult-text: #1d1d1f;
     --adult-text-secondary: #86868b;
     --adult-text-tertiary: #d1d1d6;
-    
+
     /* Background Colors */
     --adult-background-light: #f5f7fa;
     --adult-surface: rgba(255, 255, 255, 0.9);
     --adult-glass-background: rgba(255, 255, 255, 0.08);
-    
+
     /* Borders and Shadows */
     --adult-border: rgba(0, 0, 0, 0.06);
     --adult-shadow-light: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 20px rgba(0, 0, 0, 0.02);
     --adult-shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.1);
     --adult-shadow-heavy: 0 8px 32px rgba(0, 0, 0, 0.15);
-    
+
     /* Gradients */
     --adult-gradient-primary: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     --adult-gradient-card: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
-    
+
     /* Border Radius */
     --adult-border-radius: 16px;
     --adult-border-radius-large: 20px;
-    
+
     /* Transitions */
     --adult-transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-    
+
     /* Typography */
     --adult-font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
     --adult-font-weight-regular: 400;
@@ -73,6 +73,10 @@
     height: 100vh;
     height: 100dvh;
     position: relative;
+}
+
+.adult-fants-setup .setup-header h1 {
+    color: black;
 }
 
 .adult-fants-game {
@@ -528,21 +532,36 @@
 
 .wheel-arrow {
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     z-index: 10;
     transition: transform 4s cubic-bezier(0.25, 0.1, 0.25, 1);
-    transform-origin: center 200px;
+    transform-origin: center center;
+    pointer-events: none;
 }
 
 .arrow-pointer {
+    width: 4px;
+    height: 160px;
+    background: var(--adult-primary);
+    border-radius: 2px;
+    position: relative;
+    transform: translateX(-50%);
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+.arrow-pointer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 0;
     height: 0;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    border-top: 40px solid var(--adult-primary);
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 16px solid var(--adult-primary);
 }
 
 .spin-button {
