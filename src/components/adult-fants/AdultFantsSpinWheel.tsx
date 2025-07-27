@@ -152,13 +152,25 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
               // Если игрок выбран, он должен быть подсвечен вместо highlighted
               const shouldBeHighlighted = isHighlighted || isSelected;
               
-              // Рассчитываем clip-path для сектора в зависимости от угла
-              // Для равных секторов: от 0 до sectorAngle градусов
+              // Рассчитываем clip-path для сектора
+              // Стартуем с верхней точки (0°) и идем по часовой стрелке
+              const startAngle = 0;
               const endAngle = sectorAngle;
-              const x2 = 50 + 50 * Math.cos((endAngle * Math.PI) / 180);
-              const y2 = 50 + 50 * Math.sin((endAngle * Math.PI) / 180);
               
-              const clipPath = `polygon(50% 50%, 100% 50%, ${x2}% ${y2}%)`;
+              // Точка начала сектора (верх круга)
+              const x1 = 50 + 50 * Math.cos((startAngle - 90) * Math.PI / 180);
+              const y1 = 50 + 50 * Math.sin((startAngle - 90) * Math.PI / 180);
+              
+              // Точка конца сектора
+              const x2 = 50 + 50 * Math.cos((endAngle - 90) * Math.PI / 180);
+              const y2 = 50 + 50 * Math.sin((endAngle - 90) * Math.PI / 180);
+              
+              const clipPath = `polygon(50% 50%, ${x1}% ${y1}%, ${x2}% ${y2}%)`;
+              
+              // Логирование для первого сектора
+              if (index === 0) {
+                console.log(`Сектор ${index}: угол ${sectorAngle}°, clipPath: ${clipPath}`);
+              }
               
               return (
                 <div
