@@ -542,7 +542,8 @@
     height: 160px;
     background: var(--adult-primary);
     border-radius: 2px;
-    transform: translate(-50%, -50%);
+    /* Конец стрелки (нижняя часть) должен быть в центре колеса */
+    transform: translateX(-50%) translateY(-100%);
     transform-origin: center bottom;
     z-index: 10;
     pointer-events: none;

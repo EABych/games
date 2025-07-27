@@ -25,10 +25,9 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
   const spinWheel = () => {
     if (isSpinning) return;
 
-    console.log('=== НАЧАЛО АНИМАЦИИ ===');
+    console.log('=== НОВАЯ ДВУХФАЗНАЯ АНИМАЦИЯ ===');
     console.log('Количество игроков:', players.length);
     console.log('Угол сектора:', sectorAngle);
-    console.log('Список игроков:', players.map((p, i) => `${i}: ${p.name}`));
 
     setIsSpinning(true);
     setSelectedPlayer(null);
@@ -40,62 +39,63 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
     // Случайное задание
     const task = getRandomAdultFantsTask();
 
-    // Вычисляем угол для выбранного игрока
-    // Первый сектор начинается сверху (0°), затем по часовой стрелке
-    // Стрелка должна указать в центр выбранного сектора
-    const sectorStartAngle = randomPlayerIndex * sectorAngle;
-    const targetAngle = sectorStartAngle + (sectorAngle / 2);
+    // Вычисляем точный угол остановки на выбранном игроке
+    const targetAngle = randomPlayerIndex * sectorAngle + (sectorAngle / 2);
     
-    // Добавляем несколько полных оборотов для эффекта вращения
-    const spins = 2 + Math.random() * 2; // 2-4 оборота (меньше чтоб протестировать)
-    const finalAngle = spins * 360 + targetAngle;
-
     console.log(`Выбран игрок ${randomPlayerIndex} (${selectedPlayer.name})`);
-    console.log(`Начальный угол сектора: ${sectorStartAngle}°`);
-    console.log(`Целевой угол: ${targetAngle}°`);
-    console.log(`Количество оборотов: ${spins}`);
-    console.log(`Финальный угол: ${finalAngle}°`);
-    
-    // ТЕСТ: простая анимация на 90 градусов
-    const testAngle = 90;
-    console.log(`ТЕСТ: будем анимировать простой поворот на ${testAngle}°`);
+    console.log(`Будем останавливаться на угле: ${targetAngle}°`);
 
     if (arrowRef.current) {
-      console.log('Стрелка найдена, начинаем анимацию...');
-      console.log('Текущий transform:', arrowRef.current.style.transform);
-      
-      // Сначала сбрасываем позицию стрелки
+      // Сбрасываем стрелку в исходное положение
       arrowRef.current.style.transition = 'none';
-      arrowRef.current.style.transform = 'translate(-50%, -50%) rotate(0deg)';
-      console.log('Сброшено в 0°');
+      arrowRef.current.style.transform = 'translateX(-50%) translateY(-100%) rotate(0deg)';
+      arrowRef.current.offsetHeight; // force reflow
       
-      // Принудительный reflow для применения изменений
-      arrowRef.current.offsetHeight;
+      console.log('ФАЗА 1: Быстрое вращение 3 секунды');
       
-      // Затем запускаем анимацию с задержкой
+      // ФАЗА 1: Быстрое вращение (3 секунды, много оборотов)
       setTimeout(() => {
         if (arrowRef.current) {
-          console.log('Запускаем ТЕСТОВУЮ анимацию к углу:', testAngle);
-          arrowRef.current.style.transition = 'transform 2s ease-in-out';
-          arrowRef.current.style.transform = `translate(-50%, -50%) rotate(${testAngle}deg)`;
-          console.log('Новый transform:', arrowRef.current.style.transform);
-          console.log('Transition:', arrowRef.current.style.transition);
+          arrowRef.current.style.transition = 'transform 3s linear';
+          arrowRef.current.style.transform = 'translateX(-50%) translateY(-100%) rotate(1080deg)'; // 3 оборота
         }
-      }, 100);
+      }, 50);
+
+      // ФАЗА 2: Замедление до остановки на выбранном игроке
+      setTimeout(() => {
+        console.log('ФАЗА 2: Замедление до остановки');
+        
+        if (arrowRef.current) {
+          // Случайное время замедления (1-3 секунды)
+          const slowdownTime = 1.5 + Math.random() * 1.5;
+          console.log(`Время замедления: ${slowdownTime.toFixed(1)} сек`);
+          
+          // Добавляем еще немного оборотов + точную остановку
+          const additionalSpins = 1 + Math.random(); // 1-2 доп. оборота
+          const finalAngle = 1080 + (additionalSpins * 360) + targetAngle;
+          
+          console.log(`Финальный угол остановки: ${finalAngle}°`);
+          
+          arrowRef.current.style.transition = `transform ${slowdownTime}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+          arrowRef.current.style.transform = `translateX(-50%) translateY(-100%) rotate(${finalAngle}deg)`;
+        }
+        
+        // Показываем результат после завершения замедления
+        setTimeout(() => {
+          setIsSpinning(false);
+          setSelectedPlayer(selectedPlayer);
+          
+          setTimeout(() => {
+            onTaskSelected(selectedPlayer, task);
+          }, 2000);
+        }, (1.5 + Math.random() * 1.5) * 1000 + 500); // время замедления + 0.5 сек
+        
+      }, 3000); // после завершения быстрого вращения
+      
     } else {
       console.log('ERROR: Стрелка не найдена!');
     }
 
-    // После завершения анимации показываем результат
-    setTimeout(() => {
-      setIsSpinning(false);
-      setSelectedPlayer(selectedPlayer);
-      
-      // Через 3 секунды показываем модал с заданием
-      setTimeout(() => {
-        onTaskSelected(selectedPlayer, task);
-      }, 3000);
-    }, 4000);
   };
 
   const resetArrow = () => {
@@ -103,7 +103,7 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
     if (arrowRef.current) {
       console.log('Сбрасываем стрелку в исходное положение');
       arrowRef.current.style.transition = 'none';
-      arrowRef.current.style.transform = 'translate(-50%, -50%) rotate(0deg)';
+      arrowRef.current.style.transform = 'translateX(-50%) translateY(-100%) rotate(0deg)';
       console.log('Стрелка сброшена');
     } else {
       console.log('ERROR: Стрелка не найдена при сбросе!');
