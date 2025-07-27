@@ -4,12 +4,3 @@ services:
     env: static
     buildCommand: npm run render-build
     staticPublishPath: ./dist
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
-    headers:
-      - key: X-Frame-Options
-        value: DENY
-      - key: X-Content-Type-Options
-        value: nosniff
