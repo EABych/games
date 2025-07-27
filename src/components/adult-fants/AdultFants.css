@@ -538,23 +538,21 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    transform-origin: center center;
-    pointer-events: none;
-}
-
-.arrow-pointer {
     width: 4px;
     height: 160px;
     background: var(--adult-primary);
     border-radius: 2px;
-    position: relative;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
+    transform-origin: 50% 50%;
+    z-index: 10;
+    pointer-events: none;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    /* Отладочные стили */
+    border: 2px solid red;
+    box-shadow: 0 0 0 1px yellow;
 }
 
-.arrow-pointer::before {
+.wheel-arrow::before {
     content: '';
     position: absolute;
     top: 0;
@@ -566,6 +564,7 @@
     border-right: 8px solid transparent;
     border-bottom: 16px solid var(--adult-primary);
 }
+
 
 .spin-button {
     position: absolute;

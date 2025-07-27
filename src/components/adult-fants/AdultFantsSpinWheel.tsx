@@ -156,8 +156,6 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
             ref={arrowRef}
             className={`wheel-arrow ${isSpinning ? 'spinning' : ''}`}
           >
-            <div className="arrow-pointer"></div>
-          </div>
 
           {/* Центральная кнопка */}
           <button
