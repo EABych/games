@@ -3,7 +3,6 @@
   "private": true,
   "version": "2.1.0",
   "type": "module",
-  "homepage": "https://EABych.github.io/games",
   "scripts": {
     "dev": "vite",
     "build": "npm ci && tsc -b && vite build",
