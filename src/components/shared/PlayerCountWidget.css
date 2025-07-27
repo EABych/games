@@ -1,0 +1,118 @@
+/* Player Count Widget - Shared Component */
+
+.player-count-widget {
+  /* This component inherits styles from its parent context */
+}
+
+.player-count-widget .widget-label {
+  margin: 0 0 20px 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--primary-text, #1d1d1f);
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
+
+/* Player Count Controls */
+.player-count-widget .player-count-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 24px 0;
+  background: rgba(248, 249, 250, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 14px;
+  padding: 16px 24px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 20px rgba(0, 0, 0, 0.02);
+}
+
+.player-count-widget .count-button {
+  background: rgba(255, 255, 255, 0.9);
+  color: #1d1d1f;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.player-count-widget .count-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.player-count-widget .count-button:active:not(:disabled) {
+  transform: scale(0.96);
+  background: rgba(245, 245, 247, 1);
+  transition: all 0.08s ease;
+}
+
+.player-count-widget .count-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.player-count-widget .player-count {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--primary-text, #1d1d1f);
+  min-width: 60px;
+  text-align: center;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.player-count-widget .player-count-hint {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--secondary-text, #86868b);
+  letter-spacing: -0.1px;
+  margin: 16px 0 0 0;
+  line-height: 1.4;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .player-count-widget .player-count-controls {
+    gap: 20px;
+    padding: 14px 20px;
+  }
+  
+  .player-count-widget .count-button {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+  
+  .player-count-widget .player-count {
+    font-size: 26px;
+    min-width: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .player-count-widget .player-count {
+    font-size: 28px;
+    min-width: 60px;
+  }
+  
+  .player-count-widget .count-button {
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+  }
+}

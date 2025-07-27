@@ -408,13 +408,13 @@ function App() {
     <div className="app">
       <BrowserRouter>
         <Routes>
-          {/* Main app routes */}
-          <Route path="/*" element={<MainApp />} />
-          
-          {/* Player screens (public routes) */}
+          {/* Player screens (public routes) - должны быть первыми */}
           <Route path="/player/mafia/:roomId" element={<MafiaPlayerScreen />} />
           <Route path="/player/spy/:roomId" element={<SpyPlayerScreen />} />
           <Route path="/player/headwords/:roomId" element={<HeadwordsPlayerScreen />} />
+          
+          {/* Main app routes */}
+          <Route path="/*" element={<MainApp />} />
         </Routes>
       </BrowserRouter>
     </div>

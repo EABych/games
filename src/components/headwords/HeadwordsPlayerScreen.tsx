@@ -76,7 +76,7 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
       <div className="headwords-player-screen countdown-screen">
         <div className="countdown-container">
           <div className="countdown-header">
-            <h1>🎭 Приготовьтесь!</h1>
+            <h1>Приготовьтесь!</h1>
             <p>Приложите телефон ко лбу горизонтально</p>
           </div>
 
@@ -85,9 +85,9 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
           </div>
 
           <div className="countdown-instruction">
-            <p>📱 Поверните телефон горизонтально</p>
-            <p>🤚 Прижмите к лбу экраном наружу</p>
-            <p>👥 Пусть другие видят экран</p>
+            <p>Поверните телефон горизонтально</p>
+            <p>Прижмите к лбу экраном наружу</p>
+            <p>Пусть другие видят экран</p>
           </div>
         </div>
       </div>
@@ -113,7 +113,7 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
     <div className="headwords-player-screen welcome-screen">
       <div className="welcome-card">
         <div className="welcome-header">
-          <h1>🎭 Добро пожаловать в "Кто я?"!</h1>
+          <h1>Добро пожаловать в "Кто я?"!</h1>
           <p>Нажмите кнопку ниже, чтобы получить свою роль</p>
         </div>
 
@@ -121,13 +121,13 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
           {!isLoading && !error && (
             <>
               <div className="game-rules">
-                <h3>📖 Правила игры:</h3>
+                <h3>Правила игры:</h3>
                 <ul>
-                  <li>🎲 <strong>Получение роли:</strong> Нажмите кнопку и получите роль</li>
-                  <li>📱 <strong>Таймер:</strong> У вас будет 10 секунд, чтобы приложить телефон ко лбу</li>
-                  <li>🔄 <strong>Поворот:</strong> Поверните телефон горизонтально для лучшей видимости</li>
-                  <li>❓ <strong>Вопросы:</strong> Задавайте вопросы "да/нет", чтобы угадать роль</li>
-                  <li>🎯 <strong>Цель:</strong> Угадать, кто вы, не глядя на экран</li>
+                  <li><strong>Получение роли:</strong> Нажмите кнопку и получите роль</li>
+                  <li><strong>Таймер:</strong> У вас будет 10 секунд, чтобы приложить телефон ко лбу</li>
+                  <li><strong>Поворот:</strong> Поверните телефон горизонтально для лучшей видимости</li>
+                  <li><strong>Вопросы:</strong> Задавайте вопросы "да/нет", чтобы угадать роль</li>
+                  <li><strong>Цель:</strong> Угадать, кто вы, не глядя на экран</li>
                 </ul>
               </div>
 
@@ -135,7 +135,7 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
                 onClick={getRoleFromServer}
                 className="get-role-button"
               >
-                🎲 Получить роль
+                Получить роль
               </button>
             </>
           )}
@@ -149,14 +149,14 @@ export const HeadwordsPlayerScreen: React.FC<HeadwordsPlayerScreenProps> = ({ ro
 
           {error && (
             <div className="error-state">
-              <div className="error-icon">❌</div>
+              <div className="error-icon">!</div>
               <h3>Ошибка</h3>
               <p>{error}</p>
               <button
                 onClick={getRoleFromServer}
                 className="retry-button"
               >
-                🔄 Попробовать снова
+                Попробовать снова
               </button>
             </div>
           )}

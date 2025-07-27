@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { PlayerCountWidget } from '../shared/PlayerCountWidget';
 
 interface MafiaHostSetupProps {
   onStartGame: (settings: MafiaGameSettings) => void;
@@ -103,22 +104,13 @@ export const MafiaHostSetup: React.FC<MafiaHostSetupProps> = ({ onStartGame }) =
 
       <div className="setup-content">
         <div className="setting-section">
-          <h3>Количество игроков</h3>
-          <div className="player-count-controls">
-            <button 
-              onClick={() => setSettings({...settings, playerCount: Math.max(4, settings.playerCount - 1)})}
-              className="count-button"
-            >
-              −
-            </button>
-            <span className="player-count">{settings.playerCount}</span>
-            <button 
-              onClick={() => setSettings({...settings, playerCount: Math.min(20, settings.playerCount + 1)})}
-              className="count-button"
-            >
-              +
-            </button>
-          </div>
+          <PlayerCountWidget
+            value={settings.playerCount}
+            min={4}
+            max={20}
+            onChange={(playerCount) => setSettings({...settings, playerCount})}
+            hint="Минимум 4 игрока, максимум 20"
+          />
         </div>
 
         <div className="setting-section">
