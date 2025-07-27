@@ -2,12 +2,10 @@
   "name": "alias-game",
   "private": true,
   "version": "2.1.0",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "render-build": "npm install && npm run build",
-    "start": "node server.js",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
@@ -16,7 +14,6 @@
   "dependencies": {
     "@types/qrcode": "^1.5.5",
     "@types/react-router-dom": "^5.3.3",
-    "express": "^4.18.2",
     "qrcode": "^1.5.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
