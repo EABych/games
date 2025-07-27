@@ -67,7 +67,7 @@ export const CategorySelectorWidget: React.FC<CategorySelectorWidgetProps> = ({
         {categories.map((category) => {
           const isSelected = selectedCategories.includes(category.id);
           const isDisabled = disabled || 
-            (maxSelections && !isSelected && selectedCategories.length >= maxSelections);
+            !!(maxSelections && !isSelected && selectedCategories.length >= maxSelections);
           
           return (
             <button
