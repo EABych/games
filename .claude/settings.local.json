@@ -38,7 +38,11 @@
       "Bash(node:*)",
       "Bash(gh-pages:*)",
       "Bash(git fetch:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(rg:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git restore:*)"
     ],
     "deny": []
   }
