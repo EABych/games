@@ -67,7 +67,8 @@ export const usePoetGame = () => {
         playerName: currentPlayer.name,
         firstLine: prev.currentFirstLine.text,
         success,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        round: prev.currentRound
       };
 
       // Обновляем статистику игрока

@@ -13,6 +13,7 @@ export interface PoetTask {
   firstLine: string;
   success: boolean;
   timestamp: number;
+  round: number;
 }
 
 export interface PoetFirstLine {

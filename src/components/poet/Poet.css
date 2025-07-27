@@ -1,0 +1,1645 @@
+/* ========================================
+   Поэт Game - Apple Style Design
+   ======================================== */
+
+/* CSS Variables */
+:root {
+  --poet-primary-blue: #007AFF;
+  --poet-primary-text: #1d1d1f;
+  --poet-secondary-text: #86868b;
+  --poet-background-light: #f5f7fa;
+  --poet-card-background: rgba(255, 255, 255, 0.9);
+  --poet-border-color: rgba(0, 0, 0, 0.06);
+  --poet-shadow-light: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 20px rgba(0, 0, 0, 0.02);
+  --poet-shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --poet-gradient-primary: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  --poet-border-radius: 16px;
+  --poet-border-radius-large: 20px;
+  --poet-transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Typography System */
+.poet-typography {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================
+   POET SETUP SCREEN
+   ======================================== */
+
+.poet-setup {
+  max-width: 600px;
+  margin: 0 auto;
+  height: 100vh;
+  height: 100dvh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: #2c3e50;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.poet-setup .setup-header {
+  flex-shrink: 0;
+  z-index: 100;
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: calc(16px + env(safe-area-inset-top)) 60px 20px 60px;
+  margin: 0 !important;
+}
+
+.poet-setup .setup-header h2 {
+  margin: 8px 0 4px 0;
+  font-size: 20px;
+  color: #1d1d1f;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  text-align: center;
+}
+
+.poet-setup .setup-header p {
+  margin: 0;
+  font-size: 14px;
+  color: #86868b;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: -0.1px;
+}
+
+/* Content */
+.poet-setup .setup-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  justify-content: start;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+}
+
+/* Setting Sections */
+.poet-setup .setting-section {
+  background: var(--poet-card-background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--poet-border-color);
+  border-radius: var(--poet-border-radius-large);
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--poet-shadow-medium);
+}
+
+.poet-setup .setting-section h3 {
+  margin: 0 0 20px 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--poet-primary-text);
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
+
+/* Players Section */
+.poet-setup .players-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.poet-setup .players-input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.poet-setup .players-input {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.poet-setup .players-input input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  transition: var(--poet-transition);
+  color: black;
+}
+
+.poet-setup .players-input input:focus {
+  outline: none;
+  border-color: var(--poet-primary-blue);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.poet-setup .add-player-btn {
+  background: var(--poet-primary-blue);
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--poet-transition);
+  white-space: nowrap;
+  min-width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.poet-setup .add-player-btn:hover:not(:disabled) {
+  background: #0051D5;
+  transform: translateY(-1px);
+}
+
+.poet-setup .add-player-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Players List Section */
+.poet-setup .players-list-section {
+  /*min-height: 100px;*/
+}
+
+.poet-setup .players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.poet-setup .player-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.poet-setup .player-item span {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--poet-primary-text);
+}
+
+.poet-setup .remove-btn {
+  background: rgba(255, 59, 48, 0.1);
+  color: #FF3B30;
+  border: 1px solid rgba(255, 59, 48, 0.2);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--poet-transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.poet-setup .remove-btn:hover {
+  background: rgba(255, 59, 48, 0.15);
+  border-color: rgba(255, 59, 48, 0.3);
+}
+
+/* Categories Grid */
+.poet-setup .categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.poet-setup .category-btn {
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: var(--poet-transition);
+  text-align: left;
+}
+
+.poet-setup .category-btn:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 122, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.poet-setup .category-btn.selected {
+  background: rgba(0, 122, 255, 0.1);
+  border-color: var(--poet-primary-blue);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.poet-setup .category-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.poet-setup .category-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--poet-primary-text);
+  letter-spacing: -0.1px;
+}
+
+.poet-setup .category-desc {
+  font-size: 14px;
+  color: var(--poet-secondary-text);
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+/* Difficulty Grid */
+.poet-setup .difficulty-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.poet-setup .difficulty-btn {
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: var(--poet-transition);
+  text-align: left;
+}
+
+.poet-setup .difficulty-btn:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateY(-1px);
+}
+
+.poet-setup .difficulty-btn.selected {
+  background: rgba(0, 122, 255, 0.1);
+  border-color: var(--poet-primary-blue) !important;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.poet-setup .difficulty-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.poet-setup .difficulty-name {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+}
+
+.poet-setup .difficulty-desc {
+  font-size: 14px;
+  color: var(--poet-secondary-text);
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+/* Game Settings */
+.poet-setup .game-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.poet-setup .setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: var(--poet-transition);
+}
+
+.poet-setup .setting-item:hover {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 122, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.poet-setup .setting-item label {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--poet-primary-text);
+  letter-spacing: -0.1px;
+}
+
+.poet-setup .setting-item select {
+  position: relative;
+  padding: 12px 36px 12px 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  background: white;
+  cursor: pointer;
+  transition: var(--poet-transition);
+  color: var(--poet-primary-text);
+  min-width: 140px;
+  text-align: left;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+.poet-setup .setting-item select:hover {
+  border-color: rgba(0, 122, 255, 0.3);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.poet-setup .setting-item select:focus {
+  outline: none;
+  border-color: var(--poet-primary-blue);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+}
+
+/* Custom dropdown styling */
+.poet-setup .setting-item select option {
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--poet-primary-text);
+  background: white;
+  border: none;
+  line-height: 1.4;
+}
+
+.poet-setup .setting-item select::-webkit-scrollbar {
+  width: 8px;
+}
+
+.poet-setup .setting-item select::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+.poet-setup .setting-item select::-webkit-scrollbar-thumb {
+  background: rgba(0, 122, 255, 0.3);
+  border-radius: 4px;
+}
+
+.poet-setup .setting-item select::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 122, 255, 0.5);
+}
+
+/* Footer */
+.poet-setup .setup-actions {
+  flex-shrink: 0;
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 16px 20px calc(16px + env(safe-area-inset-bottom)) 20px;
+  text-align: center;
+}
+
+.poet-setup .start-game-button {
+  background: linear-gradient(135deg, #007AFF, #007AFF);
+  color: white;
+  border: none;
+  padding: 18px 36px;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(0, 122, 255, 0.25);
+  width: 100%;
+  max-width: 280px;
+  min-height: 54px;
+}
+
+.poet-setup .start-game-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 25px rgba(0, 122, 255, 0.35);
+  background: linear-gradient(135deg, #0051D5, #0051D5);
+}
+
+.poet-setup .start-game-button:active:not(:disabled) {
+  transform: translateY(0px);
+  transition: all 0.1s ease;
+  box-shadow: 0 2px 10px rgba(0, 122, 255, 0.3);
+}
+
+.poet-setup .start-game-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.poet-setup .warning-message {
+  color: #FF3B30;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.1px;
+  line-height: 1.4;
+  margin-top: 12px;
+  background: rgba(255, 59, 48, 0.1);
+  padding: 12px 16px;
+  border-radius: 8px;
+  border-left: 4px solid #FF3B30;
+}
+
+/* ========================================
+   POET GAME SCREEN
+   ======================================== */
+
+.poet-game {
+  max-width: 600px;
+  margin: 0 auto;
+  height: 100vh;
+  height: 100dvh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: #2c3e50;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Game Header */
+.poet-game .game-header {
+  flex-shrink: 0;
+  z-index: 100;
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: calc(16px + env(safe-area-inset-top)) 60px 20px 60px;
+  margin: 0 !important;
+}
+
+.poet-game .game-header h2 {
+  margin: 8px 0 4px 0;
+  font-size: 20px;
+  color: #1d1d1f;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  text-align: center;
+}
+
+.poet-game .game-header p {
+  margin: 0;
+  font-size: 14px;
+  color: #86868b;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: -0.1px;
+}
+
+/* Game Body */
+.poet-game .game-body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+}
+
+/* Task Card */
+.poet-game .task-card {
+  background: var(--poet-card-background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--poet-border-color);
+  border-radius: var(--poet-border-radius-large);
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--poet-shadow-medium);
+  text-align: center;
+}
+
+.poet-game .task-card h3 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--poet-primary-text);
+  letter-spacing: -0.1px;
+}
+
+.poet-game .task-text {
+  font-size: 16px;
+  color: var(--poet-secondary-text);
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.poet-game .first-line {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--poet-primary-text);
+  font-style: italic;
+  margin-bottom: 16px;
+  padding: 16px;
+  background: rgba(0, 122, 255, 0.05);
+  border-radius: 12px;
+  border-left: 4px solid var(--poet-primary-blue);
+}
+
+.poet-game .rhyme-suggestion {
+  font-size: 14px;
+  color: var(--poet-secondary-text);
+  background: rgba(255, 193, 7, 0.1);
+  padding: 12px;
+  border-radius: 8px;
+  border-left: 4px solid #FFC107;
+}
+
+/* Score Card */
+.poet-game .score-card {
+  background: var(--poet-card-background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--poet-border-color);
+  border-radius: var(--poet-border-radius-large);
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--poet-shadow-medium);
+}
+
+.poet-game .score-display {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  text-align: center;
+}
+
+.poet-game .score-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.poet-game .score-label {
+  font-size: 12px;
+  color: var(--poet-secondary-text);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.poet-game .score-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--poet-primary-text);
+}
+
+.poet-game .score-item.total .score-value {
+  color: var(--poet-primary-blue);
+}
+
+/* Players Progress */
+.poet-game .players-progress {
+  background: var(--poet-card-background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--poet-border-color);
+  border-radius: var(--poet-border-radius-large);
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--poet-shadow-medium);
+}
+
+.poet-game .players-progress h3 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--poet-primary-text);
+  letter-spacing: -0.1px;
+}
+
+.poet-game .players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.poet-game .player-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: var(--poet-transition);
+}
+
+.poet-game .player-item.current {
+  background: rgba(0, 122, 255, 0.1);
+  border-color: var(--poet-primary-blue);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.poet-game .player-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--poet-primary-text);
+}
+
+.poet-game .player-score {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--poet-primary-blue);
+}
+
+/* Game Actions */
+.poet-game .game-actions {
+  flex-shrink: 0;
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 16px 20px calc(16px + env(safe-area-inset-bottom)) 20px;
+}
+
+.poet-game .action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.poet-game .confirm-button {
+  background: linear-gradient(135deg, #007AFF, #007AFF);
+  color: white;
+  border: none;
+  padding: 16px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--poet-transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.poet-game .confirm-button:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #0051D5, #0051D5);
+}
+
+.poet-game .fail-button {
+  background: rgba(255, 59, 48, 0.1);
+  color: #FF3B30;
+  border: 1px solid rgba(255, 59, 48, 0.2);
+  padding: 16px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--poet-transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.poet-game .fail-button:hover {
+  background: rgba(255, 59, 48, 0.15);
+  border-color: rgba(255, 59, 48, 0.3);
+  transform: translateY(-1px);
+}
+
+.poet-game .points {
+  font-size: 12px;
+  opacity: 0.8;
+  font-weight: 500;
+}
+
+/* Loading State */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 20px;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(0, 122, 255, 0.2);
+  border-top-color: var(--poet-primary-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-state p {
+  font-size: 18px;
+  color: var(--poet-secondary-text);
+  font-weight: 500;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 768px) {
+  .poet-setup {
+    padding: env(safe-area-inset-top, 16px) env(safe-area-inset-right, 16px) env(safe-area-inset-bottom, 16px) env(safe-area-inset-left, 16px);
+  }
+
+  .poet-setup .setup-header {
+    margin: -16px -16px 0 -16px;
+    padding: env(safe-area-inset-top, 12px) 16px 12px 16px;
+  }
+
+  .poet-setup .setting-section {
+    padding: 20px;
+  }
+
+  .poet-setup .categories-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .poet-setup .difficulty-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /*.poet-setup .players-input {*/
+  /*  flex-direction: column;*/
+  /*}*/
+
+  .poet-setup .setting-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .poet-setup .players-section {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .poet-setup .setting-section {
+    padding: 16px;
+  }
+}
+
+/* ========================================
+   POET ROUND END SCREEN
+   ======================================== */
+
+.poet-round-end {
+  max-width: 600px;
+  margin: 0 auto;
+  height: 100vh;
+  height: 100dvh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: var(--poet-primary-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+/* Round End Header */
+.poet-round-end .round-end-header {
+  flex-shrink: 0;
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: calc(20px + env(safe-area-inset-top)) 20px 20px 20px;
+  text-align: center;
+}
+
+.poet-round-end .round-end-header h1 {
+  margin: 0 0 16px 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--poet-primary-text);
+  letter-spacing: -0.8px;
+}
+
+/* Round Summary */
+.poet-round-end .round-summary {
+  display: flex;
+  justify-content: center;
+}
+
+.poet-round-end .summary-stats {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  background: var(--poet-card-background);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid var(--poet-border-color);
+  border-radius: var(--poet-border-radius);
+  padding: 16px 32px;
+  box-shadow: var(--poet-shadow-light);
+}
+
+.poet-round-end .stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.poet-round-end .stat-value {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.poet-round-end .stat-item.success .stat-value {
+  color: #34C759;
+}
+
+.poet-round-end .stat-item.failed .stat-value {
+  color: #FF3B30;
+}
+
+.poet-round-end .stat-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--poet-secondary-text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.poet-round-end .stat-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--poet-border-color);
+}
+
+/* Round Results Section */
+.poet-round-end .round-results {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 20px;
+  overscroll-behavior: contain;
+  min-height: fit-content;
+}
+
+.poet-round-end .round-results h2 {
+  margin: 0 0 16px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--poet-primary-text);
+  letter-spacing: -0.3px;
+}
+
+.poet-round-end .tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.poet-round-end .task-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--poet-card-background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--poet-border-color);
+  border-radius: var(--poet-border-radius);
+  padding: 16px 20px;
+  box-shadow: var(--poet-shadow-light);
+  transition: var(--poet-transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.poet-round-end .task-item:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--poet-shadow-medium);
+}
+
+.poet-round-end .task-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+}
+
+.poet-round-end .task-item.success .task-indicator {
+  background: #34C759;
+}
+
+.poet-round-end .task-item.failed .task-indicator {
+  background: #FF3B30;
+}
+
+.poet-round-end .task-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 8px;
+}
+
+.poet-round-end .task-line {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--poet-primary-text);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.poet-round-end .task-player {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--poet-secondary-text);
+}
+
+.poet-round-end .player-name {
+  font-weight: 600;
+  color: var(--poet-primary-text);
+}
+
+.poet-round-end .task-result {
+  font-weight: 500;
+}
+
+.poet-round-end .task-item.success .task-result {
+  color: #34C759;
+}
+
+.poet-round-end .task-item.failed .task-result {
+  color: #FF3B30;
+}
+
+.poet-round-end .task-points {
+  display: flex;
+  align-items: center;
+}
+
+.poet-round-end .points-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--poet-primary-blue);
+}
+
+.poet-round-end .no-tasks {
+  text-align: center;
+  padding: 40px;
+  color: var(--poet-secondary-text);
+}
+
+/* Current Leaderboard */
+.poet-round-end .current-leaderboard {
+  padding: 0 20px 20px 20px;
+}
+
+.poet-round-end .current-leaderboard h2 {
+  margin: 0 0 16px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--poet-primary-text);
+  letter-spacing: -0.3px;
+}
+
+.poet-round-end .leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.poet-round-end .leaderboard-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--poet-card-background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--poet-border-color);
+  border-radius: var(--poet-border-radius);
+  padding: 16px;
+  box-shadow: var(--poet-shadow-light);
+  transition: var(--poet-transition);
+}
+
+.poet-round-end .leaderboard-item.leader {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 193, 7, 0.05));
+  border-color: rgba(255, 193, 7, 0.3);
+}
+
+.poet-round-end .position {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 122, 255, 0.1);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.poet-round-end .position-number {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--poet-primary-blue);
+}
+
+.poet-round-end .leaderboard-item.leader .position {
+  background: linear-gradient(135deg, #FFD700, #FFC107);
+}
+
+.poet-round-end .leaderboard-item.leader .position-number {
+  color: white;
+}
+
+.poet-round-end .player-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.poet-round-end .player-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.poet-round-end .player-score {
+  font-weight: 600;
+  color: var(--poet-primary-blue);
+}
+
+.poet-round-end .player-breakdown {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--poet-secondary-text);
+}
+
+.poet-round-end .stat-success {
+  color: #34C759;
+  font-weight: 600;
+}
+
+.poet-round-end .stat-failed {
+  color: #FF3B30;
+  font-weight: 600;
+}
+
+.poet-round-end .stat-separator {
+  color: var(--poet-border-color);
+}
+
+/* Round End Actions */
+.poet-round-end .round-end-actions {
+  flex-shrink: 0;
+  padding: 20px;
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--poet-border-color);
+}
+
+.poet-round-end .next-round-btn {
+  width: 100%;
+  padding: 18px;
+  background: var(--poet-primary-blue);
+  color: white;
+  border: none;
+  border-radius: var(--poet-border-radius);
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--poet-transition);
+  letter-spacing: -0.2px;
+}
+
+.poet-round-end .next-round-btn:hover {
+  background: #0051D5;
+  transform: translateY(-1px);
+}
+
+.poet-round-end .next-round-btn:active {
+  transform: scale(0.98);
+}
+
+/* Game Progress */
+.poet-round-end .game-progress {
+  padding: 16px 20px calc(16px + env(safe-area-inset-bottom)) 20px;
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.poet-round-end .progress-info {
+  text-align: center;
+  font-size: 14px;
+  color: var(--poet-secondary-text);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.poet-round-end .progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.poet-round-end .progress-fill {
+  height: 100%;
+  background: var(--poet-primary-blue);
+  transition: width 0.3s ease;
+  border-radius: 3px;
+}
+
+/* ========================================
+   POET END SCREEN (GAME COMPLETED)
+   ======================================== */
+
+.poet-end {
+  max-width: 600px;
+  margin: 0 auto;
+  height: 100vh;
+  height: 100dvh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: var(--poet-primary-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Game End Header */
+.poet-end .game-end-header {
+  flex-shrink: 0;
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: calc(24px + env(safe-area-inset-top)) 20px 24px 20px;
+  text-align: center;
+}
+
+.poet-end .game-end-header h1 {
+  margin: 0 0 20px 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--poet-primary-text);
+  letter-spacing: -1px;
+}
+
+/* Winner Announcement */
+.poet-end .winner-announcement {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 193, 7, 0.05));
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: var(--poet-border-radius-large);
+  padding: 32px;
+  box-shadow: var(--poet-shadow-medium);
+  position: relative;
+  overflow: hidden;
+}
+
+.poet-end .winner-crown {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #FFD700, #FFC107);
+  border-radius: 50%;
+  margin: 0 auto 16px auto;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(255, 193, 7, 0.3);
+}
+
+.poet-end .winner-crown::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.9;
+}
+
+.poet-end .winner-announcement h2 {
+  margin: 0 0 12px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--poet-primary-text);
+  letter-spacing: -0.5px;
+}
+
+.poet-end .winner-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--poet-primary-blue);
+  margin-bottom: 8px;
+  letter-spacing: -0.7px;
+}
+
+.poet-end .winner-score {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--poet-secondary-text);
+}
+
+.poet-end .no-winner {
+  background: var(--poet-card-background);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid var(--poet-border-color);
+  border-radius: var(--poet-border-radius-large);
+  padding: 32px;
+  box-shadow: var(--poet-shadow-light);
+}
+
+.poet-end .no-winner h2 {
+  margin: 0 0 12px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--poet-primary-text);
+}
+
+.poet-end .no-winner p {
+  margin: 0;
+  font-size: 16px;
+  color: var(--poet-secondary-text);
+}
+
+/* Final Leaderboard */
+.poet-end .final-leaderboard {
+  padding: 24px 20px;
+}
+
+.poet-end .final-leaderboard h2 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--poet-primary-text);
+  letter-spacing: -0.3px;
+}
+
+.poet-end .final-leaderboard-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--poet-card-background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--poet-border-color);
+  border-radius: var(--poet-border-radius);
+  padding: 20px;
+  margin-bottom: 12px;
+  box-shadow: var(--poet-shadow-light);
+  transition: var(--poet-transition);
+}
+
+.poet-end .final-leaderboard-item.winner {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 193, 7, 0.05));
+  border-color: rgba(255, 193, 7, 0.3);
+  box-shadow: var(--poet-shadow-medium);
+}
+
+.poet-end .position-badge {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.poet-end .position-badge.gold {
+  background: linear-gradient(135deg, #FFD700, #FFC107);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+}
+
+.poet-end .position-badge.silver {
+  background: linear-gradient(135deg, #C0C0C0, #A8A8A8);
+  color: white;
+  box-shadow: 0 4px 15px rgba(192, 192, 192, 0.3);
+}
+
+.poet-end .position-badge.bronze {
+  background: linear-gradient(135deg, #CD7F32, #A0522D);
+  color: white;
+  box-shadow: 0 4px 15px rgba(205, 127, 50, 0.3);
+}
+
+.poet-end .position-badge.regular {
+  background: rgba(0, 122, 255, 0.1);
+  color: var(--poet-primary-blue);
+  border: 2px solid rgba(0, 122, 255, 0.2);
+}
+
+.poet-end .player-details {
+  flex: 1;
+}
+
+.poet-end .player-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--poet-primary-text);
+  margin-bottom: 6px;
+  letter-spacing: -0.2px;
+}
+
+.poet-end .player-stats {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+  color: var(--poet-secondary-text);
+}
+
+.poet-end .player-stats .stat strong {
+  color: var(--poet-primary-blue);
+  font-weight: 600;
+}
+
+/* Special Awards */
+.poet-end .special-awards {
+  padding: 0 20px 24px 20px;
+}
+
+.poet-end .special-awards h2 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--poet-primary-text);
+  letter-spacing: -0.3px;
+}
+
+.poet-end .awards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.poet-end .award-card {
+  background: var(--poet-card-background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--poet-border-color);
+  border-radius: var(--poet-border-radius);
+  padding: 20px;
+  box-shadow: var(--poet-shadow-light);
+  transition: var(--poet-transition);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.poet-end .award-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--poet-shadow-medium);
+}
+
+.poet-end .award-indicator {
+  width: 6px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 0 3px 3px 0;
+}
+
+.poet-end .award-indicator.success {
+  background: #34C759;
+}
+
+.poet-end .award-indicator.performance {
+  background: var(--poet-primary-blue);
+}
+
+.poet-end .award-indicator.overall {
+  background: #FF9500;
+}
+
+.poet-end .award-content {
+  flex: 1;
+  padding-left: 12px;
+}
+
+.poet-end .award-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--poet-primary-text);
+  margin-bottom: 6px;
+  letter-spacing: -0.1px;
+}
+
+.poet-end .award-recipient {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--poet-primary-blue);
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
+}
+
+.poet-end .award-detail {
+  font-size: 14px;
+  color: var(--poet-secondary-text);
+  font-weight: 500;
+}
+
+/* Game Statistics */
+.poet-end .game-statistics {
+  padding: 0 20px 24px 20px;
+}
+
+.poet-end .game-statistics h2 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--poet-primary-text);
+  letter-spacing: -0.3px;
+}
+
+.poet-end .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+}
+
+.poet-end .stat-item {
+  background: var(--poet-card-background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--poet-border-color);
+  border-radius: var(--poet-border-radius);
+  padding: 20px;
+  text-align: center;
+  box-shadow: var(--poet-shadow-light);
+  transition: var(--poet-transition);
+}
+
+.poet-end .stat-item:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--poet-shadow-medium);
+}
+
+.poet-end .stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--poet-primary-blue);
+  line-height: 1;
+  margin-bottom: 8px;
+  letter-spacing: -0.8px;
+}
+
+.poet-end .stat-label {
+  font-size: 14px;
+  color: var(--poet-secondary-text);
+  font-weight: 500;
+  letter-spacing: -0.1px;
+}
+
+/* Game End Actions */
+.poet-end .game-end-actions {
+  padding: 20px;
+  flex-shrink: 0;
+}
+
+.poet-end .new-game-btn {
+  width: 100%;
+  padding: 18px;
+  background: var(--poet-primary-blue);
+  color: white;
+  border: none;
+  border-radius: var(--poet-border-radius);
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--poet-transition);
+  letter-spacing: -0.2px;
+}
+
+.poet-end .new-game-btn:hover {
+  background: #0051D5;
+  transform: translateY(-1px);
+}
+
+.poet-end .new-game-btn:active {
+  transform: scale(0.98);
+}
+
+/* Motivational Message */
+.poet-end .motivational-message {
+  padding: 24px 20px calc(24px + env(safe-area-inset-bottom)) 20px;
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.poet-end .motivational-message p {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  color: var(--poet-secondary-text);
+  line-height: 1.5;
+  letter-spacing: -0.1px;
+}
+
+.poet-end .motivational-message .quote {
+  font-style: italic;
+  color: var(--poet-primary-blue);
+  font-weight: 500;
+  font-size: 15px;
+  margin: 0;
+}
+
+/* Responsive Design for PoetEnd */
+@media (max-width: 768px) {
+  .poet-end .awards-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .poet-end .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .poet-end .game-end-header {
+    padding: calc(20px + env(safe-area-inset-top)) 16px 20px 16px;
+  }
+  
+  .poet-end .final-leaderboard,
+  .poet-end .special-awards,
+  .poet-end .game-statistics {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .poet-end .winner-announcement,
+  .poet-end .no-winner {
+    padding: 24px;
+  }
+  
+  .poet-end .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
