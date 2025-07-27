@@ -6,5 +6,17 @@ services:
     staticPublishPath: ./dist
     routes:
       - type: rewrite
-        source: /*
-        destination: /index.html
+        source: "/mafia"
+        destination: "/index.html"
+      - type: rewrite
+        source: "/spy"
+        destination: "/index.html"
+      - type: rewrite
+        source: "/headwords"
+        destination: "/index.html"
+      - type: rewrite
+        source: "/player/*"
+        destination: "/index.html"
+      - type: rewrite
+        source: "/*"
+        destination: "/index.html"
