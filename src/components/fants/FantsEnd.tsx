@@ -1,5 +1,6 @@
 import React from 'react';
 import type { FantGameState } from '../../types/fants';
+import './Fants.css';
 
 interface FantsEndProps {
   gameState: FantGameState;
@@ -33,7 +34,6 @@ export const FantsEnd: React.FC<FantsEndProps> = ({ gameState, onNewGame }) => {
       <div className="winner-section">
         {isDrawn ? (
           <div className="draw-card">
-            <div className="draw-icon">🤝</div>
             <h2>Ничья!</h2>
             <h3 className="draw-description">
               {winners.length} игрока показали одинаковый результат
@@ -113,7 +113,7 @@ export const FantsEnd: React.FC<FantsEndProps> = ({ gameState, onNewGame }) => {
                 className={`result-item ${isWinner ? 'winner-result' : ''}`}
               >
                 <div className="result-place">
-                  {isWinner ? (isDrawn ? '🤝' : '🏆') : `${index + 1}.`}
+                  {isWinner ? (isDrawn ? '=' : '1') : `${index + 1}`}
                 </div>
               <div className="result-avatar">
                 {player.name.charAt(0).toUpperCase()}
@@ -121,9 +121,9 @@ export const FantsEnd: React.FC<FantsEndProps> = ({ gameState, onNewGame }) => {
               <div className="result-info">
                 <span className="result-name">{player.name}</span>
                 <div className="result-stats">
-                  <span className="result-stat completed">✓ {player.completedFants}</span>
+                  <span className="result-stat completed">{player.completedFants} выполнено</span>
                   {gameState.settings.allowSkip && (
-                    <span className="result-stat skipped">⊘ {player.skippedFants}</span>
+                    <span className="result-stat skipped">{player.skippedFants} пропущено</span>
                   )}
                 </div>
               </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import type { FantGameState } from '../../types/fants';
 import { CATEGORY_INFO, DIFFICULTY_INFO } from '../../types/fants';
+import './Fants.css';
 
 interface FantsGameProps {
   gameState: FantGameState;
@@ -64,7 +65,6 @@ export const FantsGame: React.FC<FantsGameProps> = ({
             className="fant-category"
             style={{ '--category-color': categoryInfo.color } as React.CSSProperties}
           >
-            <span className="category-emoji">{categoryInfo.emoji}</span>
             <span className="category-name">{categoryInfo.name}</span>
           </div>
           <div 
@@ -111,9 +111,9 @@ export const FantsGame: React.FC<FantsGameProps> = ({
               <div className="player-summary-info">
                 <span className="player-summary-name">{player.name}</span>
                 <div className="player-stats">
-                  <span className="stat completed">✓ {player.completedFants}</span>
+                  <span className="stat completed">{player.completedFants} выполнено</span>
                   {gameState.settings.allowSkip && (
-                    <span className="stat skipped">⊘ {player.skippedFants}</span>
+                    <span className="stat skipped">{player.skippedFants} пропущено</span>
                   )}
                 </div>
               </div>

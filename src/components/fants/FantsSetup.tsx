@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { FantPlayer, FantSettings, FantCategory, FantDifficulty } from '../../types/fants';
 import { DEFAULT_FANT_SETTINGS, CATEGORY_INFO, DIFFICULTY_INFO } from '../../types/fants';
+import './Fants.css';
 
 interface FantsSetupProps {
   onStartGame: (players: FantPlayer[], settings: FantSettings) => void;
@@ -10,7 +11,6 @@ export const FantsSetup: React.FC<FantsSetupProps> = ({ onStartGame }) => {
   const [players, setPlayers] = useState<FantPlayer[]>([]);
   const [newPlayerName, setNewPlayerName] = useState('');
   const [settings, setSettings] = useState<FantSettings>(DEFAULT_FANT_SETTINGS);
-  const [showSettings, setShowSettings] = useState(false);
 
   const addPlayer = () => {
     if (newPlayerName.trim() && players.length < 8) {
@@ -101,94 +101,62 @@ export const FantsSetup: React.FC<FantsSetupProps> = ({ onStartGame }) => {
         )}
       </div>
 
-      <div className="game-settings">
-        <button
-          className="settings-toggle"
-          onClick={() => setShowSettings(true)}
-          type="button"
-        >
-          <span>⚙️ Настройки игры</span>
-        </button>
+      <div className="setting-section">
+        <h3>Категории заданий</h3>
+        <div className="categories-grid">
+          {(Object.keys(CATEGORY_INFO) as FantCategory[]).map(category => (
+            <button
+              key={category}
+              className={`category-option ${settings.categories.includes(category) ? 'active' : ''}`}
+              onClick={() => toggleCategory(category)}
+              type="button"
+            >
+              <span className="category-name">{CATEGORY_INFO[category].name}</span>
+            </button>
+          ))}
+        </div>
+      </div>
 
-        {showSettings && (
-          <div className="modal-overlay" onClick={() => setShowSettings(false)}>
-            <div className="modal-content settings-modal" onClick={(e) => e.stopPropagation()}>
-              <div className="modal-header">
-                <h3>Настройки игры</h3>
-                <button
-                  className="modal-close"
-                  onClick={() => setShowSettings(false)}
-                  type="button"
-                >
-                  ×
-                </button>
-              </div>
-              <div className="modal-body settings-modal-body">
-            <div className="setting-group">
-              <h3>Категории заданий</h3>
-              <div className="categories-grid">
-                {(Object.keys(CATEGORY_INFO) as FantCategory[]).map(category => (
-                  <button
-                    key={category}
-                    className={`category-option ${settings.categories.includes(category) ? 'active' : ''}`}
-                    onClick={() => toggleCategory(category)}
-                    style={{ '--category-color': CATEGORY_INFO[category].color } as React.CSSProperties}
-                    type="button"
-                  >
-                    <span className="category-emoji">{CATEGORY_INFO[category].emoji}</span>
-                    <span className="category-name">{CATEGORY_INFO[category].name}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
+      <div className="setting-section">
+        <h3>Сложность</h3>
+        <div className="difficulty-options">
+          {(Object.keys(DIFFICULTY_INFO) as FantDifficulty[]).map(difficulty => (
+            <button
+              key={difficulty}
+              className={`difficulty-option ${settings.difficulty.includes(difficulty) ? 'active' : ''}`}
+              onClick={() => toggleDifficulty(difficulty)}
+              type="button"
+            >
+              {DIFFICULTY_INFO[difficulty].name}
+            </button>
+          ))}
+        </div>
+      </div>
 
-            <div className="setting-group">
-              <h3>Сложность</h3>
-              <div className="difficulty-options">
-                {(Object.keys(DIFFICULTY_INFO) as FantDifficulty[]).map(difficulty => (
-                  <button
-                    key={difficulty}
-                    className={`difficulty-option ${settings.difficulty.includes(difficulty) ? 'active' : ''}`}
-                    onClick={() => toggleDifficulty(difficulty)}
-                    style={{ '--difficulty-color': DIFFICULTY_INFO[difficulty].color } as React.CSSProperties}
-                    type="button"
-                  >
-                    {DIFFICULTY_INFO[difficulty].name}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="setting-group">
-              <h3>Фантов на игрока</h3>
-              <div className="fants-per-player">
-                {[5, 10, 15, 20, 25, 30].map(count => (
-                  <button
-                    key={count}
-                    className={`count-option ${settings.fantsPerPlayer === count ? 'active' : ''}`}
-                    onClick={() => setSettings(prev => ({ ...prev, fantsPerPlayer: count }))}
-                    type="button"
-                  >
-                    {count}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="setting-group">
-              <label className="checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={settings.allowSkip}
-                  onChange={(e) => setSettings(prev => ({ ...prev, allowSkip: e.target.checked }))}
-                />
-                <span>Разрешить пропускать задания</span>
-              </label>
-            </div>
-              </div>
-            </div>
-          </div>
-        )}
+      <div className="setting-section">
+        <h3>Настройки игры</h3>
+        <div className="setting-item">
+          <span className="setting-label">Фантов на игрока</span>
+          <input
+            type="number"
+            min="5"
+            max="30"
+            value={settings.fantsPerPlayer}
+            onChange={(e) => setSettings(prev => ({ ...prev, fantsPerPlayer: parseInt(e.target.value) || 10 }))}
+            className="setting-input"
+          />
+        </div>
+        <div className="setting-item">
+          <span className="setting-label">Разрешить пропускать задания</span>
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={settings.allowSkip}
+              onChange={(e) => setSettings(prev => ({ ...prev, allowSkip: e.target.checked }))}
+            />
+            <span className="slider"></span>
+          </label>
+        </div>
       </div>
 
       <button
