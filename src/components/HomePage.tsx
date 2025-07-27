@@ -62,6 +62,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onSelectGame }) => {
       id: 'adult-fants',
       title: 'Взрослые Фанты 18+',
       description: 'Пикантные задания для взрослой компании'
+    },
+    {
+      id: 'secret-agent',
+      title: 'Тайный агент',
+      description: 'Секретные миссии для вечеринки'
     }
   ];
 
@@ -87,10 +92,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onSelectGame }) => {
           >
             <h3>{game.title}</h3>
             <p>{game.description}</p>
-            {(game.id === 'alias' || game.id === 'fants' || game.id === 'krocodil' || game.id === 'this-or-that' || game.id === 'poet' || game.id === 'yersh') && <span className="available-badge">Доступно</span>}
-            {game.id === 'this-or-that' && <span className="adult-badge">18+</span>}
-            {(game.id === 'mafia' || game.id === 'spy' || game.id === 'headwords' || game.id === 'evening-role' || game.id === 'adult-fants') && <span className="available-badge">Доступно</span>}
-            {(game.id === 'evening-role' || game.id === 'adult-fants') && <span className="adult-badge">18+</span>}
+            {(game.id === 'evening-role' || game.id === 'adult-fants' || game.id === 'this-or-that' || game.id === 'secret-agent') && <span className="available-badge" >18+</span>}
           </button>
         ))}
       </div>

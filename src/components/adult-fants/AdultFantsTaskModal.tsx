@@ -25,7 +25,7 @@ export const AdultFantsTaskModal: React.FC<AdultFantsTaskModalProps> = ({
     if (isOpen) {
       // Запускаем анимацию появления
       setTimeout(() => setShowAnimation(true), 100);
-      
+
       // Если есть таймер, инициализируем его
       if (task.hasTimer && task.timerDuration) {
         setTimeLeft(task.timerDuration);
@@ -39,7 +39,7 @@ export const AdultFantsTaskModal: React.FC<AdultFantsTaskModalProps> = ({
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
-    
+
     if (isTimerRunning && timeLeft !== null && timeLeft > 0) {
       interval = setInterval(() => {
         setTimeLeft((prev) => {
@@ -78,7 +78,7 @@ export const AdultFantsTaskModal: React.FC<AdultFantsTaskModalProps> = ({
   const getDifficultyColor = (difficulty: string): string => {
     switch (difficulty) {
       case 'easy': return '#4CAF50';
-      case 'medium': return '#FF9800'; 
+      case 'medium': return '#FF9800';
       case 'hard': return '#F44336';
       default: return '#2196F3';
     }
@@ -101,7 +101,7 @@ export const AdultFantsTaskModal: React.FC<AdultFantsTaskModalProps> = ({
     <div className={`adult-fants-modal-overlay ${showAnimation ? 'show' : ''}`}>
       <div className={`adult-fants-modal ${showAnimation ? 'show' : ''}`}>
         <div className="modal-header">
-          <div 
+          <div
             className="selected-player"
             style={{ backgroundColor: player.color }}
           >
@@ -118,7 +118,7 @@ export const AdultFantsTaskModal: React.FC<AdultFantsTaskModalProps> = ({
         <div className="modal-content">
           <div className="task-card">
             <div className="task-header">
-              <div 
+              <div
                 className="difficulty-badge"
                 style={{ backgroundColor: getDifficultyColor(task.difficulty) }}
               >
@@ -146,19 +146,19 @@ export const AdultFantsTaskModal: React.FC<AdultFantsTaskModalProps> = ({
 
                 <div className="timer-controls">
                   {!isTimerRunning && timeLeft !== 0 ? (
-                    <button 
+                    <button
                       className="timer-btn start"
                       onClick={startTimer}
                       disabled={timeLeft === 0}
                     >
-                      ▶️ Запустить таймер
+                      ▶
                     </button>
                   ) : isTimerRunning ? (
-                    <button 
+                    <button
                       className="timer-btn stop"
                       onClick={stopTimer}
                     >
-                      ⏸️ Остановить таймер
+                      ⏸
                     </button>
                   ) : (
                     <div className="timer-finished">
@@ -169,10 +169,10 @@ export const AdultFantsTaskModal: React.FC<AdultFantsTaskModalProps> = ({
 
                 {timeLeft !== null && timeLeft > 0 && (
                   <div className="timer-progress">
-                    <div 
+                    <div
                       className="progress-bar"
-                      style={{ 
-                        width: `${((task.timerDuration - timeLeft) / task.timerDuration) * 100}%` 
+                      style={{
+                        width: `${((task.timerDuration - timeLeft) / task.timerDuration) * 100}%`
                       }}
                     ></div>
                   </div>
@@ -187,14 +187,14 @@ export const AdultFantsTaskModal: React.FC<AdultFantsTaskModalProps> = ({
         </div>
 
         <div className="modal-actions">
-          <button 
+          <button
             className="action-btn skip"
             onClick={onSkip}
           >
             😅 Пропустить
           </button>
-          
-          <button 
+
+          <button
             className="action-btn complete"
             onClick={onComplete}
           >
@@ -204,7 +204,7 @@ export const AdultFantsTaskModal: React.FC<AdultFantsTaskModalProps> = ({
 
         <div className="modal-footer">
           <div className="disclaimer">
-            🔞 Игра предназначена для лиц старше 18 лет. 
+            🔞 Игра предназначена для лиц старше 18 лет.
             Играйте с уважением друг к другу!
           </div>
         </div>

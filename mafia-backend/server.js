@@ -1433,6 +1433,238 @@ app.get('/api/evening-role/status', (req, res) => {
   }
 });
 
+// === ЭНДПОИНТЫ ДЛЯ ИГРЫ ТАЙНЫЙ АГЕНТ ===
+
+// Миссии для прикрытия (аналогично заданиям из Evening Role)
+const secretAgentCoverMissions = [
+  // СОЦИАЛЬНЫЕ ВЗАИМОДЕЙСТВИЯ
+  { id: 'cover_social_1', type: 'cover', title: 'Тамада-провокатор', description: 'Всегда перехватывай инициативу при тостах и предлагай выпить первым', category: 'social', difficulty: 'medium' },
+  { id: 'cover_social_2', type: 'cover', title: 'Комплимент-машина', description: 'Делай комплимент каждому новому человеку, с которым начинаешь разговор', category: 'social', difficulty: 'easy' },
+  { id: 'cover_social_3', type: 'cover', title: 'Миротворец', description: 'При любом споре или разногласии предлагай компромисс и меняй тему', category: 'social', difficulty: 'medium' },
+  { id: 'cover_social_4', type: 'cover', title: 'Фотограф-энтузиаст', description: 'Постоянно предлагай сделать фото, особенно групповые снимки', category: 'social', difficulty: 'easy' },
+  { id: 'cover_social_5', type: 'cover', title: 'Знакомец универсальный', description: 'Представляй людей друг другу, если видишь что они не знакомы', category: 'social', difficulty: 'easy' },
+  { id: 'cover_social_6', type: 'cover', title: 'Историк-рассказчик', description: 'В каждом разговоре рассказывай интересную историю из жизни', category: 'social', difficulty: 'medium' },
+  
+  // СВЯЗАННЫЕ С НАПИТКАМИ
+  { id: 'cover_drinks_1', type: 'cover', title: 'Уличный курильщик', description: 'При каждом упоминании слова "выпьем" выходи покурить или подышать на балкон', category: 'drinks', difficulty: 'medium' },
+  { id: 'cover_drinks_2', type: 'cover', title: 'Бармен-консультант', description: 'Предлагай всем что выпить и рассказывай о напитках', category: 'drinks', difficulty: 'easy' },
+  { id: 'cover_drinks_3', type: 'cover', title: 'Водохлёб', description: 'Постоянно пей воду и предлагай другим не забывать пить воду', category: 'drinks', difficulty: 'easy' },
+  { id: 'cover_drinks_4', type: 'cover', title: 'Чокальщик', description: 'Всегда чокайся со всеми присутствующими при любом тосте', category: 'drinks', difficulty: 'easy' },
+  
+  // РАЗГОВОРНЫЕ ПРИВЫЧКИ
+  { id: 'cover_conversation_1', type: 'cover', title: 'Переводчик настроения', description: 'Постоянно говори "Я вижу ты в хорошем настроении" или наоборот', category: 'conversation', difficulty: 'easy' },
+  { id: 'cover_conversation_2', type: 'cover', title: 'Эхо-человек', description: 'Повторяй последние слова собеседника в виде вопроса', category: 'conversation', difficulty: 'medium' },
+  { id: 'cover_conversation_3', type: 'cover', title: 'Психолог-любитель', description: 'Анализируй поведение людей и делись наблюдениями', category: 'conversation', difficulty: 'medium' },
+  
+  // ДВИЖЕНИЯ И ЖЕСТЫ
+  { id: 'cover_movement_1', type: 'cover', title: 'Танцевальная машина', description: 'Качайся в такт любой музыке, даже фоновой', category: 'movement', difficulty: 'easy' },
+  { id: 'cover_movement_2', type: 'cover', title: 'Обнимашка', description: 'Обнимай людей при встрече и прощании (если уместно)', category: 'movement', difficulty: 'easy' },
+  { id: 'cover_movement_3', type: 'cover', title: 'Дирижёр эмоций', description: 'Активно жестикулируй и используй мимику при разговоре', category: 'movement', difficulty: 'easy' }
+];
+
+// Главные миссии
+const secretAgentMainMissions = [
+  // ВЗАИМОДЕЙСТВИЕ С ЛЮДЬМИ
+  { id: 'main_interaction_1', type: 'main', title: 'Танец равенства', description: 'Станцуй медленный танец с человеком своего пола', category: 'interaction', difficulty: 'medium', timeLimit: 5 },
+  { id: 'main_interaction_2', type: 'main', title: 'Объятия пятёрки', description: 'Обними 5 разных людей в течение 5 минут', category: 'interaction', difficulty: 'easy', timeLimit: 5 },
+  { id: 'main_interaction_3', type: 'main', title: 'Массаж-цепочка', description: 'Сделай массаж плеч трём разным людям', category: 'interaction', difficulty: 'medium', timeLimit: 5 },
+  { id: 'main_interaction_4', type: 'main', title: 'Комплимент каждому', description: 'Сделай персональный комплимент каждому присутствующему', category: 'interaction', difficulty: 'medium', timeLimit: 5 },
+  
+  // НЕБОЛЬШИЕ ВЫСТУПЛЕНИЯ
+  { id: 'main_performance_1', type: 'main', title: 'Стенд-ап комик', description: 'Расскажи смешную историю, чтобы все засмеялись', category: 'performance', difficulty: 'medium', timeLimit: 5 },
+  { id: 'main_performance_2', type: 'main', title: 'Певец настроения', description: 'Спой куплет любимой песни компании', category: 'performance', difficulty: 'medium', timeLimit: 5 },
+  { id: 'main_performance_3', type: 'main', title: 'Танцор-импровизатор', description: 'Станцуй танец под любую музыку минимум 2 минуты', category: 'performance', difficulty: 'medium', timeLimit: 5 },
+  
+  // СБОР ЧЕГО-ЛИБО
+  { id: 'main_collection_1', type: 'main', title: 'Коллекционер улыбок', description: 'Сфотографируй улыбку каждого присутствующего', category: 'collection', difficulty: 'easy', timeLimit: 5 },
+  { id: 'main_collection_2', type: 'main', title: 'Собиратель секретов', description: 'Узнай один интересный факт о каждом человеке', category: 'collection', difficulty: 'medium', timeLimit: 5 },
+  
+  // ОБЩЕНИЕ
+  { id: 'main_communication_1', type: 'main', title: 'Переводчик настроений', description: 'Угадай и озвучь настроение каждого человека', category: 'communication', difficulty: 'medium', timeLimit: 5 },
+  { id: 'main_communication_2', type: 'main', title: 'Предсказатель будущего', description: 'Сделай позитивное предсказание на будущее каждому', category: 'communication', difficulty: 'medium', timeLimit: 5 }
+];
+
+// Создание структуры игры Тайный агент
+function createSecretAgentGame(roomId, playerCount, gameDuration, allowHostParticipation) {
+  return {
+    id: roomId,
+    type: 'secret-agent',
+    playerCount: playerCount,
+    gameDuration: gameDuration,
+    allowHostParticipation: allowHostParticipation,
+    assignedMissions: new Map(), // userId -> {cover: mission, main: mission}
+    usedCoverMissionIds: new Set(),
+    usedMainMissionIds: new Set(),
+    createdAt: new Date()
+  };
+}
+
+// Функция для получения случайной миссии прикрытия
+function getRandomCoverMission(game) {
+  const availableMissions = secretAgentCoverMissions.filter(mission => 
+    !game.usedCoverMissionIds.has(mission.id)
+  );
+  
+  if (availableMissions.length === 0) {
+    // Если все миссии использованы, сбрасываем и начинаем заново
+    game.usedCoverMissionIds.clear();
+    return secretAgentCoverMissions[Math.floor(Math.random() * secretAgentCoverMissions.length)];
+  }
+  
+  const randomIndex = Math.floor(Math.random() * availableMissions.length);
+  const selectedMission = availableMissions[randomIndex];
+  game.usedCoverMissionIds.add(selectedMission.id);
+  
+  return selectedMission;
+}
+
+// Функция для получения случайной главной миссии
+function getRandomMainMission(game) {
+  const availableMissions = secretAgentMainMissions.filter(mission => 
+    !game.usedMainMissionIds.has(mission.id)
+  );
+  
+  if (availableMissions.length === 0) {
+    // Если все миссии использованы, сбрасываем и начинаем заново
+    game.usedMainMissionIds.clear();
+    return secretAgentMainMissions[Math.floor(Math.random() * secretAgentMainMissions.length)];
+  }
+  
+  const randomIndex = Math.floor(Math.random() * availableMissions.length);
+  const selectedMission = availableMissions[randomIndex];
+  game.usedMainMissionIds.add(selectedMission.id);
+  
+  return selectedMission;
+}
+
+// Создать новую игру Тайный агент
+app.post('/api/secret-agent/create-game', (req, res) => {
+  try {
+    const { roomId, playerCount, gameDuration, allowHostParticipation } = req.body;
+    
+    if (!roomId || !playerCount || !gameDuration) {
+      return res.status(400).json({ 
+        error: 'Требуются параметры: roomId, playerCount, gameDuration' 
+      });
+    }
+    
+    if (playerCount < 3 || playerCount > 15) {
+      return res.status(400).json({ 
+        error: 'Количество игроков должно быть от 3 до 15' 
+      });
+    }
+    
+    // Создаем игру
+    const secretAgentGame = createSecretAgentGame(roomId, playerCount, gameDuration, allowHostParticipation);
+    
+    // Сохраняем игру в активных играх
+    activeGames.set(roomId, secretAgentGame);
+    
+    console.log(`✅ Создана игра "Тайный агент" с ID: ${roomId}, игроков: ${playerCount}`);
+    
+    res.json({
+      success: true,
+      roomId: roomId,
+      message: 'Игра "Тайный агент" создана успешно'
+    });
+    
+  } catch (error) {
+    console.error('Ошибка создания игры "Тайный агент":', error);
+    res.status(500).json({ 
+      error: 'Ошибка при создании игры' 
+    });
+  }
+});
+
+// Получить миссии для игрока
+app.get('/api/secret-agent/get-missions', (req, res) => {
+  try {
+    const { roomId, userId, playerName } = req.query;
+    
+    if (!roomId || !userId) {
+      return res.status(400).json({ 
+        error: 'Требуются параметры: roomId, userId' 
+      });
+    }
+    
+    const game = activeGames.get(roomId);
+    if (!game || game.type !== 'secret-agent') {
+      return res.status(404).json({ 
+        error: 'Игра не найдена' 
+      });
+    }
+    
+    // Проверяем, есть ли уже миссии для этого пользователя
+    if (game.assignedMissions.has(userId)) {
+      const missions = game.assignedMissions.get(userId);
+      return res.json({
+        coverMission: missions.cover,
+        mainMission: missions.main,
+        playerName: missions.playerName || playerName
+      });
+    }
+    
+    // Генерируем новые миссии
+    const coverMission = getRandomCoverMission(game);
+    const mainMission = getRandomMainMission(game);
+    
+    // Сохраняем миссии для пользователя
+    game.assignedMissions.set(userId, {
+      cover: coverMission,
+      main: mainMission,
+      playerName: playerName || 'Агент',
+      assignedAt: new Date()
+    });
+    
+    console.log(`🕵️ Игрок ${playerName} (${userId}) получил миссии в комнате ${roomId}`);
+    
+    res.json({
+      coverMission: coverMission,
+      mainMission: mainMission,
+      playerName: playerName
+    });
+    
+  } catch (error) {
+    console.error('Ошибка получения миссий:', error);
+    res.status(500).json({ 
+      error: 'Ошибка при получении миссий' 
+    });
+  }
+});
+
+// Получить статус игры
+app.get('/api/secret-agent/status/:roomId', (req, res) => {
+  try {
+    const { roomId } = req.params;
+    
+    const game = activeGames.get(roomId);
+    if (!game || game.type !== 'secret-agent') {
+      return res.status(404).json({ 
+        error: 'Игра не найдена' 
+      });
+    }
+    
+    res.json({
+      hasActiveGame: true,
+      roomId: roomId,
+      playerCount: game.playerCount,
+      gameDuration: game.gameDuration,
+      allowHostParticipation: game.allowHostParticipation,
+      assignedMissionsCount: game.assignedMissions.size,
+      usedCoverMissionsCount: game.usedCoverMissionIds.size,
+      usedMainMissionsCount: game.usedMainMissionIds.size,
+      totalCoverMissions: secretAgentCoverMissions.length,
+      totalMainMissions: secretAgentMainMissions.length,
+      createdAt: game.createdAt
+    });
+    
+  } catch (error) {
+    res.status(500).json({ 
+      error: 'Ошибка при получении статуса игры' 
+    });
+  }
+});
+
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
@@ -1460,4 +1692,8 @@ app.listen(PORT, () => {
   console.log(`   POST /api/evening-role/change-task - Сменить роль (один раз)`);
   console.log(`   GET  /api/evening-role/get-group-task - Получить групповое задание`);
   console.log(`   GET  /api/evening-role/status - Статус игры`);
+  console.log(`   === ТАЙНЫЙ АГЕНТ ===`);
+  console.log(`   POST /api/secret-agent/create-game - Создать игру "Тайный агент"`);
+  console.log(`   GET  /api/secret-agent/get-missions - Получить миссии`);
+  console.log(`   GET  /api/secret-agent/status/:roomId - Статус игры`);
 });

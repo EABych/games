@@ -1593,7 +1593,7 @@ body.game-mode {
   position: absolute;
   top: 20px;
   right: 20px;
-  background: #34C759;
+  background: rgba(255, 59, 48, 0.8);
   color: white;
   font-size: 10px;
   font-weight: 700;
@@ -1601,7 +1601,7 @@ body.game-mode {
   border-radius: 20px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  box-shadow: 0 2px 8px rgba(52, 199, 89, 0.3);
+  box-shadow: 0 2px 8px rgba(122, 31, 25, 0.3);
   z-index: 2;
 }
 
