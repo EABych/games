@@ -502,12 +502,11 @@
 
 .wheel-sector {
     position: absolute;
-    width: 50%;
-    height: 50%;
-    top: 50%;
-    left: 50%;
-    transform-origin: 0 0;
-    clip-path: polygon(0 0, 100% 0, 100% 100%);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: center center;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
@@ -545,9 +544,9 @@
 
 .sector-content {
     position: absolute;
-    top: 5%;
-    left: 29%;
-    transform: rotate(26deg);
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
     color: white;
     font-weight: var(--adult-font-weight-bold);
     font-size: 0.9rem;
@@ -556,7 +555,8 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 80px;
+    max-width: 120px;
+    text-align: center;
 }
 
 
