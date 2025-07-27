@@ -47,7 +47,7 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
     const targetAngle = sectorStartAngle + (sectorAngle / 2);
     
     // Добавляем несколько полных оборотов для эффекта вращения
-    const spins = 4 + Math.random() * 3; // 4-7 оборотов
+    const spins = 2 + Math.random() * 2; // 2-4 оборота (меньше чтоб протестировать)
     const finalAngle = spins * 360 + targetAngle;
 
     console.log(`Выбран игрок ${randomPlayerIndex} (${selectedPlayer.name})`);
@@ -55,6 +55,10 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
     console.log(`Целевой угол: ${targetAngle}°`);
     console.log(`Количество оборотов: ${spins}`);
     console.log(`Финальный угол: ${finalAngle}°`);
+    
+    // ТЕСТ: простая анимация на 90 градусов
+    const testAngle = 90;
+    console.log(`ТЕСТ: будем анимировать простой поворот на ${testAngle}°`);
 
     if (arrowRef.current) {
       console.log('Стрелка найдена, начинаем анимацию...');
@@ -68,15 +72,16 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
       // Принудительный reflow для применения изменений
       arrowRef.current.offsetHeight;
       
-      // Затем запускаем анимацию
-      requestAnimationFrame(() => {
+      // Затем запускаем анимацию с задержкой
+      setTimeout(() => {
         if (arrowRef.current) {
-          console.log('Запускаем анимацию к углу:', finalAngle);
-          arrowRef.current.style.transition = 'transform 4s cubic-bezier(0.25, 0.1, 0.25, 1)';
-          arrowRef.current.style.transform = `translate(-50%, -50%) rotate(${finalAngle}deg)`;
+          console.log('Запускаем ТЕСТОВУЮ анимацию к углу:', testAngle);
+          arrowRef.current.style.transition = 'transform 2s ease-in-out';
+          arrowRef.current.style.transform = `translate(-50%, -50%) rotate(${testAngle}deg)`;
           console.log('Новый transform:', arrowRef.current.style.transform);
+          console.log('Transition:', arrowRef.current.style.transition);
         }
-      });
+      }, 100);
     } else {
       console.log('ERROR: Стрелка не найдена!');
     }
@@ -132,7 +137,6 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
           <div ref={wheelRef} className="wheel">
             {players.map((player, index) => {
               const rotation = index * sectorAngle;
-              console.log(`Сектор ${index} (${player.name}): поворот ${rotation}°`);
               return (
                 <div
                   key={player.id}
