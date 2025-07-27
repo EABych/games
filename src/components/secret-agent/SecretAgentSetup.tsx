@@ -23,13 +23,13 @@ export const SecretAgentSetup: React.FC<SecretAgentSetupProps> = ({ onStartGame 
   return (
     <div className="secret-agent-setup">
       <div className="setup-header">
-        <div className="game-icon">🕵️</div>
+        {/* Removed emoji icon */}
         <h1>Тайный агент</h1>
         <p className="setup-subtitle">
           Секретные миссии для незабываемой вечеринки
         </p>
         <div className="mission-badge">
-          🎯 Выполни миссию незаметно
+          Выполни миссию незаметно
         </div>
       </div>
 
@@ -40,7 +40,7 @@ export const SecretAgentSetup: React.FC<SecretAgentSetupProps> = ({ onStartGame 
           <div className="setting-group">
             <label className="setting-label">
               <span className="label-text">
-                <span className="label-icon">👥</span>
+                <span className="label-icon">Игроки</span>
                 Количество игроков
               </span>
               <div className="player-counter">
@@ -94,7 +94,7 @@ export const SecretAgentSetup: React.FC<SecretAgentSetupProps> = ({ onStartGame 
               />
               <span className="checkbox-custom"></span>
               <span className="checkbox-text">
-                <span className="label-icon">🎮</span>
+                <span className="label-icon">Хост</span>
                 Ведущий тоже играет
               </span>
             </label>
@@ -106,13 +106,13 @@ export const SecretAgentSetup: React.FC<SecretAgentSetupProps> = ({ onStartGame 
           <h3>Как играть:</h3>
           <div className="rules-list">
             <div className="rule-item">
-              <span className="rule-icon">🎯</span>
+              <span className="rule-icon">1</span>
               <div className="rule-text">
                 <strong>Задание прикрытия:</strong> Выполняй всю вечеринку незаметно
               </div>
             </div>
             <div className="rule-item">
-              <span className="rule-icon">⚡</span>
+              <span className="rule-icon">2</span>
               <div className="rule-text">
                 <strong>Главная миссия:</strong> Выполни за 5 минут так, чтобы никто не заметил
               </div>
@@ -124,7 +124,7 @@ export const SecretAgentSetup: React.FC<SecretAgentSetupProps> = ({ onStartGame 
               </div>
             </div>
             <div className="rule-item">
-              <span className="rule-icon">🕵️</span>
+              <span className="rule-icon">3</span>
               <div className="rule-text">
                 <strong>Разоблачение:</strong> Угадай миссию другого агента
               </div>
@@ -146,7 +146,7 @@ export const SecretAgentSetup: React.FC<SecretAgentSetupProps> = ({ onStartGame 
             </div>
             <div className="example-card main">
               <div className="example-header">
-                <span className="example-icon">⚡</span>
+                <span className="example-icon">→</span>
                 <span className="example-type">Главная</span>
               </div>
               <div className="example-text">

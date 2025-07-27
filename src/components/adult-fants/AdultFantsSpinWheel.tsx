@@ -130,7 +130,7 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
               </>
             ) : (
               <>
-                <div className="spin-icon">🎯</div>
+                <div className="spin-icon">SPIN</div>
                 <span>КРУТИТЬ</span>
               </>
             )}
@@ -165,7 +165,7 @@ export const AdultFantsSpinWheel: React.FC<AdultFantsSpinWheelProps> = ({
 
       <div className="wheel-instructions">
         <div className="instruction-item">
-          <span className="instruction-icon">🎯</span>
+          <span className="instruction-icon">1</span>
           <span>Нажмите красную кнопку в центре для запуска</span>
         </div>
         <div className="instruction-item">

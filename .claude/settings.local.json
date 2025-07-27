@@ -42,7 +42,8 @@
       "Bash(rg:*)",
       "Bash(git log:*)",
       "Bash(git show:*)",
-      "Bash(git restore:*)"
+      "Bash(git restore:*)",
+      "Bash(sed:*)"
     ],
     "deny": []
   }

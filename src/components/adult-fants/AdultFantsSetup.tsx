@@ -39,13 +39,13 @@ export const AdultFantsSetup: React.FC<AdultFantsSetupProps> = ({ onStartGame })
   return (
     <div className="adult-fants-setup">
       <div className="setup-header">
-        <div className="game-icon">🔥</div>
+        {/* Removed emoji icon */}
         <h1>Взрослые Фанты 18+</h1>
         <p className="setup-subtitle">
           Пикантная игра для взрослой компании
         </p>
         <div className="warning-badge">
-          ⚠️ Только для лиц старше 18 лет
+          Только для лиц старше 18 лет
         </div>
       </div>
 
@@ -109,19 +109,19 @@ export const AdultFantsSetup: React.FC<AdultFantsSetupProps> = ({ onStartGame })
           <h3>Правила игры:</h3>
           <div className="rules-list">
             <div className="rule-item">
-              <span className="rule-icon">🎯</span>
+              <span className="rule-icon">1</span>
               <span>Нажмите красную кнопку для запуска колеса</span>
             </div>
             <div className="rule-item">
-              <span className="rule-icon">🎭</span>
+              <span className="rule-icon">2</span>
               <span>Выполняйте задания с юмором и уважением</span>
             </div>
             <div className="rule-item">
-              <span className="rule-icon">⏰</span>
+              <span className="rule-icon">3</span>
               <span>Некоторые задания имеют таймер</span>
             </div>
             <div className="rule-item">
-              <span className="rule-icon">🚫</span>
+              <span className="rule-icon">4</span>
               <span>Можете отказаться от любого задания</span>
             </div>
           </div>
@@ -147,7 +147,7 @@ export const AdultFantsSetup: React.FC<AdultFantsSetupProps> = ({ onStartGame })
             onClick={() => onStartGame(players)}
             className="start-game-btn"
           >
-            🎲 Начать игру
+            Начать игру
           </button>
         )}
 

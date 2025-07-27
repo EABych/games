@@ -21,7 +21,7 @@ export const EveningRoleSetup: React.FC<EveningRoleSetupProps> = ({ onStartGame 
     
     try {
       // Создаем игру на сервере
-      const response = await fetch('https://mafia-backend-fbm5.onrender.com/api/evening-role/generate-game', {
+      const response = await fetch('https://mafia-backend-5z0e.onrender.com/api/evening-role/generate-game', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

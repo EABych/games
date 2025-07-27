@@ -47,7 +47,7 @@ export const EveningRoleHost: React.FC<EveningRoleHostProps> = ({ roomId, onBack
   const loadGroupTask = async () => {
     setIsLoadingGroupTask(true);
     try {
-      const response = await fetch('https://mafia-backend-fbm5.onrender.com/api/evening-role/get-group-task');
+      const response = await fetch('https://mafia-backend-5z0e.onrender.com/api/evening-role/get-group-task');
       if (response.ok) {
         const data = await response.json();
         setGroupTask(data.task);
@@ -69,7 +69,7 @@ export const EveningRoleHost: React.FC<EveningRoleHostProps> = ({ roomId, onBack
       // Генерируем уникальный ID для хоста
       const hostUserId = `host_${roomId}`;
       
-      const response = await fetch(`https://mafia-backend-fbm5.onrender.com/api/evening-role/get-task?roomId=${roomId}&userId=${hostUserId}`);
+      const response = await fetch(`https://mafia-backend-5z0e.onrender.com/api/evening-role/get-task?roomId=${roomId}&userId=${hostUserId}`);
       if (response.ok) {
         const data = await response.json();
         setHostTask(data.task);

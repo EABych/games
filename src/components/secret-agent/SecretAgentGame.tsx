@@ -21,7 +21,7 @@ export const SecretAgentGame: React.FC = () => {
     
     try {
       // Инициализируем игру на сервере
-      const response = await fetch('https://mafia-backend-fbm5.onrender.com/api/secret-agent/create-game', {
+      const response = await fetch('https://mafia-backend-5z0e.onrender.com/api/secret-agent/create-game', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

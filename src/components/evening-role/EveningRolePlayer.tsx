@@ -60,7 +60,7 @@ export const EveningRolePlayer: React.FC = () => {
     setError(null);
     
     try {
-      const response = await fetch(`https://mafia-backend-fbm5.onrender.com/api/evening-role/get-task?roomId=${roomId}&userId=${userId}`);
+      const response = await fetch(`https://mafia-backend-5z0e.onrender.com/api/evening-role/get-task?roomId=${roomId}&userId=${userId}`);
       
       if (!response.ok) {
         const errorData = await response.json();
@@ -99,7 +99,7 @@ export const EveningRolePlayer: React.FC = () => {
     setError(null);
     
     try {
-      const response = await fetch('https://mafia-backend-fbm5.onrender.com/api/evening-role/change-task', {
+      const response = await fetch('https://mafia-backend-5z0e.onrender.com/api/evening-role/change-task', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

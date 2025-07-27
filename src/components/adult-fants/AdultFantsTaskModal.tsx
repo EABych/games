@@ -126,7 +126,7 @@ export const AdultFantsTaskModal: React.FC<AdultFantsTaskModalProps> = ({
               </div>
               {task.hasTimer && (
                 <div className="timer-badge">
-                  ⏱️ С таймером
+                  С таймером
                 </div>
               )}
             </div>
@@ -138,7 +138,6 @@ export const AdultFantsTaskModal: React.FC<AdultFantsTaskModalProps> = ({
             {task.hasTimer && task.timerDuration && (
               <div className="timer-section">
                 <div className={`timer-display ${isTimerRunning ? 'running' : ''} ${timeLeft === 0 ? 'finished' : ''}`}>
-                  <div className="timer-icon">⏱️</div>
                   <div className="timer-time">
                     {timeLeft !== null ? formatTime(timeLeft) : formatTime(task.timerDuration)}
                   </div>
@@ -151,18 +150,18 @@ export const AdultFantsTaskModal: React.FC<AdultFantsTaskModalProps> = ({
                       onClick={startTimer}
                       disabled={timeLeft === 0}
                     >
-                      ▶
+                      Старт
                     </button>
                   ) : isTimerRunning ? (
                     <button
                       className="timer-btn stop"
                       onClick={stopTimer}
                     >
-                      ⏸
+                      Пауза
                     </button>
                   ) : (
                     <div className="timer-finished">
-                      ✅ Время вышло!
+                      Время вышло!
                     </div>
                   )}
                 </div>
@@ -191,20 +190,20 @@ export const AdultFantsTaskModal: React.FC<AdultFantsTaskModalProps> = ({
             className="action-btn skip"
             onClick={onSkip}
           >
-            😅 Пропустить
+            Пропустить
           </button>
 
           <button
             className="action-btn complete"
             onClick={onComplete}
           >
-            ✅ Выполнено
+            Выполнено
           </button>
         </div>
 
         <div className="modal-footer">
           <div className="disclaimer">
-            🔞 Игра предназначена для лиц старше 18 лет.
+            Игра предназначена для лиц старше 18 лет.
             Играйте с уважением друг к другу!
           </div>
         </div>

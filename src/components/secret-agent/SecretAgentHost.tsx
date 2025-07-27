@@ -61,7 +61,7 @@ export const SecretAgentHost: React.FC<SecretAgentHostProps> = ({
       // Генерируем уникальный ID для хоста
       const hostUserId = `host_${roomId}`;
       
-      const response = await fetch(`https://mafia-backend-fbm5.onrender.com/api/secret-agent/get-missions?roomId=${roomId}&userId=${hostUserId}`);
+      const response = await fetch(`https://mafia-backend-5z0e.onrender.com/api/secret-agent/get-missions?roomId=${roomId}&userId=${hostUserId}`);
       if (response.ok) {
         const data = await response.json();
         setHostMissions({
@@ -98,7 +98,7 @@ export const SecretAgentHost: React.FC<SecretAgentHostProps> = ({
     <div className="secret-agent-host">
       <div className="host-header">
         <div className="room-info">
-          <h1>🕵️ Тайный агент</h1>
+          <h1>Тайный агент</h1>
           <div className="room-details">
             <div className="room-id">
               <span className="detail-label">ID миссии:</span>
@@ -129,7 +129,7 @@ export const SecretAgentHost: React.FC<SecretAgentHostProps> = ({
       <div className="host-content">
         <div className="qr-section">
           <div className="qr-card">
-            <h2>🎯 Агенты: получите свои миссии!</h2>
+            <h2>Агенты: получите свои миссии!</h2>
             
             {!showQR ? (
               <div className="qr-placeholder">
@@ -137,7 +137,7 @@ export const SecretAgentHost: React.FC<SecretAgentHostProps> = ({
                   className="show-qr-btn"
                   onClick={() => setShowQR(true)}
                 >
-                  📱 Показать QR-код агентам
+                  Показать QR-код агентам
                 </button>
                 <p className="qr-instruction">
                   Покажите этот секретный QR-код агентам для получения их заданий
@@ -163,7 +163,7 @@ export const SecretAgentHost: React.FC<SecretAgentHostProps> = ({
                   className="hide-qr-btn"
                   onClick={() => setShowQR(false)}
                 >
-                  🔒 Скрыть секретный код
+                  Скрыть секретный код
                 </button>
               </div>
             )}
@@ -173,7 +173,7 @@ export const SecretAgentHost: React.FC<SecretAgentHostProps> = ({
         {settings.allowHostParticipation && (
           <div className="host-missions-section">
             <div className="host-missions-card">
-              <h2>🎮 Миссии для ведущего</h2>
+              <h2>Миссии для ведущего</h2>
               
               {!hasHostReceivedMissions ? (
                 <div className="get-host-missions">
@@ -183,7 +183,7 @@ export const SecretAgentHost: React.FC<SecretAgentHostProps> = ({
                     onClick={handleGetHostMissions}
                     disabled={isLoadingMissions}
                   >
-                    {isLoadingMissions ? '🔄 Получение миссий...' : '🕵️ Получить секретные миссии'}
+                    {isLoadingMissions ? 'Получение миссий...' : 'Получить секретные миссии'}
                   </button>
                 </div>
               ) : (
@@ -203,17 +203,17 @@ export const SecretAgentHost: React.FC<SecretAgentHostProps> = ({
 
                   <div className="mission-card main-mission">
                     <div className="mission-header">
-                      <span className="mission-icon">⚡</span>
+                      <span className="mission-icon">МИССИЯ</span>
                       <span className="mission-type">Главная миссия</span>
                       <span className="mission-difficulty">{hostMissions?.main.difficulty}</span>
                     </div>
                     <div className="mission-title">{hostMissions?.main.title}</div>
                     <div className="mission-description">{hostMissions?.main.description}</div>
                     <div className="mission-timer">
-                      ⏱️ Время выполнения: {hostMissions?.main.timeLimit} минут
+                      Время выполнения: {hostMissions?.main.timeLimit} минут
                     </div>
                     <div className="mission-note">
-                      🎯 Выполни незаметно, никто не должен понять что ты делаешь 5 минут
+                      Выполни незаметно, никто не должен понять что ты делаешь 5 минут
                     </div>
                   </div>
                   
@@ -227,10 +227,10 @@ export const SecretAgentHost: React.FC<SecretAgentHostProps> = ({
         )}
 
         <div className="game-control-panel">
-          <h3>🎮 Панель управления операцией</h3>
+          <h3>Панель управления операцией</h3>
           <div className="control-grid">
             <div className="control-item">
-              <div className="control-icon">👥</div>
+              <div className="control-icon">ИГРОКИ</div>
               <div className="control-info">
                 <div className="control-number">{settings.playerCount}</div>
                 <div className="control-label">Агентов в миссии</div>
@@ -244,7 +244,7 @@ export const SecretAgentHost: React.FC<SecretAgentHostProps> = ({
               </div>
             </div>
             <div className="control-item">
-              <div className="control-icon">🎯</div>
+              <div className="control-icon">МИССИЯ</div>
               <div className="control-info">
                 <div className="control-number">2</div>
                 <div className="control-label">Миссии на агента</div>
@@ -254,7 +254,7 @@ export const SecretAgentHost: React.FC<SecretAgentHostProps> = ({
         </div>
 
         <div className="game-tips">
-          <h3>📋 Инструкции для ведущего</h3>
+          <h3>Инструкции для ведущего</h3>
           <div className="tips-list">
             <div className="tip-item">
               <span className="tip-icon">👀</span>
@@ -265,7 +265,7 @@ export const SecretAgentHost: React.FC<SecretAgentHostProps> = ({
               <span>Поощряйте креативность в выполнении заданий прикрытия</span>
             </div>
             <div className="tip-item">
-              <span className="tip-icon">⏱️</span>
+              <span className="tip-icon">1</span>
               <span>Главные миссии должны быть выполнены незаметно за 5 минут</span>
             </div>
             <div className="tip-item">
@@ -273,7 +273,7 @@ export const SecretAgentHost: React.FC<SecretAgentHostProps> = ({
               <span>Агент побеждает если выполнит главную миссию или его не раскроют</span>
             </div>
             <div className="tip-item">
-              <span className="tip-icon">🕵️</span>
+              <span className="tip-icon">2</span>
               <span>Позволяйте игрокам угадывать миссии других для разоблачения</span>
             </div>
           </div>

@@ -47,7 +47,7 @@ export const SecretAgentPlayer: React.FC = () => {
 
     setIsLoading(true);
     try {
-      const response = await fetch(`https://mafia-backend-fbm5.onrender.com/api/secret-agent/get-missions?roomId=${roomId}&userId=${userId}&playerName=${encodeURIComponent(playerName)}`);
+      const response = await fetch(`https://mafia-backend-5z0e.onrender.com/api/secret-agent/get-missions?roomId=${roomId}&userId=${userId}&playerName=${encodeURIComponent(playerName)}`);
       
       if (response.ok) {
         const data = await response.json();
@@ -111,10 +111,10 @@ export const SecretAgentPlayer: React.FC = () => {
       <div className="secret-agent-player">
         <div className="player-intro">
           <div className="intro-header">
-            <div className="agent-icon">🕵️</div>
+            <div className="agent-icon">AGENT</div>
             <h1>Секретная операция</h1>
             <div className="classified-badge">
-              🔒 СОВЕРШЕННО СЕКРЕТНО
+              СОВЕРШЕННО СЕКРЕТНО
             </div>
           </div>
 
@@ -147,7 +147,7 @@ export const SecretAgentPlayer: React.FC = () => {
                   disabled={!playerName.trim() || isLoading}
                   className="get-missions-btn"
                 >
-                  {isLoading ? '🔄 Подключение...' : '🎯 Получить миссии'}
+                  {isLoading ? 'Подключение...' : 'Получить миссии'}
                 </button>
               </div>
             </div>
@@ -160,7 +160,7 @@ export const SecretAgentPlayer: React.FC = () => {
                   <span>Получите задание прикрытия - выполняйте его всю игру незаметно</span>
                 </div>
                 <div className="briefing-item">
-                  <span className="briefing-icon">⚡</span>
+                  <span className="briefing-icon">BRIEF</span>
                   <span>Получите главную миссию - выполните за 5 минут так, чтобы никто не заметил</span>
                 </div>
                 <div className="briefing-item">
@@ -194,7 +194,7 @@ export const SecretAgentPlayer: React.FC = () => {
           className="toggle-missions-btn"
           onClick={() => setShowMissions(!showMissions)}
         >
-          {showMissions ? '🔒 Скрыть миссии' : '👁️ Показать миссии'}
+          {showMissions ? 'Скрыть миссии' : 'Показать миссии'}
         </button>
       </div>
 
@@ -219,7 +219,7 @@ export const SecretAgentPlayer: React.FC = () => {
             
             <div className="mission-instructions">
               <div className="instruction-item">
-                <span className="instruction-icon">🎯</span>
+                <span className="instruction-icon">1</span>
                 <span>Выполняй это задание всю игру незаметно</span>
               </div>
               <div className="instruction-item">
@@ -231,7 +231,7 @@ export const SecretAgentPlayer: React.FC = () => {
 
           <div className="mission-card main-mission">
             <div className="mission-header">
-              <span className="mission-icon">⚡</span>
+              <span className="mission-icon">МИССИЯ</span>
               <span className="mission-type">Главная миссия</span>
               <span 
                 className="mission-difficulty"
@@ -251,7 +251,7 @@ export const SecretAgentPlayer: React.FC = () => {
                 {!isMainMissionActive && mainMissionTimeLeft === null ? (
                   <div className="timer-controls">
                     <div className="timer-info">
-                      <span className="timer-icon">⏱️</span>
+                      <span className="timer-icon">TIME</span>
                       <span>Время выполнения: {missions.main.timeLimit} минут</span>
                     </div>
                     <button 
@@ -264,7 +264,7 @@ export const SecretAgentPlayer: React.FC = () => {
                 ) : isMainMissionActive && mainMissionTimeLeft !== null ? (
                   <div className="active-timer">
                     <div className={`timer-display ${mainMissionTimeLeft <= 60 ? 'urgent' : ''}`}>
-                      <span className="timer-icon">⏱️</span>
+                      <span className="timer-icon">TIME</span>
                       <span className="timer-time">{formatTime(mainMissionTimeLeft)}</span>
                     </div>
                     <div className="timer-progress">
@@ -293,11 +293,11 @@ export const SecretAgentPlayer: React.FC = () => {
 
             <div className="mission-instructions">
               <div className="instruction-item">
-                <span className="instruction-icon">🎯</span>
+                <span className="instruction-icon">1</span>
                 <span>Выполни за {missions.main.timeLimit} минут незаметно</span>
               </div>
               <div className="instruction-item">
-                <span className="instruction-icon">🕵️</span>
+                <span className="instruction-icon">2</span>
                 <span>Никто не должен понять что ты делаешь 5 минут после выполнения</span>
               </div>
             </div>
@@ -313,7 +313,7 @@ export const SecretAgentPlayer: React.FC = () => {
             <span>Задание прикрытия должно выглядеть как твоя естественная привычка</span>
           </div>
           <div className="tip-item">
-            <span className="tip-icon">⚡</span>
+            <span className="tip-icon">!</span>
             <span>Главную миссию выполняй когда удобный момент, но в рамках времени</span>
           </div>
           <div className="tip-item">
@@ -329,7 +329,7 @@ export const SecretAgentPlayer: React.FC = () => {
 
       <div className="warning-footer">
         <div className="warning-text">
-          🔒 Держите миссии в секрете! Показывайте экран только когда уверены, что никто не подглядывает.
+          Держите миссии в секрете! Показывайте экран только когда уверены, что никто не подглядывает.
         </div>
       </div>
     </div>
